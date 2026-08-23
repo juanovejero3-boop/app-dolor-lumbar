@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v9 - ADVANCED MULTI-BLOCK & WIZARD</title>
+    <title>PRIME PHYSIQUE v10 - CLINICAL PATHWAYS</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Prime Physique Cyberpunk Palette */
             --bg-main: #050505;
             --bg-card: #121216;
             --bg-input: #0a0a0c;
@@ -60,23 +59,14 @@
             box-shadow: 0 2px 15px rgba(255, 23, 68, 0.2);
         }
         .header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-family: 'Share Tech Mono', monospace;
-            color: #fff;
+            margin: 0; font-size: 1.5rem; text-transform: uppercase;
+            letter-spacing: 3px; font-family: 'Share Tech Mono', monospace; color: #fff;
         }
         .header h1 span { color: var(--neon-red); text-shadow: 0 0 8px rgba(255, 23, 68, 0.6); }
         .tag-alumno {
-            background-color: rgba(255, 23, 68, 0.1);
-            color: var(--neon-red);
-            padding: 4px 12px;
-            font-size: 0.8rem;
-            font-family: 'Share Tech Mono', monospace;
-            border: 1px solid var(--neon-red);
-            text-transform: uppercase;
-            box-shadow: 0 0 10px rgba(255, 23, 68, 0.2);
+            background-color: rgba(255, 23, 68, 0.1); color: var(--neon-red); padding: 4px 12px;
+            font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; border: 1px solid var(--neon-red);
+            text-transform: uppercase; box-shadow: 0 0 10px rgba(255, 23, 68, 0.2);
             clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
         }
 
@@ -84,70 +74,78 @@
         .view.active { display: block; }
 
         .btn {
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            border: 1px solid var(--border-light);
-            padding: 10px 15px;
-            cursor: pointer;
-            font-weight: 700;
-            font-family: 'Share Tech Mono', monospace;
-            text-transform: uppercase;
-            transition: 0.3s;
+            background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-light);
+            padding: 10px 15px; cursor: pointer; font-weight: 700; font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase; transition: 0.3s;
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
         .btn:hover { 
-            border-color: var(--neon-red); 
-            color: var(--neon-red);
-            background-color: rgba(255, 23, 68, 0.05);
-            box-shadow: 0 0 15px rgba(255, 23, 68, 0.2);
+            border-color: var(--neon-red); color: var(--neon-red);
+            background-color: rgba(255, 23, 68, 0.05); box-shadow: 0 0 15px rgba(255, 23, 68, 0.2);
         }
         .btn-primary {
             background: linear-gradient(45deg, var(--burgundy), var(--bg-card));
-            border: 1px solid var(--neon-red);
-            color: #fff;
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-red); color: #fff; width: 100%; padding: 15px;
+            font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
         }
         .btn-primary:hover { 
             background: linear-gradient(45deg, var(--neon-red), var(--burgundy));
-            border-color: var(--neon-red);
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+            border-color: var(--neon-red); box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
         }
 
         .client-card {
             background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%);
-            border: 1px solid var(--border-light);
-            padding: 18px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.3s;
+            border: 1px solid var(--border-light); padding: 18px; margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s;
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
         }
         .client-card:hover { 
-            border-color: var(--neon-red);
-            box-shadow: -5px 0 0 var(--neon-red);
+            border-color: var(--neon-red); box-shadow: -5px 0 0 var(--neon-red);
             background: linear-gradient(135deg, var(--burgundy) 0%, var(--bg-card) 100%);
         }
         .client-card span:first-child { font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; color: #fff; }
 
+        /* PERFIL CLÍNICO GLOBAL */
+        .client-profile-bar {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-light);
+            border-top: 2px solid var(--neon-red);
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-item { display: flex; flex-direction: column; gap: 5px; }
+        .profile-label { font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+        .profile-select {
+            background: var(--bg-input); color: #fff; border: 1px solid var(--border-color);
+            padding: 8px; font-family: 'Rajdhani', sans-serif; font-size: 1rem; outline: none; min-width: 150px;
+        }
+        .profile-select:focus { border-color: var(--neon-red); }
+        .progression-badge {
+            background: rgba(0, 230, 118, 0.15); border: 1px solid var(--green);
+            color: var(--green); padding: 8px 15px; font-family: 'Share Tech Mono', monospace;
+            font-weight: bold; margin-left: auto; display: none; align-items: center; gap: 10px;
+            animation: pulse-green 2s infinite; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 5px rgba(0, 230, 118, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(0, 230, 118, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(0, 230, 118, 0.2); }
+        }
+
         .tabs-container {
-            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px;
-            margin-bottom: 15px; scrollbar-width: none;
+            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none;
         }
         .tabs-container::-webkit-scrollbar { display: none; }
         .tab-pill {
             background-color: var(--bg-input); border: 1px solid var(--border-color);
-            color: var(--text-muted); padding: 8px 20px; font-size: 0.9rem;
-            font-weight: 700; font-family: 'Share Tech Mono', monospace; cursor: pointer;
-            white-space: nowrap; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-            transition: 0.2s;
+            color: var(--text-muted); padding: 8px 20px; font-size: 0.9rem; font-weight: 700;
+            font-family: 'Share Tech Mono', monospace; cursor: pointer; white-space: nowrap;
+            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); transition: 0.2s;
         }
         .tab-pill.active {
             background-color: var(--burgundy); color: white; border-color: var(--neon-red);
@@ -156,10 +154,8 @@
         .tab-pill:hover:not(.active) { border-color: var(--neon-red); color: var(--neon-red); }
 
         .block-card {
-            background-color: rgba(18, 18, 22, 0.8);
-            border: 1px solid var(--border-color);
-            border-top: 3px solid var(--burgundy);
-            margin-bottom: 30px; padding: 20px; position: relative;
+            background-color: rgba(18, 18, 22, 0.8); border: 1px solid var(--border-color);
+            border-top: 3px solid var(--burgundy); margin-bottom: 30px; padding: 20px; position: relative;
         }
         .block-header {
             display: flex; justify-content: space-between; align-items: center;
@@ -167,50 +163,25 @@
         }
         .block-title { font-family: 'Share Tech Mono', monospace; color: var(--neon-red); font-size: 1.2rem; text-transform: uppercase; }
 
-        /* Asistente Cuestionario */
-        .wizard-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px dashed var(--border-light);
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        .wizard-title {
-            color: #fff;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            color: var(--text-muted);
-        }
+        .wizard-card { background: rgba(0, 0, 0, 0.6); border: 1px dashed var(--border-light); padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+        .wizard-title { color: var(--text-muted); font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; margin-bottom: 15px; }
         .wizard-option {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            cursor: pointer;
-            padding: 8px;
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            transition: 0.2s;
+            display: block; margin-bottom: 10px; font-size: 0.95rem; color: var(--text-main);
+            cursor: pointer; padding: 8px; background: var(--bg-input); border: 1px solid var(--border-color); transition: 0.2s;
         }
         .wizard-option:hover { border-color: var(--neon-red); }
         .wizard-option input { accent-color: var(--neon-red); margin-right: 10px; }
 
         .ex-card {
-            background: linear-gradient(180deg, var(--bg-card) 0%, #0d0d10 100%);
-            border: 1px solid var(--border-light); margin-bottom: 20px;
-            position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            background: linear-gradient(180deg, var(--bg-card) 0%, #0d0d10 100%); border: 1px solid var(--border-light);
+            margin-bottom: 20px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
-        .ex-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-            background-color: var(--border-light);
-        }
+        .ex-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--border-light); }
         .ex-card:hover::before { background-color: var(--neon-red); }
         
         .ex-header {
-            padding: 12px 15px; display: flex; justify-content: space-between;
-            align-items: center; background: linear-gradient(90deg, var(--border-color), var(--bg-input));
-            border-bottom: 1px solid var(--border-light);
+            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(90deg, var(--border-color), var(--bg-input)); border-bottom: 1px solid var(--border-light);
         }
         .ex-title-wrap { display: flex; align-items: center; gap: 10px; flex: 1; }
         .ex-triangle { color: var(--neon-red); font-size: 1rem; }
@@ -220,19 +191,13 @@
         }
         .ex-name-input::placeholder { color: var(--text-muted); }
         .rpe-wrap {
-            display: flex; align-items: center; background-color: var(--rpe-bg);
-            border: 1px solid var(--burgundy); padding: 3px 8px; font-family: 'Share Tech Mono', monospace;
+            display: flex; align-items: center; background-color: var(--rpe-bg); border: 1px solid var(--burgundy);
+            padding: 3px 8px; font-family: 'Share Tech Mono', monospace;
         }
-        .rpe-input {
-            background: transparent; border: none; color: var(--rpe-text);
-            width: 35px; font-weight: bold; font-size: 0.9rem; text-align: right; outline: none;
-        }
+        .rpe-input { background: transparent; border: none; color: var(--rpe-text); width: 35px; font-weight: bold; font-size: 0.9rem; text-align: right; outline: none; }
 
         .sets-table { padding: 15px; }
-        .sets-header, .set-row {
-            display: grid; grid-template-columns: 40px 1fr 1fr 40px; gap: 15px;
-            align-items: center; text-align: center;
-        }
+        .sets-header, .set-row { display: grid; grid-template-columns: 40px 1fr 1fr 40px; gap: 15px; align-items: center; text-align: center; }
         .sets-header {
             font-size: 0.8rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace;
             border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 12px;
@@ -240,9 +205,9 @@
         .set-row { margin-bottom: 10px; }
         .set-num { font-size: 1rem; font-family: 'Share Tech Mono', monospace; color: var(--text-muted); }
         .set-input {
-            background-color: var(--bg-input); border: 1px solid var(--border-color);
-            color: #fff; font-family: 'Share Tech Mono', monospace; padding: 10px;
-            text-align: center; font-size: 1.1rem; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s;
+            background-color: var(--bg-input); border: 1px solid var(--border-color); color: #fff;
+            font-family: 'Share Tech Mono', monospace; padding: 10px; text-align: center; font-size: 1.1rem;
+            width: 100%; box-sizing: border-box; outline: none; transition: 0.2s;
         }
         .set-input:focus { border-color: var(--neon-red); }
         .set-checkbox { width: 22px; height: 22px; accent-color: var(--neon-red); cursor: pointer; }
@@ -259,8 +224,7 @@
         label.diag-label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.9rem; color: #fff; font-family: 'Share Tech Mono', monospace; }
         select, input[type="range"].regular-slider {
             width: 100%; padding: 10px; background-color: var(--bg-input); color: white;
-            border: 1px solid var(--border-color); font-family: 'Rajdhani', sans-serif; font-size: 1rem;
-            box-sizing: border-box; outline: none;
+            border: 1px solid var(--border-color); font-family: 'Rajdhani', sans-serif; font-size: 1rem; box-sizing: border-box; outline: none;
         }
         input[type="range"].regular-slider { accent-color: var(--neon-red); }
         .radio-group { 
@@ -270,14 +234,14 @@
         .radio-group label { margin: 0; color: var(--text-main); font-family: 'Rajdhani', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         
         .semaforo-result {
-            margin-top: 20px; padding: 15px; border: 1px solid var(--border-color);
-            background-color: var(--bg-input); display: flex; align-items: center; gap: 15px;
+            margin-top: 20px; padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-input);
+            display: flex; align-items: center; gap: 15px;
         }
         .light { width: 20px; height: 20px; border-radius: 50%; background-color: #333; }
         .status-text { font-weight: bold; font-size: 1.1rem; font-family: 'Share Tech Mono', monospace; }
         .status-msg { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
 
-        .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .auto-save-indicator { 
             font-size: 0.85rem; color: var(--green); font-family: 'Share Tech Mono', monospace;
             opacity: 0; transition: opacity 0.5s; text-shadow: 0 0 5px var(--green);
@@ -285,26 +249,20 @@
         .auto-save-indicator.show { opacity: 1; }
         
         .day-title-input {
-            width: 100%; background: transparent; border: none; color: #fff;
-            font-size: 1.5rem; font-family: 'Share Tech Mono', monospace;
-            padding-bottom: 10px; margin-bottom: 25px; border-bottom: 2px solid var(--burgundy); outline: none;
+            width: 100%; background: transparent; border: none; color: #fff; font-size: 1.5rem;
+            font-family: 'Share Tech Mono', monospace; padding-bottom: 10px; margin-bottom: 25px;
+            border-bottom: 2px solid var(--burgundy); outline: none;
         }
         .day-title-input:focus { border-color: var(--neon-red); }
-        
-        .block-actions {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;
-        }
+        .block-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
 
-        /* ----- ESTILOS ESPECÍFICOS SEMÁFORO TENDINOSO AVANZADO ----- */
         input[type=range].tendon-slider {
-            -webkit-appearance: none; width: 100%; height: 6px; background: var(--border-color);
-            border-radius: 3px; outline: none; padding: 0; margin: 10px 0;
+            -webkit-appearance: none; width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; outline: none; padding: 0; margin: 10px 0;
         }
         input[type=range].tendon-slider::-webkit-slider-thumb {
             -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
             background: var(--thumb-color, var(--green)); cursor: pointer; margin-top: -9px;
-            box-shadow: 0 0 12px var(--thumb-color, rgba(0, 255, 102, 0.5)); border: 2px solid var(--bg-main);
-            transition: background 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 0 12px var(--thumb-color, rgba(0, 255, 102, 0.5)); border: 2px solid var(--bg-main); transition: background 0.2s ease, box-shadow 0.2s ease;
         }
         input[type=range].tendon-slider::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: transparent; border-radius: 3px; }
     </style>
@@ -317,16 +275,39 @@
         <div class="tag-alumno">CLINICAL SYS</div>
     </div>
 
+    <!-- VISTA DASHBOARD -->
     <div id="view-dashboard" class="view active">
         <button class="btn btn-primary" onclick="promptNewClient()">[+] INICIALIZAR ATLETA</button>
         <div id="clients-list"></div>
     </div>
 
+    <!-- VISTA TRACKER DEL ALUMNO -->
     <div id="view-tracker" class="view">
         <div class="flex-between">
             <button class="btn" onclick="showView('view-dashboard')">&lt; PANEL</button>
             <h2 id="tracker-client-name" style="margin:0; font-size:1.2rem; font-family:'Share Tech Mono', monospace; color:#fff;">ATLETA</h2>
             <span id="save-indicator" class="auto-save-indicator">GUARDADO</span>
+        </div>
+
+        <!-- Perfil Clínico / Progresión -->
+        <div class="client-profile-bar">
+            <div class="profile-item">
+                <span class="profile-label">PROTOCOLO ACTIVO:</span>
+                <select id="profile-protocol" class="profile-select" onchange="updateProfile()">
+                    <option value="none">-- Seleccionar --</option>
+                    <option value="lumbar">Rehab Lumbar</option>
+                    <option value="tendinoso">Rehab Tendinosa</option>
+                </select>
+            </div>
+            <div class="profile-item">
+                <span class="profile-label">FASE ACTUAL:</span>
+                <select id="profile-phase" class="profile-select" onchange="updateProfile()">
+                    <option value="none">-- Seleccionar Protocolo --</option>
+                </select>
+            </div>
+            <div id="progression-badge" class="progression-badge">
+                <span style="font-size:1.2rem;">⚡</span> [!] PROGRESIÓN AUTORIZADA
+            </div>
         </div>
 
         <div class="tabs-container" id="week-tabs"></div>
@@ -364,16 +345,16 @@
     ];
 
     const dataEstados = {
-        VERDE_CORTO: { title: "VERDE - VAS CORTO DE CARGA", color: "var(--green)", desc: "Casi no le molesta al hacerlo y a las 24 h está igual que siempre. El estímulo se le queda corto: así el tendón no tiene motivo para adaptarse.", action: "→ SUBE CARGA CON DECISIÓN: PUEDES SALTAR MÁS DE UN ESCALÓN" },
-        VERDE_OPTIMO: { title: "VERDE ÓPTIMO", color: "var(--green)", desc: "Molestia tolerable mientras trabaja y a las 24 h el tendón la ha dejado ir. Esta es la ventana donde se gana adaptación.", action: "→ PROGRESA UN ESCALÓN" },
-        VERDE_ALTO: { title: "VERDE ALTO", color: "var(--green)", desc: "Sigue dentro de la ventana, pero en su parte alta: queda poco margen antes del amarillo.", action: "→ CONSOLIDA UNA SEMANA; SI SE MANTIENE, PROGRESA UN ESCALÓN" },
-        AMARILLO_RIGIDEZ: { title: "AMARILLO - RIGIDEZ MATUTINA", color: "var(--yellow)", desc: "Los números acompañan, pero la rigidez matutina ha subido: suele ser el primer aviso de que el tendón va sobrecargado, antes incluso de que suba el dolor.", action: "→ NO PROGRESES HASTA QUE LA RIGIDEZ VUELVA A SU BASAL" },
-        AMARILLO_MOLESTA: { title: "AMARILLO - LE MOLESTA AL HACERLO", color: "var(--yellow)", desc: "Durante el ejercicio le molesta bastante, pero a las 24 h el tendón no le pasa factura. La dosis aguanta; lo que chirría es el ejercicio o cómo lo ejecuta.", action: "→ MANTÉN LA CARGA Y AJUSTA RANGO O VELOCIDAD, NO LOS KILOS" },
-        AMARILLO_FACTURA: { title: "AMARILLO - LE PASA FACTURA", color: "var(--yellow)", desc: "Trabajando va bien, pero al día siguiente el tendón se queja más de lo habitual. Has llegado al techo de lo que hoy asimila.", action: "→ REPITE LA MISMA CARGA; SI VUELVE A SUBIR A LAS 24 H, BAJA UN ESCALÓN" },
-        AMARILLO_ALTO: { title: "AMARILLO ALTO", color: "var(--yellow)", desc: "Le molesta al hacerlo y además le pasa factura a las 24 h: las dos señales en el borde. Estás pegado al rojo.", action: "→ NO PROGRESES: REPITE CON MENOS VOLUMEN Y VUELVE A MEDIR" },
-        ROJO: { title: "ROJO", color: "var(--neon-red)", desc: "A las 24 h el tendón ha respondido claramente por encima de su basal: se ha pasado de la ventana de carga.", action: "→ BAJA UN ESCALÓN (UNA SOLA VARIABLE) Y VUELVE A MEDIR A LAS 24 H" },
-        ROJO_ALTO: { title: "ROJO ALTO - TENDÓN IRRITADO", color: "var(--neon-red)", desc: "No es un exceso puntual. Con esta respuesta a las 24 h el tendón está irritado, y a estos niveles no se dosifica hacia abajo: se descarga.", action: "→ RETIRA EL EJERCICIO 2-3 DÍAS, ISOMÉTRICOS A TOLERANCIA Y REENTRA DOS ESCALONES POR DEBAJO" },
-        ROJO_MAXIMO: { title: "ROJO MÁXIMO - REPLANTEA", color: "var(--neon-red)", desc: "Le duele mucho mientras lo hace y encima le pasa factura al día siguiente. Con este cuadro no toca ajustar la carga: toca cambiar el ejercicio y revisar en qué fase está de verdad.", action: "→ PARA ESE EJERCICIO Y REEVALÚA ANTES DE SEGUIR DOSIFICANDO" }
+        VERDE_CORTO: { title: "VERDE - VAS CORTO DE CARGA", color: "var(--green)", desc: "El estímulo se le queda corto: así el tejido no tiene motivo para adaptarse.", action: "→ SUBE CARGA CON DECISIÓN" },
+        VERDE_OPTIMO: { title: "VERDE ÓPTIMO", color: "var(--green)", desc: "Molestia tolerable intra-sesión y buena asimilación a las 24 h.", action: "→ PROGRESA UN ESCALÓN" },
+        VERDE_ALTO: { title: "VERDE ALTO", color: "var(--green)", desc: "Parte alta de la ventana terapéutica. Queda poco margen antes de sobrecarga.", action: "→ CONSOLIDA UNA SEMANA" },
+        AMARILLO_RIGIDEZ: { title: "AMARILLO - RIGIDEZ MATUTINA", color: "var(--yellow)", desc: "Aviso temprano de sobrecarga estructural sin aumento de dolor percibido.", action: "→ NO PROGRESAR CARGA" },
+        AMARILLO_MOLESTA: { title: "AMARILLO - MOLESTIA INTRA-SESIÓN", color: "var(--yellow)", desc: "Dosis bien asimilada a las 24h, pero ejecución excesivamente dolorosa.", action: "→ AJUSTAR TÉCNICA/RANGO, NO PESO" },
+        AMARILLO_FACTURA: { title: "AMARILLO - LÍMITE TISULAR", color: "var(--yellow)", desc: "El tejido se queja a las 24h. Techo de asimilación actual alcanzado.", action: "→ MANTENER CARGA / BAJAR SI EMPEORA" },
+        AMARILLO_ALTO: { title: "AMARILLO ALTO", color: "var(--yellow)", desc: "Doble señal de alerta (durante y post). Rozando el límite lesivo.", action: "→ NO PROGRESAR, REDUCIR VOLUMEN" },
+        ROJO: { title: "ROJO", color: "var(--neon-red)", desc: "Respuesta clara por encima del basal a las 24h. Ventana de carga excedida.", action: "→ BAJAR UN ESCALÓN Y REEVALUAR" },
+        ROJO_ALTO: { title: "ROJO ALTO - TEJIDO IRRITADO", color: "var(--neon-red)", desc: "Estado de irritación. No se puede dosificar hacia abajo de forma normal.", action: "→ DESCARGA A ISOMÉTRICOS / RETIRAR" },
+        ROJO_MAXIMO: { title: "ROJO MÁXIMO - REPLANTEA", color: "var(--neon-red)", desc: "Dolor extremo y sostenido. Protocolo actual totalmente inadecuado.", action: "→ ABORTAR EJERCICIO INMEDIATAMENTE" }
     };
 
     function obtenerColorInterpolado(val) {
@@ -391,15 +372,20 @@
     }
 
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v9_db');
-        if (stored) db = JSON.parse(stored);
+        const stored = localStorage.getItem('prime_v10_db');
+        if (stored) {
+            db = JSON.parse(stored);
+            // Migración para perfil global
+            db.clients.forEach(c => {
+                if(!c.profile) c.profile = { protocol: 'none', phase: 'none' };
+            });
+        }
         renderDashboard();
     };
 
     function triggerSaveIndicator() {
         const ind = document.getElementById('save-indicator');
-        ind.classList.add('show');
-        setTimeout(() => ind.classList.remove('show'), 1500);
+        ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 1500);
     }
 
     function showView(id) {
@@ -411,8 +397,7 @@
         const list = document.getElementById('clients-list');
         list.innerHTML = '';
         if(db.clients.length === 0) {
-            list.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-family:\'Share Tech Mono\';">SISTEMA VACÍO.</p>';
-            return;
+            list.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-family:\'Share Tech Mono\';">SISTEMA VACÍO.</p>'; return;
         }
         db.clients.forEach((c, idx) => {
             list.innerHTML += `<div class="client-card" onclick="openTracker(${idx})"><span>${c.name}</span><span style="color:var(--neon-red); font-family:'Share Tech Mono'; font-size:0.9rem;">[ ABRIR ]</span></div>`;
@@ -423,30 +408,92 @@
     function promptNewClient() {
         const name = prompt("Nombre del Atleta:");
         if (name) {
-            let weeks = {};
-            for(let i=1; i<=12; i++) weeks[i] = [];
-            db.clients.push({ name, weeks });
-            localStorage.setItem('prime_v9_db', JSON.stringify(db));
-            renderDashboard();
+            let weeks = {}; for(let i=1; i<=12; i++) weeks[i] = [];
+            db.clients.push({ name, weeks, profile: { protocol: 'none', phase: 'none' } });
+            localStorage.setItem('prime_v10_db', JSON.stringify(db)); renderDashboard();
         }
     }
 
     function openTracker(clientIdx) {
         cClientIndex = clientIdx; cWeek = 1; cDayIndex = 0;
         document.getElementById('tracker-client-name').innerText = db.clients[cClientIndex].name;
+        updateProfileUI();
         renderTabs(); showView('view-tracker');
     }
 
-    function renderTabs() {
-        const wTabs = document.getElementById('week-tabs');
-        wTabs.innerHTML = '';
-        for(let i=1; i<=12; i++) {
-            wTabs.innerHTML += `<div class="tab-pill ${cWeek === i ? 'active' : ''}" onclick="selectWeek(${i})">W${i}</div>`;
+    /* LOGICA DE PERFIL Y PROGRESIÓN */
+    function updateProfileUI() {
+        const p = db.clients[cClientIndex].profile;
+        document.getElementById('profile-protocol').value = p.protocol;
+        const phaseSelect = document.getElementById('profile-phase');
+        phaseSelect.innerHTML = '<option value="none">-- Seleccionar --</option>';
+        if(p.protocol === 'lumbar') {
+            phaseSelect.innerHTML += `<option value="Fase 1">Fase 1: Centralización</option><option value="Fase 2">Fase 2: Core/Estabilidad</option><option value="Fase 3">Fase 3: Carga Axial</option>`;
+        } else if(p.protocol === 'tendinoso') {
+            phaseSelect.innerHTML += `<option value="Fase 1">Fase 1: Movilidad / Analgesia</option><option value="Fase 2">Fase 2: Fuerza Específica</option><option value="Fase 3">Fase 3: Fuerza General</option><option value="Fase 4">Fase 4: Potencia / Pliometría</option>`;
         }
-        const dTabs = document.getElementById('day-tabs');
-        dTabs.innerHTML = '';
+        phaseSelect.value = p.phase;
+        document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
+    }
+
+    function updateProfile() {
+        const protocol = document.getElementById('profile-protocol').value;
+        const phase = document.getElementById('profile-phase').value;
+        if(db.clients[cClientIndex].profile.protocol !== protocol) {
+            db.clients[cClientIndex].profile.protocol = protocol;
+            db.clients[cClientIndex].profile.phase = 'none';
+            updateProfileUI(); 
+        } else {
+            db.clients[cClientIndex].profile.phase = phase;
+        }
+        autoSave();
+    }
+
+    function checkProgression() {
+        if(cClientIndex === null) return false;
         const client = db.clients[cClientIndex];
-        const days = client.weeks[cWeek] || [];
+        const protocol = client.profile.protocol;
+        if(protocol === 'none') return false;
+
+        let qualifyingWeeks = 0;
+        let weeksChecked = 0;
+
+        for(let w = 12; w >= 1; w--) {
+            const days = client.weeks[w] || [];
+            let protocolFoundInWeek = false;
+            let maxPost24 = -1;
+
+            days.forEach(day => {
+                day.blocks.forEach(b => {
+                    if(b.type === protocol) {
+                        protocolFoundInWeek = true;
+                        let p24 = 0;
+                        if(protocol === 'lumbar') p24 = parseInt(b.tracker.post24) || 0;
+                        else p24 = parseInt(b.tracker.eva24h) || 0;
+                        if(p24 > maxPost24) maxPost24 = p24;
+                    }
+                });
+            });
+
+            if(protocolFoundInWeek) {
+                weeksChecked++;
+                if(maxPost24 <= 2) {
+                    qualifyingWeeks++;
+                } else {
+                    return false; // Racha rota
+                }
+            }
+            if(qualifyingWeeks >= 3) return true; // 3 semanas ok
+        }
+        return false;
+    }
+
+    function renderTabs() {
+        const wTabs = document.getElementById('week-tabs'); wTabs.innerHTML = '';
+        for(let i=1; i<=12; i++) wTabs.innerHTML += `<div class="tab-pill ${cWeek === i ? 'active' : ''}" onclick="selectWeek(${i})">W${i}</div>`;
+        
+        const dTabs = document.getElementById('day-tabs'); dTabs.innerHTML = '';
+        const client = db.clients[cClientIndex]; const days = client.weeks[cWeek] || [];
         
         if (days.length === 0) { addDay(); } else {
             days.forEach((d, idx) => { dTabs.innerHTML += `<div class="tab-pill ${cDayIndex === idx ? 'active' : ''}" onclick="selectDay(${idx})">${d.name || 'DÍA '+(idx+1)}</div>`; });
@@ -460,60 +507,48 @@
 
     function addDay() {
         if(cClientIndex === null) return;
-        autoSave();
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v9_db', JSON.stringify(db));
-        renderTabs();
+        autoSave(); renderTabs();
     }
 
     function deleteCurrentDay() {
         if(confirm("¿Purgar el día actual?")) {
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
-            cDayIndex = 0;
-            localStorage.setItem('prime_v9_db', JSON.stringify(db));
-            renderTabs();
+            cDayIndex = 0; autoSave(); renderTabs();
         }
     }
 
     function addBlock(type) {
-        autoSave();
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
         let newBlock = { id: Date.now(), type: type, exercises: [ { name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] } ], tracker: {} };
-        if (type === 'lumbar') {
-            newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
-        } else {
-            newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
-        }
+        if (type === 'lumbar') newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
+        else newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
         day.blocks.push(newBlock);
-        renderDayContent();
-        localStorage.setItem('prime_v9_db', JSON.stringify(db));
+        autoSave(); renderDayContent();
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
-            autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
-            renderDayContent(); localStorage.setItem('prime_v9_db', JSON.stringify(db));
+            db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
+            autoSave(); renderDayContent();
         }
     }
 
     function addExercise(bIdx) {
-        autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        renderDayContent(); localStorage.setItem('prime_v9_db', JSON.stringify(db));
+        autoSave(); renderDayContent(); 
     }
 
     function removeExercise(bIdx, exIdx) {
-        autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
-        renderDayContent(); localStorage.setItem('prime_v9_db', JSON.stringify(db));
+        autoSave(); renderDayContent();
     }
 
     function addSet(bIdx, exIdx) {
-        autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        renderDayContent(); localStorage.setItem('prime_v9_db', JSON.stringify(db));
+        autoSave(); renderDayContent();
     }
 
     function toggleWizard(bIdx) {
@@ -531,8 +566,7 @@
         if(!day) return;
 
         document.getElementById('day-name-input').value = day.name;
-        const bContainer = document.getElementById('blocks-container');
-        bContainer.innerHTML = '';
+        const bContainer = document.getElementById('blocks-container'); bContainer.innerHTML = '';
 
         day.blocks.forEach((block, bIdx) => {
             let exHTML = '';
@@ -548,7 +582,6 @@
                         </div>
                     `;
                 });
-
                 exHTML += `
                     <div class="ex-card">
                         <div class="ex-header">
@@ -572,17 +605,13 @@
                 `;
             });
 
-            let diagHTML = '';
-            let wizHTML = '';
-            const t = block.tracker;
+            let diagHTML = ''; let wizHTML = ''; const t = block.tracker;
             
             if (block.type === 'lumbar') {
                 let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
                 wizHTML = `
                     <div id="wiz-${bIdx}" class="wizard-card" style="display:none;">
-                        <div class="wizard-title">
-                            <span>SELECCIONE EL ESCENARIO CLÍNICO:</span>
-                        </div>
+                        <div class="wizard-title"><span>SELECCIONE EL ESCENARIO CLÍNICO:</span></div>
                         <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 1: Centralización')"> Dolor constante, irradiado o alta irritabilidad mecánica.</label>
                         <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 2: Core/Estabilidad')"> Dolor intermitente/centralizado, intolerancia a posturas.</label>
                         <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 3: Carga Axial')"> Tolerancia base OK, necesidad de adaptación a cargas axiales.</label>
@@ -597,51 +626,34 @@
                             <option value="Fase 2: Core/Estabilidad" ${t.stage==='Fase 2: Core/Estabilidad'?'selected':''}>Fase 2: Estabilización Lumbo-Pélvica</option>
                             <option value="Fase 3: Carga Axial" ${t.stage==='Fase 3: Carga Axial'?'selected':''}>Fase 3: Sobrecarga Axial</option>
                         </select>
-
                         <label class="diag-label">ESCALA EVA (INTRA-SESIÓN): <span class="eva-val-display" style="color:var(--neon-red);">${t.eva}</span>/10</label>
                         <input type="range" class="l-eva regular-slider" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
-
                         <label class="diag-label">SÍNTOMA DOMINANTE:</label>
                         <div class="radio-group">
                             <label><input type="radio" name="l-nature-${bIdx}" value="Muscular" ${t.nature==='Muscular'?'checked':''} onchange="autoSave()"> Tensión muscular local</label>
                             <label><input type="radio" name="l-nature-${bIdx}" value="Radicular" ${t.nature==='Radicular'?'checked':''} onchange="autoSave()"> Irritación radicular / Eléctrico</label>
                         </div>
-
                         <label class="diag-label">VECTOR MDT:</label>
                         <div class="radio-group">
                             <label><input type="radio" name="l-dir-${bIdx}" value="Centraliza" ${t.direction==='Centraliza'?'checked':''} onchange="autoSave()"> Centraliza (Seguro)</label>
                             <label><input type="radio" name="l-dir-${bIdx}" value="Periferaliza" ${t.direction==='Periferaliza'?'checked':''} onchange="autoSave()"> Periferaliza (Riesgo)</label>
                         </div>
-
                         <label class="diag-label">DOLOR POST 24H (EVA): <span class="eva24-val-display" style="color:var(--neon-red);">${post24val}</span>/10</label>
                         <input type="range" class="l-24 regular-slider" min="0" max="10" value="${post24val}" oninput="this.previousElementSibling.querySelector('.eva24-val-display').innerText=this.value; autoSave()">
-
-                        <div class="semaforo-result s-box">
-                            <div class="light s-light"></div>
-                            <div>
-                                <div class="status-text s-text">--</div>
-                                <div class="status-msg s-msg">--</div>
-                            </div>
-                        </div>
+                        <div class="semaforo-result s-box"><div class="light s-light"></div><div><div class="status-text s-text">--</div><div class="status-msg s-msg">--</div></div></div>
                     </div>
                 `;
             } else {
-                const tD = t.evaDurante || 0;
-                const t24 = t.eva24h || 0;
-                const tRig = t.rigidez ? 'checked' : '';
-                
+                const tD = t.evaDurante || 0; const t24 = t.eva24h || 0; const tRig = t.rigidez ? 'checked' : '';
                 wizHTML = `
                     <div id="wiz-${bIdx}" class="wizard-card" style="display:none;">
-                        <div class="wizard-title">
-                            <span>SELECCIONE EL ESCENARIO CLÍNICO:</span>
-                        </div>
+                        <div class="wizard-title"><span>SELECCIONE EL ESCENARIO CLÍNICO:</span></div>
                         <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 1: Movilidad')"> Fase reactiva, dolor agudo al movimiento o carga baja.</label>
-                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 2: Fuerza Específica')"> Dolor controlado en isometría, debilidad en la estructura aislada.</label>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 2: Fuerza Específica')"> Dolor controlado en isometría, debilidad en estructura aislada.</label>
                         <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 3: Fuerza General')"> Fuerza aislada OK, dolor al integrar en movimientos pesados.</label>
-                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 4: Potencia')"> Tolerancia a fuerza pesada OK, dolor al realizar CEA (pliometría).</label>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 4: Potencia')"> Tolerancia a fuerza pesada OK, iniciar pliometría/CEA.</label>
                     </div>
                 `;
-
                 diagHTML = `
                     <div class="diagnostic-section" style="border-left-color: var(--yellow);">
                         <h3 style="color: var(--yellow);">DIAGNÓSTICO TENDINOSO</h3>
@@ -652,48 +664,27 @@
                             <option value="Fase 3: Fuerza General" ${t.stage==='Fase 3: Fuerza General'?'selected':''}>Fase 3: Fuerza General</option>
                             <option value="Fase 4: Potencia" ${t.stage==='Fase 4: Potencia'?'selected':''}>Fase 4: Potencia / Pliometría</option>
                         </select>
-                        
                         <div style="display:flex; justify-content:space-between; margin-top:15px; font-weight:bold; font-size:0.9rem; text-transform:uppercase; color:var(--text-muted); font-family:'Share Tech Mono';">
-                            <span>Dolor durante el ejercicio (40%)</span>
-                            <span class="val-durante" style="font-size:1.5rem; color:var(--green);">${tD}</span>
+                            <span>Dolor intra-sesión (40%)</span><span class="val-durante" style="font-size:1.5rem; color:var(--green);">${tD}</span>
                         </div>
                         <div class="desc-durante" style="text-align:right; font-size:0.8rem; color:var(--text-muted); margin-bottom:5px; font-style:italic;">Sin dolor alguno</div>
                         <input type="range" class="t-durante tendon-slider" min="0" max="10" value="${tD}" step="1" oninput="autoSave()">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #555; margin-top: 5px;">
-                            <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
-                        </div>
-
                         <div style="display:flex; justify-content:space-between; margin-top:20px; font-weight:bold; font-size:0.9rem; text-transform:uppercase; color:var(--text-muted); font-family:'Share Tech Mono';">
-                            <span>A las 24 H, sobre su basal (60%)</span>
-                            <span class="val-24h" style="font-size:1.5rem; color:var(--green);">+${t24}</span>
+                            <span>A las 24 H, sobre basal (60%)</span><span class="val-24h" style="font-size:1.5rem; color:var(--green);">+${t24}</span>
                         </div>
                         <div class="desc-24h" style="text-align:right; font-size:0.8rem; color:var(--text-muted); margin-bottom:5px; font-style:italic;">Sin aumento de dolor</div>
                         <input type="range" class="t-24h tendon-slider" min="0" max="10" value="${t24}" step="1" oninput="autoSave()">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #555; margin-top: 5px;">
-                            <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
-                        </div>
-
                         <label class="tendon-check-group" style="display:flex; align-items:center; background:rgba(0,0,0,0.4); padding:10px; border:1px solid var(--border-color); border-radius:4px; margin-top:20px; cursor:pointer; transition:all 0.3s;">
                             <input type="checkbox" class="t-rigidez" ${tRig} onchange="autoSave()" style="width:20px; height:20px; accent-color:var(--neon-red); margin-right:15px;">
                             <span style="font-family:'Rajdhani'; font-size:1rem; color:var(--text-main); text-transform:none;">Rigidez matutina claramente aumentada</span>
                         </label>
-
                         <div class="tendon-result" style="background:rgba(0,0,0,0.6); border:1px solid var(--border-color); border-left:6px solid gray; padding:15px; margin-top:20px; border-radius:4px; transition:all 0.3s;">
                             <div style="display:flex; align-items:center; font-size:1.1rem; font-weight:bold; margin-bottom:10px; font-family:'Share Tech Mono'; text-transform:uppercase;">
-                                <div class="status-dot" style="width:20px; height:20px; border-radius:50%; background:gray; margin-right:10px;"></div>
-                                <span class="result-heading">Esperando datos...</span>
+                                <div class="status-dot" style="width:20px; height:20px; border-radius:50%; background:gray; margin-right:10px;"></div><span class="result-heading">Esperando datos...</span>
                             </div>
                             <div class="result-desc" style="font-size:0.95rem; color:#d0d0d0; margin-bottom:15px; line-height:1.5;">Ajuste los valores superiores para obtener recomendación.</div>
                             <div class="action-text" style="font-weight:bold; font-size:0.95rem; color:#fff; letter-spacing:0.5px;"></div>
-                            <div class="rigidez-extra" style="margin-top:10px; font-size:0.8rem; color:var(--neon-red); font-weight:bold; border-top:1px solid rgba(255,23,68,0.3); padding-top:10px; display:none; letter-spacing:0.5px;">RIGIDEZ MATUTINA → UN MOTIVO MÁS PARA NO PROGRESAR</div>
-                        </div>
-
-                        <div class="warning-card" style="background:rgba(128,0,32,0.15); border:1px solid var(--burgundy); padding:15px; border-radius:4px; margin-top:20px; display:none;">
-                            <div style="display:flex; align-items:center; color:var(--neon-red); font-weight:bold; font-family:'Share Tech Mono'; margin-bottom:10px;">
-                                <span style="border:2px solid var(--neon-red); border-radius:50%; width:20px; height:20px; display:flex; justify-content:center; align-items:center; margin-right:10px;">!</span>
-                                REVISA LOS EJERCICIOS
-                            </div>
-                            <div style="font-size:0.85rem; color:#e0e0e0; line-height:1.5;">Le está molestando en exceso a su paciente. Un 8-10 durante la sesión no es normal, aunque a las 24 h responda bien: revisa la selección del ejercicio, el rango, la velocidad y la posición (¿hay compresión del tendón?) antes de tocar los kilos. Objetivo: que el dolor durante el ejercicio baje a 5 o menos.</div>
+                            <div class="rigidez-extra" style="margin-top:10px; font-size:0.8rem; color:var(--neon-red); font-weight:bold; border-top:1px solid rgba(255,23,68,0.3); padding-top:10px; display:none;">RIGIDEZ MATUTINA → NO PROGRESAR</div>
                         </div>
                     </div>
                 `;
@@ -705,7 +696,7 @@
                         <div class="block-title">PROTOCOLO: ${block.type === 'lumbar' ? 'LUMBAR' : 'TENDINOSO'}</div>
                         <div>
                             <button class="btn" style="border:none; color:var(--text-muted); font-size:0.8rem;" onclick="toggleWizard(${bIdx})">[?] ASISTENTE</button>
-                            <button class="btn" style="border:none; color:var(--neon-red); font-size:0.8rem;" onclick="removeBlock(${bIdx})">[X] ELIMINAR</button>
+                            <button class="btn" style="border:none; color:var(--neon-red); font-size:0.8rem;" onclick="removeBlock(${bIdx})">[X] BORRAR</button>
                         </div>
                     </div>
                     ${wizHTML}
@@ -718,30 +709,18 @@
 
         document.querySelectorAll('.block-card').forEach((bCard, bIdx) => {
             const block = day.blocks[bIdx];
-            if(block.type === 'lumbar') {
-                evaluateLumbar(block.tracker, bCard);
-            } else {
-                evaluateTendonAdvanced(block.tracker, bCard);
-            }
+            if(block.type === 'lumbar') evaluateLumbar(block.tracker, bCard);
+            else evaluateTendonAdvanced(block.tracker, bCard);
         });
     }
 
     function autoSaveDayName() {
         if(cClientIndex === null || !db.clients[cClientIndex].weeks[cWeek][cDayIndex]) return;
-        const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
-        day.name = document.getElementById('day-name-input').value;
-        
+        db.clients[cClientIndex].weeks[cWeek][cDayIndex].name = document.getElementById('day-name-input').value;
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v9_db', JSON.stringify(db));
-            triggerSaveIndicator();
-            const dTabs = document.getElementById('day-tabs');
-            const days = db.clients[cClientIndex].weeks[cWeek];
-            dTabs.innerHTML = '';
-            days.forEach((d, idx) => {
-                dTabs.innerHTML += `<div class="tab-pill ${cDayIndex === idx ? 'active' : ''}" onclick="selectDay(${idx})">${d.name || 'DÍA '+(idx+1)}</div>`;
-            });
-            dTabs.innerHTML += `<div class="tab-pill" style="border-style:dashed; color:var(--text-muted); border-color:var(--border-light);" onclick="addDay()">+ DÍA</div>`;
+            localStorage.setItem('prime_v10_db', JSON.stringify(db));
+            triggerSaveIndicator(); renderTabs();
         }, 800); 
     }
 
@@ -750,22 +729,12 @@
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
 
         document.querySelectorAll('.block-card').forEach((bCard) => {
-            const bIdx = bCard.getAttribute('data-bidx');
-            const block = day.blocks[bIdx];
-
+            const bIdx = bCard.getAttribute('data-bidx'); const block = day.blocks[bIdx];
             const exCards = bCard.querySelectorAll('.ex-card');
             block.exercises = Array.from(exCards).map(exCard => {
                 const setRows = exCard.querySelectorAll('.set-row');
-                const sets = Array.from(setRows).map(row => ({
-                    kg: row.querySelector('.dom-kg').value,
-                    reps: row.querySelector('.dom-reps').value,
-                    done: row.querySelector('.dom-done').checked
-                }));
-                return {
-                    name: exCard.querySelector('.dom-name').value,
-                    rpe: exCard.querySelector('.dom-rpe').value,
-                    sets: sets
-                };
+                const sets = Array.from(setRows).map(row => ({ kg: row.querySelector('.dom-kg').value, reps: row.querySelector('.dom-reps').value, done: row.querySelector('.dom-done').checked }));
+                return { name: exCard.querySelector('.dom-name').value, rpe: exCard.querySelector('.dom-rpe').value, sets: sets };
             });
 
             if (block.type === 'lumbar') {
@@ -786,8 +755,9 @@
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v9_db', JSON.stringify(db));
+            localStorage.setItem('prime_v10_db', JSON.stringify(db));
             triggerSaveIndicator();
+            document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
         }, 500);
     }
 
@@ -796,118 +766,64 @@
         let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
 
         if (t.nature === 'Radicular' || t.direction === 'Periferaliza' || t.eva > 5 || post24val > 5) {
-            color = 'var(--neon-red)'; status = 'ALERTA CRÍTICA';
-            msg = 'Compromiso radicular o empeoramiento post-sesión. Detener patrón. Reducir carga drásticamente.';
+            color = 'var(--neon-red)'; status = 'ALERTA CRÍTICA'; msg = 'Compromiso radicular o empeoramiento post-sesión. Detener patrón. Reducir carga.';
         } else if ((t.eva >= 4 && t.eva <= 5) || (post24val >= 4 && post24val <= 5)) {
-            color = 'var(--yellow)'; status = 'ADVERTENCIA';
-            msg = 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
+            color = 'var(--yellow)'; status = 'ADVERTENCIA'; msg = 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
         } else {
-            color = 'var(--green)'; status = 'ÓPTIMO';
-            msg = 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
+            color = 'var(--green)'; status = 'ÓPTIMO'; msg = 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
         }
         
-        const box = bCard.querySelector('.s-box');
-        box.style.borderColor = color;
-        const light = bCard.querySelector('.s-light');
-        light.style.backgroundColor = color;
-        light.style.boxShadow = `0 0 15px ${color}`;
-        const txt = bCard.querySelector('.s-text');
-        txt.innerText = status; txt.style.color = color;
+        const box = bCard.querySelector('.s-box'); box.style.borderColor = color;
+        const light = bCard.querySelector('.s-light'); light.style.backgroundColor = color; light.style.boxShadow = `0 0 15px ${color}`;
+        const txt = bCard.querySelector('.s-text'); txt.innerText = status; txt.style.color = color;
         bCard.querySelector('.s-msg').innerText = msg;
     }
 
     function evaluateTendonAdvanced(t, bCard) {
-        const durante = t.evaDurante;
-        const despues = t.eva24h;
-        const rigidez = t.rigidez;
-
-        const sliderD = bCard.querySelector('.t-durante');
-        const valD = bCard.querySelector('.val-durante');
-        const descD = bCard.querySelector('.desc-durante');
+        const durante = t.evaDurante; const despues = t.eva24h; const rigidez = t.rigidez;
+        const sliderD = bCard.querySelector('.t-durante'); const valD = bCard.querySelector('.val-durante'); const descD = bCard.querySelector('.desc-durante');
         const colorD = obtenerColorInterpolado(durante);
         valD.textContent = durante; valD.style.color = colorD; valD.style.textShadow = `0 0 8px ${colorD}`;
         sliderD.style.background = `linear-gradient(to right, ${colorD} ${(durante/10)*100}%, var(--border-color) ${(durante/10)*100}%)`;
-        sliderD.style.setProperty('--thumb-color', colorD);
-        descD.textContent = textosDolor[durante];
+        sliderD.style.setProperty('--thumb-color', colorD); descD.textContent = textosDolor[durante];
 
-        const slider24 = bCard.querySelector('.t-24h');
-        const val24 = bCard.querySelector('.val-24h');
-        const desc24 = bCard.querySelector('.desc-24h');
+        const slider24 = bCard.querySelector('.t-24h'); const val24 = bCard.querySelector('.val-24h'); const desc24 = bCard.querySelector('.desc-24h');
         const color24 = obtenerColorInterpolado(despues);
         val24.textContent = "+" + despues; val24.style.color = color24; val24.style.textShadow = `0 0 8px ${color24}`;
         slider24.style.background = `linear-gradient(to right, ${color24} ${(despues/10)*100}%, var(--border-color) ${(despues/10)*100}%)`;
-        slider24.style.setProperty('--thumb-color', color24);
-        desc24.textContent = despues === 0 ? "Sin aumento de dolor" : textosDolor[despues];
+        slider24.style.setProperty('--thumb-color', color24); desc24.textContent = despues === 0 ? "Sin aumento de dolor" : textosDolor[despues];
 
         let estadoClave = ""; 
         if (durante <= 2) {
-            if (despues <= 1) estadoClave = "VERDE_CORTO";
-            else if (despues === 2) estadoClave = "VERDE_OPTIMO";
-            else if (despues === 3) estadoClave = "VERDE_ALTO";
-            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
-            else if (despues <= 7) estadoClave = "ROJO";
-            else estadoClave = "ROJO_ALTO";
+            if (despues <= 1) estadoClave = "VERDE_CORTO"; else if (despues === 2) estadoClave = "VERDE_OPTIMO"; else if (despues === 3) estadoClave = "VERDE_ALTO";
+            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA"; else if (despues <= 7) estadoClave = "ROJO"; else estadoClave = "ROJO_ALTO";
         } else if (durante <= 4) {
-            if (despues <= 2) estadoClave = "VERDE_OPTIMO";
-            else if (despues === 3) estadoClave = "VERDE_ALTO";
-            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
-            else if (despues <= 7) estadoClave = "ROJO";
-            else estadoClave = "ROJO_ALTO";
+            if (despues <= 2) estadoClave = "VERDE_OPTIMO"; else if (despues === 3) estadoClave = "VERDE_ALTO"; else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
+            else if (despues <= 7) estadoClave = "ROJO"; else estadoClave = "ROJO_ALTO";
         } else if (durante === 5) {
-            if (despues <= 3) estadoClave = "VERDE_ALTO";
-            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
-            else if (despues <= 7) estadoClave = "ROJO";
+            if (despues <= 3) estadoClave = "VERDE_ALTO"; else if (despues <= 5) estadoClave = "AMARILLO_FACTURA"; else if (despues <= 7) estadoClave = "ROJO";
             else estadoClave = "ROJO_ALTO";
         } else if (durante <= 7) { 
-            if (despues <= 3) estadoClave = "AMARILLO_MOLESTA";
-            else if (despues <= 5) estadoClave = "AMARILLO_ALTO";
-            else if (despues <= 7) estadoClave = "ROJO";
+            if (despues <= 3) estadoClave = "AMARILLO_MOLESTA"; else if (despues <= 5) estadoClave = "AMARILLO_ALTO"; else if (despues <= 7) estadoClave = "ROJO";
             else estadoClave = "ROJO_ALTO";
         } else {
-            if (despues <= 3) estadoClave = "AMARILLO_MOLESTA";
-            else if (despues <= 5) estadoClave = "AMARILLO_ALTO";
-            else estadoClave = "ROJO_MAXIMO";
+            if (despues <= 3) estadoClave = "AMARILLO_MOLESTA"; else if (despues <= 5) estadoClave = "AMARILLO_ALTO"; else estadoClave = "ROJO_MAXIMO";
         }
 
-        const rigidezExtra = bCard.querySelector('.rigidez-extra');
-        const checkGroup = bCard.querySelector('.tendon-check-group');
-        
+        const rigidezExtra = bCard.querySelector('.rigidez-extra'); const checkGroup = bCard.querySelector('.tendon-check-group');
         if (rigidez) {
-            checkGroup.classList.add('active');
-            checkGroup.style.borderColor = 'var(--neon-red)';
-            checkGroup.style.background = 'rgba(255, 23, 68, 0.1)';
-            if (estadoClave.startsWith("VERDE")) {
-                estadoClave = "AMARILLO_RIGIDEZ";
-                rigidezExtra.style.display = "none";
-            } else {
-                rigidezExtra.style.display = "block";
-            }
+            checkGroup.classList.add('active'); checkGroup.style.borderColor = 'var(--neon-red)'; checkGroup.style.background = 'rgba(255, 23, 68, 0.1)';
+            if (estadoClave.startsWith("VERDE")) { estadoClave = "AMARILLO_RIGIDEZ"; rigidezExtra.style.display = "none"; } else { rigidezExtra.style.display = "block"; }
         } else {
-            checkGroup.classList.remove('active');
-            checkGroup.style.borderColor = 'var(--border-color)';
-            checkGroup.style.background = 'rgba(0,0,0,0.4)';
+            checkGroup.classList.remove('active'); checkGroup.style.borderColor = 'var(--border-color)'; checkGroup.style.background = 'rgba(0,0,0,0.4)';
             rigidezExtra.style.display = "none";
         }
 
-        const datos = dataEstados[estadoClave];
-        const resCard = bCard.querySelector('.tendon-result');
-        resCard.style.borderLeftColor = datos.color;
-        resCard.style.boxShadow = `0 5px 15px rgba(0,0,0,0.5), inset 4px 0 0 ${datos.color}22`;
-        
-        const dot = bCard.querySelector('.status-dot');
-        dot.style.backgroundColor = datos.color;
-        dot.style.boxShadow = `0 0 12px ${datos.color}`;
-        
-        const head = bCard.querySelector('.result-heading');
-        head.textContent = datos.title;
-        head.style.color = datos.color;
-        
-        bCard.querySelector('.result-desc').textContent = datos.desc;
-        bCard.querySelector('.action-text').textContent = datos.action;
-
-        const warn = bCard.querySelector('.warning-card');
-        if (durante >= 8) warn.style.display = "block";
-        else warn.style.display = "none";
+        const datos = dataEstados[estadoClave]; const resCard = bCard.querySelector('.tendon-result');
+        resCard.style.borderLeftColor = datos.color; resCard.style.boxShadow = `0 5px 15px rgba(0,0,0,0.5), inset 4px 0 0 ${datos.color}22`;
+        const dot = bCard.querySelector('.status-dot'); dot.style.backgroundColor = datos.color; dot.style.boxShadow = `0 0 12px ${datos.color}`;
+        const head = bCard.querySelector('.result-heading'); head.textContent = datos.title; head.style.color = datos.color;
+        bCard.querySelector('.result-desc').textContent = datos.desc; bCard.querySelector('.action-text').textContent = datos.action;
     }
 </script>
 </body>
