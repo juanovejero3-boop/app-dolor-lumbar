@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v10 - CLINICAL PATHWAYS</title>
+    <title>PRIME PHYSIQUE v10.1 - CLINICAL PATHWAYS (FIXED)</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -107,16 +107,9 @@
 
         /* PERFIL CLÍNICO GLOBAL */
         .client-profile-bar {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--border-light);
-            border-top: 2px solid var(--neon-red);
-            padding: 15px;
-            margin-bottom: 25px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-light);
+            border-top: 2px solid var(--neon-red); padding: 15px; margin-bottom: 25px;
+            border-radius: 4px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
         }
         .profile-item { display: flex; flex-direction: column; gap: 5px; }
         .profile-label { font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
@@ -375,10 +368,7 @@
         const stored = localStorage.getItem('prime_v10_db');
         if (stored) {
             db = JSON.parse(stored);
-            // Migración para perfil global
-            db.clients.forEach(c => {
-                if(!c.profile) c.profile = { protocol: 'none', phase: 'none' };
-            });
+            db.clients.forEach(c => { if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; });
         }
         renderDashboard();
     };
@@ -394,8 +384,7 @@
     }
 
     function renderDashboard() {
-        const list = document.getElementById('clients-list');
-        list.innerHTML = '';
+        const list = document.getElementById('clients-list'); list.innerHTML = '';
         if(db.clients.length === 0) {
             list.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-family:\'Share Tech Mono\';">SISTEMA VACÍO.</p>'; return;
         }
@@ -417,8 +406,7 @@
     function openTracker(clientIdx) {
         cClientIndex = clientIdx; cWeek = 1; cDayIndex = 0;
         document.getElementById('tracker-client-name').innerText = db.clients[cClientIndex].name;
-        updateProfileUI();
-        renderTabs(); showView('view-tracker');
+        updateProfileUI(); renderTabs(); showView('view-tracker');
     }
 
     /* LOGICA DE PERFIL Y PROGRESIÓN */
@@ -505,50 +493,68 @@
     function selectWeek(w) { cWeek = w; cDayIndex = 0; renderTabs(); }
     function selectDay(d) { cDayIndex = d; renderTabs(); }
 
+    /* CORE FIX: The AutoSave was scraping the old DOM before inserting the new items. 
+       Now we AutoSave() first, then push to DB, then render, then manually setItem. */
+
     function addDay() {
         if(cClientIndex === null) return;
+        autoSave();
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        autoSave(); renderTabs();
+        localStorage.setItem('prime_v10_db', JSON.stringify(db));
+        renderTabs();
     }
 
     function deleteCurrentDay() {
         if(confirm("¿Purgar el día actual?")) {
+            autoSave();
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
-            cDayIndex = 0; autoSave(); renderTabs();
+            cDayIndex = 0;
+            localStorage.setItem('prime_v10_db', JSON.stringify(db));
+            renderTabs();
         }
     }
 
     function addBlock(type) {
+        autoSave();
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
         let newBlock = { id: Date.now(), type: type, exercises: [ { name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] } ], tracker: {} };
         if (type === 'lumbar') newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
         else newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
         day.blocks.push(newBlock);
-        autoSave(); renderDayContent();
+        renderDayContent();
+        localStorage.setItem('prime_v10_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
+            autoSave(); 
             db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
-            autoSave(); renderDayContent();
+            renderDayContent(); 
+            localStorage.setItem('prime_v10_db', JSON.stringify(db));
         }
     }
 
     function addExercise(bIdx) {
+        autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        autoSave(); renderDayContent(); 
+        renderDayContent(); 
+        localStorage.setItem('prime_v10_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
+        autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
-        autoSave(); renderDayContent();
+        renderDayContent(); 
+        localStorage.setItem('prime_v10_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
+        autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        autoSave(); renderDayContent();
+        renderDayContent(); 
+        localStorage.setItem('prime_v10_db', JSON.stringify(db));
     }
 
     function toggleWizard(bIdx) {
