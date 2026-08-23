@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v7.1 - MULTI-BLOCK PROTOCOL</title>
+    <title>PRIME PHYSIQUE v8 - ADVANCED MULTI-BLOCK</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Prime Physique Cyberpunk Palette */
             --bg-main: #050505;
             --bg-card: #121216;
             --bg-input: #0a0a0c;
@@ -217,6 +218,7 @@
         .set-input:focus { border-color: var(--neon-red); }
         .set-checkbox { width: 22px; height: 22px; accent-color: var(--neon-red); cursor: pointer; }
 
+        /* Estilos generales del Semáforo Lumbar */
         .diagnostic-section {
             background-color: rgba(0,0,0,0.5); border: 1px solid var(--border-light);
             padding: 20px; margin-top: 25px; border-left: 3px solid var(--neon-red);
@@ -227,12 +229,12 @@
         }
         
         label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.9rem; color: #fff; font-family: 'Share Tech Mono', monospace; }
-        select, input[type="range"] {
+        select, input[type="range"].regular-slider {
             width: 100%; padding: 10px; background-color: var(--bg-input); color: white;
             border: 1px solid var(--border-color); font-family: 'Rajdhani', sans-serif; font-size: 1rem;
             box-sizing: border-box; outline: none;
         }
-        input[type="range"] { accent-color: var(--neon-red); }
+        input[type="range"].regular-slider { accent-color: var(--neon-red); }
         .radio-group { 
             display: flex; flex-direction: column; gap: 8px; background-color: var(--bg-input); 
             padding: 12px; border: 1px solid var(--border-color); 
@@ -263,6 +265,37 @@
         
         .block-actions {
             display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;
+        }
+
+        /* ----- ESTILOS ESPECÍFICOS SEMÁFORO TENDINOSO AVANZADO ----- */
+        input[type=range].tendon-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        input[type=range].tendon-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: var(--thumb-color, var(--green));
+            cursor: pointer;
+            margin-top: -9px;
+            box-shadow: 0 0 12px var(--thumb-color, rgba(0, 255, 102, 0.5));
+            border: 2px solid var(--bg-main);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        input[type=range].tendon-slider::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: transparent;
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -314,8 +347,46 @@
     let saveTimeout = null;
     let titleSaveTimeout = null;
 
+    // Constantes de Lógica Tendinosa
+    const textosDolor = [
+        "Sin dolor alguno", "Molestia muy leve, apenas se siente", "Molestia leve, fácil de ignorar",
+        "Dolor suave, presente pero no interfiere", "Dolor moderado, se nota constantemente",
+        "Dolor límite, molesto pero tolerable", "Dolor fuerte, empieza a dificultar el movimiento",
+        "Dolor muy fuerte, interfiere claramente", "Dolor intenso, muy difícil continuar",
+        "Dolor severo, impide la actividad", "El peor dolor imaginable, insoportable"
+    ];
+
+    const dataEstados = {
+        VERDE_CORTO: { title: "VERDE - VAS CORTO DE CARGA", color: "var(--green)", desc: "Casi no le molesta al hacerlo y a las 24 h está igual que siempre. El estímulo se le queda corto: así el tendón no tiene motivo para adaptarse.", action: "→ SUBE CARGA CON DECISIÓN: PUEDES SALTAR MÁS DE UN ESCALÓN" },
+        VERDE_OPTIMO: { title: "VERDE ÓPTIMO", color: "var(--green)", desc: "Molestia tolerable mientras trabaja y a las 24 h el tendón la ha dejado ir. Esta es la ventana donde se gana adaptación.", action: "→ PROGRESA UN ESCALÓN" },
+        VERDE_ALTO: { title: "VERDE ALTO", color: "var(--green)", desc: "Sigue dentro de la ventana, pero en su parte alta: queda poco margen antes del amarillo.", action: "→ CONSOLIDA UNA SEMANA; SI SE MANTIENE, PROGRESA UN ESCALÓN" },
+        AMARILLO_RIGIDEZ: { title: "AMARILLO - RIGIDEZ MATUTINA", color: "var(--yellow)", desc: "Los números acompañan, pero la rigidez matutina ha subido: suele ser el primer aviso de que el tendón va sobrecargado, antes incluso de que suba el dolor.", action: "→ NO PROGRESES HASTA QUE LA RIGIDEZ VUELVA A SU BASAL" },
+        AMARILLO_MOLESTA: { title: "AMARILLO - LE MOLESTA AL HACERLO", color: "var(--yellow)", desc: "Durante el ejercicio le molesta bastante, pero a las 24 h el tendón no le pasa factura. La dosis aguanta; lo que chirría es el ejercicio o cómo lo ejecuta.", action: "→ MANTÉN LA CARGA Y AJUSTA RANGO O VELOCIDAD, NO LOS KILOS" },
+        AMARILLO_FACTURA: { title: "AMARILLO - LE PASA FACTURA", color: "var(--yellow)", desc: "Trabajando va bien, pero al día siguiente el tendón se queja más de lo habitual. Has llegado al techo de lo que hoy asimila.", action: "→ REPITE LA MISMA CARGA; SI VUELVE A SUBIR A LAS 24 H, BAJA UN ESCALÓN" },
+        AMARILLO_ALTO: { title: "AMARILLO ALTO", color: "var(--yellow)", desc: "Le molesta al hacerlo y además le pasa factura a las 24 h: las dos señales en el borde. Estás pegado al rojo.", action: "→ NO PROGRESES: REPITE CON MENOS VOLUMEN Y VUELVE A MEDIR" },
+        ROJO: { title: "ROJO", color: "var(--neon-red)", desc: "A las 24 h el tendón ha respondido claramente por encima de su basal: se ha pasado de la ventana de carga.", action: "→ BAJA UN ESCALÓN (UNA SOLA VARIABLE) Y VUELVE A MEDIR A LAS 24 H" },
+        ROJO_ALTO: { title: "ROJO ALTO - TENDÓN IRRITADO", color: "var(--neon-red)", desc: "No es un exceso puntual. Con esta respuesta a las 24 h el tendón está irritado, y a estos niveles no se dosifica hacia abajo: se descarga.", action: "→ RETIRA EL EJERCICIO 2-3 DÍAS, ISOMÉTRICOS A TOLERANCIA Y REENTRA DOS ESCALONES POR DEBAJO" },
+        ROJO_MAXIMO: { title: "ROJO MÁXIMO - REPLANTEA", color: "var(--neon-red)", desc: "Le duele mucho mientras lo hace y encima le pasa factura al día siguiente. Con este cuadro no toca ajustar la carga: toca cambiar el ejercicio y revisar en qué fase está de verdad.", action: "→ PARA ESE EJERCICIO Y REEVALÚA ANTES DE SEGUIR DOSIFICANDO" }
+    };
+
+    function obtenerColorInterpolado(val) {
+        let r, g, b;
+        if (val <= 5) {
+            const factor = val / 5;
+            r = Math.round(0 + factor * (255 - 0));
+            g = Math.round(255 + factor * (204 - 255));
+            b = Math.round(102 + factor * (0 - 102));
+        } else {
+            const factor = (val - 5) / 5;
+            r = 255;
+            g = Math.round(204 + factor * (0 - 204));
+            b = Math.round(0 + factor * (60 - 0));
+        }
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v7_db');
+        const stored = localStorage.getItem('prime_v8_db');
         if (stored) db = JSON.parse(stored);
         renderDashboard();
     };
@@ -355,7 +426,7 @@
             let weeks = {};
             for(let i=1; i<=12; i++) weeks[i] = [];
             db.clients.push({ name, weeks });
-            localStorage.setItem('prime_v7_db', JSON.stringify(db));
+            localStorage.setItem('prime_v8_db', JSON.stringify(db));
             renderDashboard();
         }
     }
@@ -404,7 +475,7 @@
         };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v7_db', JSON.stringify(db));
+        localStorage.setItem('prime_v8_db', JSON.stringify(db));
         renderTabs();
     }
 
@@ -412,7 +483,7 @@
         if(confirm("¿Purgar el día actual?")) {
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
             cDayIndex = 0;
-            localStorage.setItem('prime_v7_db', JSON.stringify(db));
+            localStorage.setItem('prime_v8_db', JSON.stringify(db));
             renderTabs();
         }
     }
@@ -429,7 +500,7 @@
         if (type === 'lumbar') {
             newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
         } else {
-            newBlock.tracker = { stage: 'Isométrica / Analgesia', eva: 0, nature: 'Tolerable', post24: 0 };
+            newBlock.tracker = { evaDurante: 0, eva24h: 0, rigidez: false };
         }
 
         day.blocks.push(newBlock);
@@ -514,11 +585,12 @@
                 `;
             });
 
+            // Diagnostic Section Output
             let diagHTML = '';
             const t = block.tracker;
-            let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
             
             if (block.type === 'lumbar') {
+                let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
                 diagHTML = `
                     <div class="diagnostic-section">
                         <h3>DIAGNÓSTICO LUMBAR</h3>
@@ -530,7 +602,7 @@
                         </select>
 
                         <label>ESCALA EVA (INTRA-SESIÓN): <span class="eva-val-display" style="color:var(--neon-red);">${t.eva}</span>/10</label>
-                        <input type="range" class="l-eva" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
+                        <input type="range" class="l-eva regular-slider" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
 
                         <label>SÍNTOMA DOMINANTE:</label>
                         <div class="radio-group">
@@ -545,7 +617,7 @@
                         </div>
 
                         <label>DOLOR POST 24H (EVA): <span class="eva24-val-display" style="color:var(--neon-red);">${post24val}</span>/10</label>
-                        <input type="range" class="l-24" min="0" max="10" value="${post24val}" oninput="this.previousElementSibling.querySelector('.eva24-val-display').innerText=this.value; autoSave()">
+                        <input type="range" class="l-24 regular-slider" min="0" max="10" value="${post24val}" oninput="this.previousElementSibling.querySelector('.eva24-val-display').innerText=this.value; autoSave()">
 
                         <div class="semaforo-result s-box">
                             <div class="light s-light"></div>
@@ -557,34 +629,56 @@
                     </div>
                 `;
             } else {
+                // TENDON ADVANCED HUD
+                const tD = t.evaDurante || 0;
+                const t24 = t.eva24h || 0;
+                const tRig = t.rigidez ? 'checked' : '';
+
                 diagHTML = `
                     <div class="diagnostic-section" style="border-left-color: var(--yellow);">
-                        <h3 style="color: var(--yellow);">DIAGNÓSTICO TENDINOSO</h3>
-                        <label>FASE DE CARGA:</label>
-                        <select class="t-stage" onchange="autoSave()">
-                            <option value="Isométrica / Analgesia" ${t.stage==='Isométrica / Analgesia'?'selected':''}>Fase 1: Isométrica / Analgesia</option>
-                            <option value="Isotónica Pesada" ${t.stage==='Isotónica Pesada'?'selected':''}>Fase 2: Isotónica Pesada Lenta</option>
-                            <option value="Almacenamiento de Energía" ${t.stage==='Almacenamiento de Energía'?'selected':''}>Fase 3: Almacenamiento de Energía</option>
-                        </select>
-
-                        <label>DOLOR INTRA-SESIÓN (EVA): <span class="eva-val-display" style="color:var(--yellow);">${t.eva}</span>/10</label>
-                        <input type="range" class="t-eva" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
-
-                        <label>COMPORTAMIENTO DEL DOLOR:</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="t-nature-${bIdx}" value="Tolerable" ${t.nature==='Tolerable'?'checked':''} onchange="autoSave()"> Carga tolerada (Molestia sorda)</label>
-                            <label><input type="radio" name="t-nature-${bIdx}" value="Agudo" ${t.nature==='Agudo'?'checked':''} onchange="autoSave()"> Dolor agudo / Punzante articular</label>
+                        <h3 style="color: var(--yellow);">SEMÁFORO DEL DOLOR TENDINOSO</h3>
+                        
+                        <div style="display:flex; justify-content:space-between; margin-top:15px; font-weight:bold; font-size:0.9rem; text-transform:uppercase; color:var(--text-muted); font-family:'Share Tech Mono';">
+                            <span>Dolor durante el ejercicio (40%)</span>
+                            <span class="val-durante" style="font-size:1.5rem; color:var(--green);">${tD}</span>
+                        </div>
+                        <div class="desc-durante" style="text-align:right; font-size:0.8rem; color:var(--text-muted); margin-bottom:5px; font-style:italic;">Sin dolor alguno</div>
+                        <input type="range" class="t-durante tendon-slider" min="0" max="10" value="${tD}" step="1" oninput="autoSave()">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #555; margin-top: 5px;">
+                            <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
                         </div>
 
-                        <label>DOLOR POST 24H (EVA): <span class="eva24-val-display" style="color:var(--yellow);">${post24val}</span>/10</label>
-                        <input type="range" class="t-24" min="0" max="10" value="${post24val}" oninput="this.previousElementSibling.querySelector('.eva24-val-display').innerText=this.value; autoSave()">
+                        <div style="display:flex; justify-content:space-between; margin-top:20px; font-weight:bold; font-size:0.9rem; text-transform:uppercase; color:var(--text-muted); font-family:'Share Tech Mono';">
+                            <span>A las 24 H, sobre su basal (60%)</span>
+                            <span class="val-24h" style="font-size:1.5rem; color:var(--green);">+${t24}</span>
+                        </div>
+                        <div class="desc-24h" style="text-align:right; font-size:0.8rem; color:var(--text-muted); margin-bottom:5px; font-style:italic;">Sin aumento de dolor</div>
+                        <input type="range" class="t-24h tendon-slider" min="0" max="10" value="${t24}" step="1" oninput="autoSave()">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #555; margin-top: 5px;">
+                            <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+                        </div>
 
-                        <div class="semaforo-result s-box">
-                            <div class="light s-light"></div>
-                            <div>
-                                <div class="status-text s-text">--</div>
-                                <div class="status-msg s-msg">--</div>
+                        <label class="tendon-check-group" style="display:flex; align-items:center; background:rgba(0,0,0,0.4); padding:10px; border:1px solid var(--border-color); border-radius:4px; margin-top:20px; cursor:pointer; transition:all 0.3s;">
+                            <input type="checkbox" class="t-rigidez" ${tRig} onchange="autoSave()" style="width:20px; height:20px; accent-color:var(--neon-red); margin-right:15px;">
+                            <span style="font-family:'Rajdhani'; font-size:1rem; color:var(--text-main); text-transform:none;">Rigidez matutina claramente aumentada</span>
+                        </label>
+
+                        <div class="tendon-result" style="background:rgba(0,0,0,0.6); border:1px solid var(--border-color); border-left:6px solid gray; padding:15px; margin-top:20px; border-radius:4px; transition:all 0.3s;">
+                            <div style="display:flex; align-items:center; font-size:1.1rem; font-weight:bold; margin-bottom:10px; font-family:'Share Tech Mono'; text-transform:uppercase;">
+                                <div class="status-dot" style="width:20px; height:20px; border-radius:50%; background:gray; margin-right:10px;"></div>
+                                <span class="result-heading">Esperando datos...</span>
                             </div>
+                            <div class="result-desc" style="font-size:0.95rem; color:#d0d0d0; margin-bottom:15px; line-height:1.5;">Ajuste los valores superiores para obtener recomendación.</div>
+                            <div class="action-text" style="font-weight:bold; font-size:0.95rem; color:#fff; letter-spacing:0.5px;"></div>
+                            <div class="rigidez-extra" style="margin-top:10px; font-size:0.8rem; color:var(--neon-red); font-weight:bold; border-top:1px solid rgba(255,23,68,0.3); padding-top:10px; display:none; letter-spacing:0.5px;">RIGIDEZ MATUTINA → UN MOTIVO MÁS PARA NO PROGRESAR</div>
+                        </div>
+
+                        <div class="warning-card" style="background:rgba(128,0,32,0.15); border:1px solid var(--burgundy); padding:15px; border-radius:4px; margin-top:20px; display:none;">
+                            <div style="display:flex; align-items:center; color:var(--neon-red); font-weight:bold; font-family:'Share Tech Mono'; margin-bottom:10px;">
+                                <span style="border:2px solid var(--neon-red); border-radius:50%; width:20px; height:20px; display:flex; justify-content:center; align-items:center; margin-right:10px;">!</span>
+                                REVISA LOS EJERCICIOS
+                            </div>
+                            <div style="font-size:0.85rem; color:#e0e0e0; line-height:1.5;">Le está molestando en exceso a su paciente. Un 8-10 durante la sesión no es normal, aunque a las 24 h responda bien: revisa la selección del ejercicio, el rango, la velocidad y la posición (¿hay compresión del tendón?) antes de tocar los kilos. Objetivo: que el dolor durante el ejercicio baje a 5 o menos.</div>
                         </div>
                     </div>
                 `;
@@ -608,7 +702,7 @@
             if(block.type === 'lumbar') {
                 evaluateLumbar(block.tracker, bCard);
             } else {
-                evaluateTendon(block.tracker, bCard);
+                evaluateTendonAdvanced(block.tracker, bCard);
             }
         });
     }
@@ -620,7 +714,7 @@
         
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v7_db', JSON.stringify(db));
+            localStorage.setItem('prime_v8_db', JSON.stringify(db));
             triggerSaveIndicator();
             const dTabs = document.getElementById('day-tabs');
             const days = db.clients[cClientIndex].weeks[cWeek];
@@ -663,17 +757,16 @@
                 block.tracker.post24 = parseInt(bCard.querySelector('.l-24').value);
                 evaluateLumbar(block.tracker, bCard);
             } else {
-                block.tracker.stage = bCard.querySelector('.t-stage').value;
-                block.tracker.eva = parseInt(bCard.querySelector('.t-eva').value);
-                block.tracker.nature = bCard.querySelector(`input[name="t-nature-${bIdx}"]:checked`).value;
-                block.tracker.post24 = parseInt(bCard.querySelector('.t-24').value);
-                evaluateTendon(block.tracker, bCard);
+                block.tracker.evaDurante = parseInt(bCard.querySelector('.t-durante').value);
+                block.tracker.eva24h = parseInt(bCard.querySelector('.t-24h').value);
+                block.tracker.rigidez = bCard.querySelector('.t-rigidez').checked;
+                evaluateTendonAdvanced(block.tracker, bCard);
             }
         });
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v7_db', JSON.stringify(db));
+            localStorage.setItem('prime_v8_db', JSON.stringify(db));
             triggerSaveIndicator();
         }, 500);
     }
@@ -692,27 +785,7 @@
             color = 'var(--green)'; status = 'ÓPTIMO';
             msg = 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
         }
-        applyLogicUI(bCard, color, status, msg);
-    }
-
-    function evaluateTendon(t, bCard) {
-        let color, status, msg;
-        let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
-
-        if (t.nature === 'Agudo' || t.eva > 5 || post24val > 5) {
-            color = 'var(--neon-red)'; status = 'SOBRECARGA AGUDA';
-            msg = 'Capacidad tendinosa excedida. Retroceder a fase isométrica o reducir volumen/intensidad.';
-        } else if ((t.eva >= 4 && t.eva <= 5) || (post24val >= 4 && post24val <= 5)) {
-            color = 'var(--yellow)'; status = 'ZONA DE ADAPTACIÓN';
-            msg = 'Respuesta esperable. Mantener parámetros actuales hasta consolidar tolerancia al estímulo.';
-        } else {
-            color = 'var(--green)'; status = 'ÓPTIMO';
-            msg = 'Estímulo asimilado correctamente con recuperación basal. Progresar carga mecánica según macrociclo.';
-        }
-        applyLogicUI(bCard, color, status, msg);
-    }
-
-    function applyLogicUI(bCard, color, status, msg) {
+        
         const box = bCard.querySelector('.s-box');
         box.style.borderColor = color;
         const light = bCard.querySelector('.s-light');
@@ -721,6 +794,102 @@
         const txt = bCard.querySelector('.s-text');
         txt.innerText = status; txt.style.color = color;
         bCard.querySelector('.s-msg').innerText = msg;
+    }
+
+    function evaluateTendonAdvanced(t, bCard) {
+        const durante = t.evaDurante;
+        const despues = t.eva24h;
+        const rigidez = t.rigidez;
+
+        // Visual Update Sliders
+        const sliderD = bCard.querySelector('.t-durante');
+        const valD = bCard.querySelector('.val-durante');
+        const descD = bCard.querySelector('.desc-durante');
+        const colorD = obtenerColorInterpolado(durante);
+        valD.textContent = durante; valD.style.color = colorD; valD.style.textShadow = `0 0 8px ${colorD}`;
+        sliderD.style.background = `linear-gradient(to right, ${colorD} ${(durante/10)*100}%, var(--border-color) ${(durante/10)*100}%)`;
+        sliderD.style.setProperty('--thumb-color', colorD);
+        descD.textContent = textosDolor[durante];
+
+        const slider24 = bCard.querySelector('.t-24h');
+        const val24 = bCard.querySelector('.val-24h');
+        const desc24 = bCard.querySelector('.desc-24h');
+        const color24 = obtenerColorInterpolado(despues);
+        val24.textContent = "+" + despues; val24.style.color = color24; val24.style.textShadow = `0 0 8px ${color24}`;
+        slider24.style.background = `linear-gradient(to right, ${color24} ${(despues/10)*100}%, var(--border-color) ${(despues/10)*100}%)`;
+        slider24.style.setProperty('--thumb-color', color24);
+        desc24.textContent = despues === 0 ? "Sin aumento de dolor" : textosDolor[despues];
+
+        // Logic
+        let estadoClave = ""; 
+        if (durante <= 2) {
+            if (despues <= 1) estadoClave = "VERDE_CORTO";
+            else if (despues === 2) estadoClave = "VERDE_OPTIMO";
+            else if (despues === 3) estadoClave = "VERDE_ALTO";
+            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
+            else if (despues <= 7) estadoClave = "ROJO";
+            else estadoClave = "ROJO_ALTO";
+        } else if (durante <= 4) {
+            if (despues <= 2) estadoClave = "VERDE_OPTIMO";
+            else if (despues === 3) estadoClave = "VERDE_ALTO";
+            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
+            else if (despues <= 7) estadoClave = "ROJO";
+            else estadoClave = "ROJO_ALTO";
+        } else if (durante === 5) {
+            if (despues <= 3) estadoClave = "VERDE_ALTO";
+            else if (despues <= 5) estadoClave = "AMARILLO_FACTURA";
+            else if (despues <= 7) estadoClave = "ROJO";
+            else estadoClave = "ROJO_ALTO";
+        } else if (durante <= 7) { 
+            if (despues <= 3) estadoClave = "AMARILLO_MOLESTA";
+            else if (despues <= 5) estadoClave = "AMARILLO_ALTO";
+            else if (despues <= 7) estadoClave = "ROJO";
+            else estadoClave = "ROJO_ALTO";
+        } else {
+            if (despues <= 3) estadoClave = "AMARILLO_MOLESTA";
+            else if (despues <= 5) estadoClave = "AMARILLO_ALTO";
+            else estadoClave = "ROJO_MAXIMO";
+        }
+
+        const rigidezExtra = bCard.querySelector('.rigidez-extra');
+        const checkGroup = bCard.querySelector('.tendon-check-group');
+        
+        if (rigidez) {
+            checkGroup.classList.add('active');
+            checkGroup.style.borderColor = 'var(--neon-red)';
+            checkGroup.style.background = 'rgba(255, 23, 68, 0.1)';
+            if (estadoClave.startsWith("VERDE")) {
+                estadoClave = "AMARILLO_RIGIDEZ";
+                rigidezExtra.style.display = "none";
+            } else {
+                rigidezExtra.style.display = "block";
+            }
+        } else {
+            checkGroup.classList.remove('active');
+            checkGroup.style.borderColor = 'var(--border-color)';
+            checkGroup.style.background = 'rgba(0,0,0,0.4)';
+            rigidezExtra.style.display = "none";
+        }
+
+        const datos = dataEstados[estadoClave];
+        const resCard = bCard.querySelector('.tendon-result');
+        resCard.style.borderLeftColor = datos.color;
+        resCard.style.boxShadow = `0 5px 15px rgba(0,0,0,0.5), inset 4px 0 0 ${datos.color}22`;
+        
+        const dot = bCard.querySelector('.status-dot');
+        dot.style.backgroundColor = datos.color;
+        dot.style.boxShadow = `0 0 12px ${datos.color}`;
+        
+        const head = bCard.querySelector('.result-heading');
+        head.textContent = datos.title;
+        head.style.color = datos.color;
+        
+        bCard.querySelector('.result-desc').textContent = datos.desc;
+        bCard.querySelector('.action-text').textContent = datos.action;
+
+        const warn = bCard.querySelector('.warning-card');
+        if (durante >= 8) warn.style.display = "block";
+        else warn.style.display = "none";
     }
 </script>
 </body>
