@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v6 - HEAVY METAL PROTOCOL</title>
-    <link href="[https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap](https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap)" rel="stylesheet">
+    <title>PRIME PHYSIQUE v7 - MULTI-BLOCK PROTOCOL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Metallic & Cyberpunk Red Palette */
+            /* Prime Physique Cyberpunk Palette */
             --bg-main: #050505;
-            --bg-card: #151518;
+            --bg-card: #121216;
             --bg-input: #0a0a0c;
-            --border-color: #2a2a30; /* Dark metallic gray */
-            --border-light: #44444c; /* Lighter metallic gray */
-            --neon-red: #ff003c;
-            --dark-red: #5a0015;
-            --metallic-light: #8a8a99;
-            --metallic-dark: #1e1e24;
-            --text-main: #e2e8f0;
-            --text-muted: #64748b;
+            --border-color: #333333; /* Dark charcoal */
+            --border-light: #555555;
+            --neon-red: #ff1744;
+            --burgundy: #800020;
+            --text-main: #c4c4c4;
+            --text-muted: #888888;
             --rpe-bg: #1a0505;
-            --rpe-text: #ff3366;
-            --neon-green: #00ff66; /* Tiny green details */
-            --yellow: #f59e0b;
+            --rpe-text: #ff1744;
+            --green: #00e676; 
+            --yellow: #ffea00;
         }
 
         body {
@@ -33,35 +31,34 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            /* Metallic Grid Background */
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255, 23, 68, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 23, 68, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
             background-position: center center;
         }
 
         .app-container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             min-height: 100vh;
-            background: linear-gradient(180deg, rgba(20, 20, 24, 0.95) 0%, rgba(5, 5, 5, 0.98) 100%);
-            border-left: 2px solid var(--border-light);
-            border-right: 2px solid var(--border-light);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 0, 60, 0.05);
+            background: linear-gradient(180deg, rgba(18, 18, 22, 0.95) 0%, rgba(5, 5, 5, 0.98) 100%);
+            border-left: 1px solid var(--burgundy);
+            border-right: 1px solid var(--burgundy);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(128, 0, 32, 0.2);
             padding-bottom: 50px;
             position: relative;
         }
 
-        /* Top Header - HUD Style */
+        /* Top Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 25px;
-            background: linear-gradient(90deg, #000, var(--metallic-dark), #000);
+            background: linear-gradient(90deg, #000, var(--bg-card), #000);
             border-bottom: 2px solid var(--neon-red);
-            box-shadow: 0 2px 15px rgba(255, 0, 60, 0.2);
+            box-shadow: 0 2px 15px rgba(255, 23, 68, 0.2);
         }
         .header h1 {
             margin: 0;
@@ -69,21 +66,21 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             font-family: 'Share Tech Mono', monospace;
-            color: var(--metallic-light);
+            color: #fff;
         }
         .header h1 span { 
             color: var(--neon-red); 
-            text-shadow: 0 0 8px rgba(255, 0, 60, 0.6);
+            text-shadow: 0 0 8px rgba(255, 23, 68, 0.6);
         }
         .tag-alumno {
-            background-color: rgba(0, 255, 102, 0.05);
-            color: var(--neon-green);
+            background-color: rgba(255, 23, 68, 0.1);
+            color: var(--neon-red);
             padding: 4px 12px;
             font-size: 0.8rem;
             font-family: 'Share Tech Mono', monospace;
-            border: 1px solid var(--neon-green);
+            border: 1px solid var(--neon-red);
             text-transform: uppercase;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 10px rgba(255, 23, 68, 0.2);
             clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
         }
 
@@ -91,9 +88,9 @@
         .view { display: none; padding: 25px; }
         .view.active { display: block; }
 
-        /* Cyberpunk Buttons */
+        /* Buttons */
         .btn {
-            background-color: var(--metallic-dark);
+            background-color: var(--bg-card);
             color: var(--text-main);
             border: 1px solid var(--border-light);
             padding: 10px 15px;
@@ -107,13 +104,13 @@
         .btn:hover { 
             border-color: var(--neon-red); 
             color: var(--neon-red);
-            background-color: rgba(255, 0, 60, 0.05);
-            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2);
+            background-color: rgba(255, 23, 68, 0.05);
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.2);
         }
         .btn-primary {
-            background: linear-gradient(45deg, var(--bg-card), var(--metallic-dark));
-            border: 1px solid var(--metallic-light);
-            color: var(--neon-red);
+            background: linear-gradient(45deg, var(--burgundy), var(--bg-card));
+            border: 1px solid var(--neon-red);
+            color: #fff;
             width: 100%;
             padding: 15px;
             font-size: 1.1rem;
@@ -122,15 +119,14 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
         }
         .btn-primary:hover { 
-            background: linear-gradient(45deg, var(--dark-red), var(--neon-red));
+            background: linear-gradient(45deg, var(--neon-red), var(--burgundy));
             border-color: var(--neon-red);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
         }
 
         /* Client Cards */
         .client-card {
-            background: linear-gradient(135deg, var(--bg-input) 0%, var(--metallic-dark) 100%);
+            background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%);
             border: 1px solid var(--border-light);
             padding: 18px;
             margin-bottom: 15px;
@@ -144,13 +140,13 @@
         .client-card:hover { 
             border-color: var(--neon-red);
             box-shadow: -5px 0 0 var(--neon-red);
-            background: linear-gradient(135deg, var(--dark-red) 0%, var(--bg-card) 100%);
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--bg-card) 100%);
         }
         .client-card span:first-child {
             font-size: 1.3rem;
             font-weight: 700;
             letter-spacing: 1px;
-            color: var(--text-main);
+            color: #fff;
         }
 
         /* Tabs (Semanas y Días) */
@@ -166,7 +162,7 @@
         .tab-pill {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
-            color: var(--metallic-light);
+            color: var(--text-muted);
             padding: 8px 20px;
             font-size: 0.9rem;
             font-weight: 700;
@@ -177,49 +173,63 @@
             transition: 0.2s;
         }
         .tab-pill.active {
-            background-color: var(--dark-red);
+            background-color: var(--burgundy);
             color: white;
             border-color: var(--neon-red);
-            box-shadow: 0 0 10px var(--dark-red);
+            box-shadow: 0 0 10px var(--burgundy);
         }
         .tab-pill:hover:not(.active) { border-color: var(--neon-red); color: var(--neon-red); }
 
-        /* Tarjeta de Ejercicio (Metal Plating Style) */
+        /* Block Card */
+        .block-card {
+            background-color: rgba(18, 18, 22, 0.8);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--burgundy);
+            margin-bottom: 30px;
+            padding: 20px;
+            position: relative;
+        }
+        .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .block-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-red);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        /* Tarjeta de Ejercicio */
         .ex-card {
             background: linear-gradient(180deg, var(--bg-card) 0%, #0d0d10 100%);
             border: 1px solid var(--border-light);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
         .ex-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 4px; height: 100%;
-            background-color: var(--metallic-light);
+            background-color: var(--border-light);
         }
         .ex-card:hover::before { background-color: var(--neon-red); }
         
         .ex-header {
-            padding: 12px 15px 12px 20px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(90deg, var(--metallic-dark), var(--bg-input));
+            background: linear-gradient(90deg, var(--border-color), var(--bg-input));
             border-bottom: 1px solid var(--border-light);
         }
-        .ex-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-        }
-        .ex-triangle { 
-            color: var(--neon-red); 
-            font-size: 1rem;
-            text-shadow: 0 0 8px var(--neon-red);
-        }
+        .ex-title-wrap { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .ex-triangle { color: var(--neon-red); font-size: 1rem; }
         .ex-name-input {
             background: transparent;
             border: none;
@@ -231,28 +241,22 @@
             outline: none;
             letter-spacing: 1px;
         }
-        .ex-name-input::placeholder { color: var(--metallic-light); }
+        .ex-name-input::placeholder { color: var(--text-muted); }
         .rpe-wrap {
             display: flex;
             align-items: center;
             background-color: var(--rpe-bg);
-            border: 1px solid var(--dark-red);
+            border: 1px solid var(--burgundy);
             padding: 3px 8px;
             font-family: 'Share Tech Mono', monospace;
         }
         .rpe-input {
-            background: transparent;
-            border: none;
-            color: var(--rpe-text);
-            width: 35px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-align: right;
-            outline: none;
+            background: transparent; border: none; color: var(--rpe-text);
+            width: 35px; font-weight: bold; font-size: 0.9rem; text-align: right; outline: none;
         }
 
         /* Tabla de Sets */
-        .sets-table { padding: 15px 15px 25px 20px; }
+        .sets-table { padding: 15px; }
         .sets-header, .set-row {
             display: grid;
             grid-template-columns: 40px 1fr 1fr 40px;
@@ -262,22 +266,18 @@
         }
         .sets-header {
             font-size: 0.8rem;
-            color: var(--metallic-light);
+            color: var(--text-muted);
             font-family: 'Share Tech Mono', monospace;
             border-bottom: 1px dashed var(--border-color);
             padding-bottom: 8px;
             margin-bottom: 12px;
         }
         .set-row { margin-bottom: 10px; }
-        .set-num { 
-            font-size: 1rem; 
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--text-muted); 
-        }
+        .set-num { font-size: 1rem; font-family: 'Share Tech Mono', monospace; color: var(--text-muted); }
         .set-input {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
-            color: var(--neon-red);
+            color: #fff;
             font-family: 'Share Tech Mono', monospace;
             padding: 10px;
             text-align: center;
@@ -286,97 +286,75 @@
             box-sizing: border-box;
             outline: none;
             transition: 0.2s;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
-        .set-input:focus { 
-            border-color: var(--neon-red); 
-            background-color: rgba(255,0,60,0.02);
-        }
-        .set-checkbox {
-            width: 22px; height: 22px;
-            accent-color: var(--neon-red);
-            cursor: pointer;
-            filter: drop-shadow(0 0 2px var(--neon-red));
-        }
+        .set-input:focus { border-color: var(--neon-red); }
+        .set-checkbox { width: 22px; height: 22px; accent-color: var(--neon-red); cursor: pointer; }
 
-        /* Lumbar Tracker Section - Diagnostic HUD */
-        .lumbar-section {
-            background-color: rgba(10,10,12,0.9);
+        /* Lumbar/Tendon Tracker Section */
+        .diagnostic-section {
+            background-color: rgba(0,0,0,0.5);
             border: 1px solid var(--border-light);
-            padding: 25px;
-            margin-top: 40px;
-            position: relative;
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.02) 2px, rgba(255, 255, 255, 0.02) 4px);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+            padding: 20px;
+            margin-top: 25px;
+            border-left: 3px solid var(--neon-red);
         }
-        .lumbar-section::before {
-            content: 'DIAGNOSTIC SYS //';
-            position: absolute;
-            top: -12px; left: 20px;
-            background: var(--bg-main);
-            color: var(--neon-green);
+        .diagnostic-section h3 {
+            margin-top: 0;
+            color: var(--neon-red);
             font-family: 'Share Tech Mono', monospace;
-            padding: 0 10px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
         }
-        .lumbar-section h3 { display: none; } 
         
-        label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.9rem; color: var(--metallic-light); font-family: 'Share Tech Mono', monospace; }
+        label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.9rem; color: #fff; font-family: 'Share Tech Mono', monospace; }
         select, input[type="range"] {
-            width: 100%; padding: 12px; background-color: var(--bg-input); color: white;
+            width: 100%; padding: 10px; background-color: var(--bg-input); color: white;
             border: 1px solid var(--border-color); font-family: 'Rajdhani', sans-serif; font-size: 1rem;
             box-sizing: border-box; outline: none;
         }
         input[type="range"] { accent-color: var(--neon-red); }
         .radio-group { 
             display: flex; flex-direction: column; gap: 8px; 
-            background-color: var(--bg-input); padding: 15px; 
-            border: 1px solid var(--border-color); border-left: 3px solid var(--border-light); 
+            background-color: var(--bg-input); padding: 12px; 
+            border: 1px solid var(--border-color); 
         }
         .radio-group label { margin: 0; color: var(--text-main); font-family: 'Rajdhani', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         
         .semaforo-result {
-            margin-top: 25px;
-            padding: 20px;
-            border: 2px solid var(--border-color);
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
             background-color: var(--bg-input);
             display: flex;
             align-items: center;
-            gap: 20px;
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            gap: 15px;
         }
-        .light { 
-            width: 25px; height: 25px; border-radius: 50%; background-color: #333; 
-            border: 2px solid #000;
-        }
-        .status-text { font-weight: bold; font-size: 1.3rem; font-family: 'Share Tech Mono', monospace; }
-        .status-msg { font-size: 0.95rem; color: var(--text-muted); margin-top: 5px; }
+        .light { width: 20px; height: 20px; border-radius: 50%; background-color: #333; }
+        .status-text { font-weight: bold; font-size: 1.1rem; font-family: 'Share Tech Mono', monospace; }
+        .status-msg { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
 
         /* Utilities */
         .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .auto-save-indicator { 
-            font-size: 0.85rem; color: var(--neon-green); font-family: 'Share Tech Mono', monospace;
-            opacity: 0; transition: opacity 0.5s; text-shadow: 0 0 5px var(--neon-green);
+            font-size: 0.85rem; color: var(--green); font-family: 'Share Tech Mono', monospace;
+            opacity: 0; transition: opacity 0.5s; text-shadow: 0 0 5px var(--green);
         }
         .auto-save-indicator.show { opacity: 1; }
         
         .day-title-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.5rem;
-            font-family: 'Share Tech Mono', monospace;
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border-light);
-            outline: none;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            width: 100%; background: transparent; border: none; color: #fff;
+            font-size: 1.5rem; font-family: 'Share Tech Mono', monospace;
+            padding-bottom: 10px; margin-bottom: 25px; border-bottom: 2px solid var(--burgundy); outline: none;
         }
-        .day-title-input:focus { border-color: var(--neon-red); color: var(--neon-red); }
-        .day-title-input::placeholder { color: var(--border-light); }
+        .day-title-input:focus { border-color: var(--neon-red); }
+        
+        .block-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -384,82 +362,37 @@
 <div class="app-container">
     <div class="header">
         <h1>PRIME <span>PHYSIQUE</span></h1>
-        <div class="tag-alumno">SYS // TACTICAL</div>
+        <div class="tag-alumno">CLINICAL SYS</div>
     </div>
 
     <!-- VISTA 1: DASHBOARD -->
     <div id="view-dashboard" class="view active">
-        <button class="btn btn-primary" onclick="promptNewClient()">[+] INICIALIZAR SUJETO</button>
+        <button class="btn btn-primary" onclick="promptNewClient()">[+] INICIALIZAR ATLETA</button>
         <div id="clients-list"></div>
     </div>
 
     <!-- VISTA 2: TRACKER DEL ALUMNO (SEMANAS Y DÍAS) -->
     <div id="view-tracker" class="view">
         <div class="flex-between">
-            <button class="btn" onclick="showView('view-dashboard')">&lt; ABORTAR</button>
-            <h2 id="tracker-client-name" style="margin:0; font-size:1.2rem; font-family:'Share Tech Mono', monospace; color:var(--text-main);">SUJETO</h2>
-            <span id="save-indicator" class="auto-save-indicator">SINC RONIZADO //</span>
+            <button class="btn" onclick="showView('view-dashboard')">&lt; PANEL</button>
+            <h2 id="tracker-client-name" style="margin:0; font-size:1.2rem; font-family:'Share Tech Mono', monospace; color:#fff;">ATLETA</h2>
+            <span id="save-indicator" class="auto-save-indicator">GUARDADO</span>
         </div>
 
-        <!-- Pestañas de Semanas -->
         <div class="tabs-container" id="week-tabs"></div>
-
-        <!-- Pestañas de Días -->
         <div class="tabs-container" id="day-tabs"></div>
 
-        <!-- Contenedor del Día Actual (Ejercicios + Lumbar) -->
         <div id="day-content">
+            <input type="text" id="day-name-input" class="day-title-input" placeholder="DESIGNACIÓN DEL DÍA (Ej. SESIÓN 1)" oninput="autoSaveDayName()">
             
-            <input type="text" id="day-name-input" class="day-title-input" placeholder="DESIGNACIÓN DEL DÍA (Ej. EMPUJE PESADO)" oninput="autoSaveDayName()">
-            
-            <!-- Lista de Ejercicios -->
-            <div id="exercises-container"></div>
-            
-            <button class="btn" style="width:100%; border: 1px dashed var(--border-light); background: rgba(255,255,255,0.02); color: var(--metallic-light);" onclick="addExercise()">[+] INTEGRAR MÓDULO DE ENTRENAMIENTO</button>
-
-            <!-- Evaluador Lumbar Integrado -->
-            <div class="lumbar-section">
-                
-                <label>PARÁMETRO DE FASE:</label>
-                <select id="l-stage" onchange="autoSave()">
-                    <option value="Fase 1: Centralización">Fase 1: Centralización Mecánica</option>
-                    <option value="Fase 2: Core/Estabilidad">Fase 2: Estabilización Lumbo-Pélvica</option>
-                    <option value="Fase 3: Carga Axial">Fase 3: Sobrecarga Axial (Hinge/Squat)</option>
-                </select>
-
-                <label>ESCALA DE ESTRÉS TISULAR (EVA): <span id="eva-val" style="color:var(--neon-red); font-size:1.2rem;">0</span>/10</label>
-                <input type="range" id="l-eva" min="0" max="10" value="0" oninput="document.getElementById('eva-val').innerText=this.value; autoSave()">
-
-                <label>COMPORTAMIENTO NEUROLÓGICO:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="l-nature" value="Muscular" checked onchange="autoSave()"> Tensión miofascial / Fatiga estructural</label>
-                    <label><input type="radio" name="l-nature" value="Radicular" onchange="autoSave()"> Irritación radicular / Dolor punzante</label>
-                </div>
-
-                <label>VECTOR DIRECCIONAL (MDT):</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="l-dir" value="Centraliza" checked onchange="autoSave()"> Centralización (Retracción del síntoma)</label>
-                    <label><input type="radio" name="l-dir" value="Periferaliza" onchange="autoSave()"> Periferalización (Irradiación distal)</label>
-                </div>
-
-                <label>ANÁLISIS POST-24H:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="l-24" value="Basal" checked onchange="autoSave()"> Estabilización a niveles basales</label>
-                    <label><input type="radio" name="l-24" value="Rigidez" onchange="autoSave()"> Rigidez matutina sin déficit motor</label>
-                    <label><input type="radio" name="l-24" value="Empeoramiento" onchange="autoSave()"> Agravamiento sostenido del cuadro</label>
-                </div>
-
-                <!-- Resultado Semáforo -->
-                <div class="semaforo-result" id="s-box">
-                    <div class="light" id="s-light"></div>
-                    <div>
-                        <div class="status-text" id="s-text">ANALIZANDO...</div>
-                        <div class="status-msg" id="s-msg">-</div>
-                    </div>
-                </div>
+            <div class="block-actions">
+                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('lumbar')">+ BLOQUE LUMBAR</button>
+                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('tendinoso')">+ BLOQUE TENDINOSO</button>
             </div>
+
+            <div id="blocks-container"></div>
             
-            <button class="btn" style="width:100%; margin-top:25px; border-color:var(--dark-red); color:var(--neon-red); background:rgba(255,0,60,0.05);" onclick="deleteCurrentDay()">[!] PURGAR DATOS DEL DÍA</button>
+            <button class="btn" style="width:100%; margin-top:25px; border-color:var(--border-light); color:#fff;" onclick="deleteCurrentDay()">PURGAR DÍA ACTUAL</button>
         </div>
     </div>
 </div>
@@ -473,7 +406,7 @@
     let titleSaveTimeout = null;
 
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v6_db');
+        const stored = localStorage.getItem('prime_v7_db');
         if (stored) db = JSON.parse(stored);
         renderDashboard();
     };
@@ -493,14 +426,14 @@
         const list = document.getElementById('clients-list');
         list.innerHTML = '';
         if(db.clients.length === 0) {
-            list.innerHTML = '<p style="color:var(--metallic-light); text-align:center; font-family:\'Share Tech Mono\';">NO SE DETECTAN SUJETOS. INICIE PROTOCOLO.</p>';
+            list.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-family:\'Share Tech Mono\';">SISTEMA VACÍO.</p>';
             return;
         }
         db.clients.forEach((c, idx) => {
             list.innerHTML += `
                 <div class="client-card" onclick="openTracker(${idx})">
                     <span>${c.name}</span>
-                    <span style="color:var(--neon-red); font-family:'Share Tech Mono'; font-size:0.9rem;">[ ACCEDER ]</span>
+                    <span style="color:var(--neon-red); font-family:'Share Tech Mono'; font-size:0.9rem;">[ ABRIR ]</span>
                 </div>
             `;
         });
@@ -508,12 +441,12 @@
     }
 
     function promptNewClient() {
-        const name = prompt("Designación del Sujeto:");
+        const name = prompt("Nombre del Atleta:");
         if (name) {
             let weeks = {};
             for(let i=1; i<=12; i++) weeks[i] = [];
             db.clients.push({ name, weeks });
-            localStorage.setItem('prime_v6_db', JSON.stringify(db));
+            localStorage.setItem('prime_v7_db', JSON.stringify(db));
             renderDashboard();
         }
     }
@@ -545,7 +478,7 @@
             days.forEach((d, idx) => {
                 dTabs.innerHTML += `<div class="tab-pill ${cDayIndex === idx ? 'active' : ''}" onclick="selectDay(${idx})">${d.name || 'DÍA '+(idx+1)}</div>`;
             });
-            dTabs.innerHTML += `<div class="tab-pill" style="border-style:dashed; color:var(--metallic-light); border-color:var(--border-light);" onclick="addDay()">+ ADD</div>`;
+            dTabs.innerHTML += `<div class="tab-pill" style="border-style:dashed; color:var(--text-muted); border-color:var(--border-light);" onclick="addDay()">+ DÍA</div>`;
             renderDayContent();
         }
     }
@@ -558,24 +491,68 @@
         
         const newDay = {
             name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1),
-            exercises: [
-                { name: '', rpe: 7, sets: [ {kg: '', reps: '', done: false} ] }
-            ],
-            lumbar: { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 'Basal' }
+            blocks: []
         };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v6_db', JSON.stringify(db));
+        localStorage.setItem('prime_v7_db', JSON.stringify(db));
         renderTabs();
     }
 
     function deleteCurrentDay() {
-        if(confirm("¿Confirmar purga de datos del día actual? Esta acción es irreversible.")) {
+        if(confirm("¿Purgar el día actual?")) {
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
             cDayIndex = 0;
-            localStorage.setItem('prime_v6_db', JSON.stringify(db));
+            localStorage.setItem('prime_v7_db', JSON.stringify(db));
             renderTabs();
         }
+    }
+
+    function addBlock(type) {
+        const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
+        let newBlock = {
+            id: Date.now(),
+            type: type,
+            exercises: [ { name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] } ],
+            tracker: {}
+        };
+
+        if (type === 'lumbar') {
+            newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 'Basal' };
+        } else {
+            newBlock.tracker = { stage: 'Isométrica / Analgesia', eva: 0, nature: 'Tolerable', post24: 'Basal' };
+        }
+
+        day.blocks.push(newBlock);
+        autoSave();
+        renderDayContent();
+    }
+
+    function removeBlock(bIdx) {
+        if(confirm("¿Eliminar bloque completo?")) {
+            db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
+            autoSave();
+            renderDayContent();
+        }
+    }
+
+    function addExercise(bIdx) {
+        const block = db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx];
+        block.exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
+        autoSave(); 
+        renderDayContent(); 
+    }
+
+    function removeExercise(bIdx, exIdx) {
+        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
+        autoSave();
+        renderDayContent();
+    }
+
+    function addSet(bIdx, exIdx) {
+        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
+        autoSave();
+        renderDayContent();
     }
 
     function renderDayContent() {
@@ -584,77 +561,156 @@
 
         document.getElementById('day-name-input').value = day.name;
 
-        const exContainer = document.getElementById('exercises-container');
-        exContainer.innerHTML = '';
+        const bContainer = document.getElementById('blocks-container');
+        bContainer.innerHTML = '';
 
-        day.exercises.forEach((ex, exIdx) => {
-            let setsHTML = '';
-            ex.sets.forEach((s, sIdx) => {
-                setsHTML += `
-                    <div class="set-row">
-                        <div class="set-num">0${sIdx + 1}</div>
-                        <input type="number" class="set-input dom-kg" placeholder="--" value="${s.kg}" oninput="autoSave()">
-                        <input type="number" class="set-input dom-reps" placeholder="--" value="${s.reps}" oninput="autoSave()">
-                        <input type="checkbox" class="set-checkbox dom-done" ${s.done ? 'checked' : ''} onchange="autoSave()">
+        day.blocks.forEach((block, bIdx) => {
+            
+            let exHTML = '';
+            block.exercises.forEach((ex, exIdx) => {
+                let setsHTML = '';
+                ex.sets.forEach((s, sIdx) => {
+                    setsHTML += `
+                        <div class="set-row">
+                            <div class="set-num">${sIdx + 1}</div>
+                            <input type="number" class="set-input dom-kg" placeholder="--" value="${s.kg}" oninput="autoSave()">
+                            <input type="number" class="set-input dom-reps" placeholder="--" value="${s.reps}" oninput="autoSave()">
+                            <input type="checkbox" class="set-checkbox dom-done" ${s.done ? 'checked' : ''} onchange="autoSave()">
+                        </div>
+                    `;
+                });
+
+                exHTML += `
+                    <div class="ex-card">
+                        <div class="ex-header">
+                            <div class="ex-title-wrap">
+                                <span class="ex-triangle">▲</span>
+                                <input type="text" class="ex-name-input dom-name" placeholder="EJERCICIO..." value="${ex.name}" oninput="autoSave()">
+                            </div>
+                            <div class="rpe-wrap">
+                                <span style="font-size:0.7rem; color:var(--text-muted);">@</span>
+                                <input type="number" class="rpe-input dom-rpe" value="${ex.rpe}" oninput="autoSave()">
+                                <span style="font-size:0.7rem; color:var(--rpe-text);">RPE</span>
+                                <span style="cursor:pointer; color:var(--neon-red); margin-left:12px; font-weight:bold; font-family:'Share Tech Mono';" onclick="removeExercise(${bIdx}, ${exIdx})">[X]</span>
+                            </div>
+                        </div>
+                        <div class="sets-table">
+                            <div class="sets-header">
+                                <div>SET</div><div>KG</div><div>REPS</div><div>LOG</div>
+                            </div>
+                            <div class="sets-wrapper">${setsHTML}</div>
+                            <button class="btn" style="width:100%; border:1px dashed var(--border-light); background:transparent; margin-top:5px;" onclick="addSet(${bIdx}, ${exIdx})">+ SERIE</button>
+                        </div>
                     </div>
                 `;
             });
 
-            exContainer.innerHTML += `
-                <div class="ex-card" data-exidx="${exIdx}">
-                    <div class="ex-header">
-                        <div class="ex-title-wrap">
-                            <span class="ex-triangle">▲</span>
-                            <input type="text" class="ex-name-input dom-name" placeholder="IDENTIFICADOR DE EJERCICIO..." value="${ex.name}" oninput="autoSave()">
+            // Diagnostic Section
+            let diagHTML = '';
+            const t = block.tracker;
+            
+            if (block.type === 'lumbar') {
+                diagHTML = `
+                    <div class="diagnostic-section">
+                        <h3>DIAGNÓSTICO LUMBAR</h3>
+                        <label>FASE CLÍNICA:</label>
+                        <select class="l-stage" onchange="autoSave()">
+                            <option value="Fase 1: Centralización" ${t.stage==='Fase 1: Centralización'?'selected':''}>Fase 1: Centralización Mecánica</option>
+                            <option value="Fase 2: Core/Estabilidad" ${t.stage==='Fase 2: Core/Estabilidad'?'selected':''}>Fase 2: Estabilización Lumbo-Pélvica</option>
+                            <option value="Fase 3: Carga Axial" ${t.stage==='Fase 3: Carga Axial'?'selected':''}>Fase 3: Sobrecarga Axial</option>
+                        </select>
+
+                        <label>ESCALA EVA: <span class="eva-val-display" style="color:var(--neon-red);">${t.eva}</span>/10</label>
+                        <input type="range" class="l-eva" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
+
+                        <label>SÍNTOMA DOMINANTE:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="l-nature-${bIdx}" value="Muscular" ${t.nature==='Muscular'?'checked':''} onchange="autoSave()"> Tensión muscular local</label>
+                            <label><input type="radio" name="l-nature-${bIdx}" value="Radicular" ${t.nature==='Radicular'?'checked':''} onchange="autoSave()"> Irritación radicular / Eléctrico</label>
                         </div>
-                        <div class="rpe-wrap">
-                            <span style="font-size:0.7rem; color:var(--text-muted);">@</span>
-                            <input type="number" class="rpe-input dom-rpe" value="${ex.rpe}" oninput="autoSave()">
-                            <span style="font-size:0.7rem; color:var(--rpe-text);">RPE</span>
-                            <span style="cursor:pointer; color:var(--neon-red); margin-left:12px; font-weight:bold; font-family:'Share Tech Mono';" onclick="removeExercise(${exIdx})">[X]</span>
+
+                        <label>VECTOR MDT:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="l-dir-${bIdx}" value="Centraliza" ${t.direction==='Centraliza'?'checked':''} onchange="autoSave()"> Centraliza (Seguro)</label>
+                            <label><input type="radio" name="l-dir-${bIdx}" value="Periferaliza" ${t.direction==='Periferaliza'?'checked':''} onchange="autoSave()"> Periferaliza (Riesgo)</label>
+                        </div>
+
+                        <label>REGLA 24 HORAS:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="l-24-${bIdx}" value="Basal" ${t.post24==='Basal'?'checked':''} onchange="autoSave()"> Retorno a nivel basal</label>
+                            <label><input type="radio" name="l-24-${bIdx}" value="Rigidez" ${t.post24==='Rigidez'?'checked':''} onchange="autoSave()"> Aumento de rigidez</label>
+                            <label><input type="radio" name="l-24-${bIdx}" value="Empeoramiento" ${t.post24==='Empeoramiento'?'checked':''} onchange="autoSave()"> Empeoramiento sostenido</label>
+                        </div>
+                        <div class="semaforo-result s-box">
+                            <div class="light s-light"></div>
+                            <div>
+                                <div class="status-text s-text">--</div>
+                                <div class="status-msg s-msg">--</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="sets-table">
-                        <div class="sets-header">
-                            <div>SET</div><div>KG</div><div>REPS</div><div>LOG</div>
+                `;
+            } else {
+                diagHTML = `
+                    <div class="diagnostic-section" style="border-left-color: var(--yellow);">
+                        <h3 style="color: var(--yellow);">DIAGNÓSTICO TENDINOSO</h3>
+                        <label>FASE DE CARGA:</label>
+                        <select class="t-stage" onchange="autoSave()">
+                            <option value="Isométrica / Analgesia" ${t.stage==='Isométrica / Analgesia'?'selected':''}>Fase 1: Isométrica / Analgesia</option>
+                            <option value="Isotónica Pesada" ${t.stage==='Isotónica Pesada'?'selected':''}>Fase 2: Isotónica Pesada Lenta</option>
+                            <option value="Almacenamiento de Energía" ${t.stage==='Almacenamiento de Energía'?'selected':''}>Fase 3: Almacenamiento de Energía</option>
+                        </select>
+
+                        <label>DOLOR INTRA-SESIÓN (EVA): <span class="eva-val-display" style="color:var(--yellow);">${t.eva}</span>/10</label>
+                        <input type="range" class="t-eva" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
+
+                        <label>COMPORTAMIENTO DEL DOLOR:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="t-nature-${bIdx}" value="Tolerable" ${t.nature==='Tolerable'?'checked':''} onchange="autoSave()"> Carga tolerada (Molestia sorda)</label>
+                            <label><input type="radio" name="t-nature-${bIdx}" value="Agudo" ${t.nature==='Agudo'?'checked':''} onchange="autoSave()"> Dolor agudo / Punzante articular</label>
                         </div>
-                        <div class="sets-wrapper">${setsHTML}</div>
-                        <button class="btn-add-set" onclick="addSet(${exIdx})">+ AÑADIR SERIE</button>
+
+                        <label>RESPUESTA 24 HORAS:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="t-24-${bIdx}" value="Basal" ${t.post24==='Basal'?'checked':''} onchange="autoSave()"> Retorno al basal pre-sesión</label>
+                            <label><input type="radio" name="t-24-${bIdx}" value="Rigidez" ${t.post24==='Rigidez'?'checked':''} onchange="autoSave()"> Rigidez matutina aumentada</label>
+                            <label><input type="radio" name="t-24-${bIdx}" value="Persistente" ${t.post24==='Persistente'?'checked':''} onchange="autoSave()"> Dolor persistente elevado</label>
+                        </div>
+                        <div class="semaforo-result s-box">
+                            <div class="light s-light"></div>
+                            <div>
+                                <div class="status-text s-text">--</div>
+                                <div class="status-msg s-msg">--</div>
+                            </div>
+                        </div>
                     </div>
+                `;
+            }
+
+            bContainer.innerHTML += `
+                <div class="block-card" data-bidx="${bIdx}">
+                    <div class="block-header">
+                        <div class="block-title">PROTOCOLO: ${block.type === 'lumbar' ? 'LUMBAR' : 'TENDINOSO'}</div>
+                        <button class="btn" style="border:none; color:var(--neon-red);" onclick="removeBlock(${bIdx})">[X] ELIMINAR</button>
+                    </div>
+                    ${exHTML}
+                    <button class="btn" style="width:100%; border: 1px dashed var(--border-light); background: rgba(255,255,255,0.02); margin-bottom: 20px;" onclick="addExercise(${bIdx})">+ AÑADIR EJERCICIO</button>
+                    ${diagHTML}
                 </div>
             `;
         });
 
-        const l = day.lumbar;
-        document.getElementById('l-stage').value = l.stage;
-        document.getElementById('l-eva').value = l.eva;
-        document.getElementById('eva-val').innerText = l.eva;
-        document.querySelector(`input[name="l-nature"][value="${l.nature}"]`).checked = true;
-        document.querySelector(`input[name="l-dir"][value="${l.direction}"]`).checked = true;
-        document.querySelector(`input[name="l-24"][value="${l.post24}"]`).checked = true;
-
-        evaluateLumbarLogic(l.eva, l.nature, l.direction, l.post24);
+        // Trigger logic evaluation for all blocks
+        document.querySelectorAll('.block-card').forEach((bCard, bIdx) => {
+            const block = day.blocks[bIdx];
+            if(block.type === 'lumbar') {
+                evaluateLumbar(block.tracker, bCard);
+            } else {
+                evaluateTendon(block.tracker, bCard);
+            }
+        });
     }
 
-    function addExercise() {
-        const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
-        day.exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        autoSave(); 
-        renderDayContent(); 
-    }
-
-    function removeExercise(idx) {
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].exercises.splice(idx, 1);
-        autoSave();
-        renderDayContent();
-    }
-
-    function addSet(exIdx) {
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        autoSave();
-        renderDayContent();
-    }
-    
     function autoSaveDayName() {
         if(cClientIndex === null || !db.clients[cClientIndex].weeks[cWeek][cDayIndex]) return;
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
@@ -662,7 +718,7 @@
         
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v6_db', JSON.stringify(db));
+            localStorage.setItem('prime_v7_db', JSON.stringify(db));
             triggerSaveIndicator();
             const dTabs = document.getElementById('day-tabs');
             const days = db.clients[cClientIndex].weeks[cWeek];
@@ -670,76 +726,97 @@
             days.forEach((d, idx) => {
                 dTabs.innerHTML += `<div class="tab-pill ${cDayIndex === idx ? 'active' : ''}" onclick="selectDay(${idx})">${d.name || 'DÍA '+(idx+1)}</div>`;
             });
-            dTabs.innerHTML += `<div class="tab-pill" style="border-style:dashed; color:var(--metallic-light); border-color:var(--border-light);" onclick="addDay()">+ ADD</div>`;
+            dTabs.innerHTML += `<div class="tab-pill" style="border-style:dashed; color:var(--text-muted); border-color:var(--border-light);" onclick="addDay()">+ DÍA</div>`;
         }, 800); 
     }
 
     function autoSave() {
         if(cClientIndex === null || !db.clients[cClientIndex].weeks[cWeek][cDayIndex]) return;
-
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
 
-        document.querySelectorAll('.ex-card').forEach(card => {
-            const exIdx = card.getAttribute('data-exidx');
-            const ex = day.exercises[exIdx];
-            ex.name = card.querySelector('.dom-name').value;
-            ex.rpe = card.querySelector('.dom-rpe').value;
-            
-            const setRows = card.querySelectorAll('.set-row');
-            ex.sets = Array.from(setRows).map(row => ({
-                kg: row.querySelector('.dom-kg').value,
-                reps: row.querySelector('.dom-reps').value,
-                done: row.querySelector('.dom-done').checked
-            }));
+        document.querySelectorAll('.block-card').forEach((bCard) => {
+            const bIdx = bCard.getAttribute('data-bidx');
+            const block = day.blocks[bIdx];
+
+            // Scrape Exercises
+            const exCards = bCard.querySelectorAll('.ex-card');
+            block.exercises = Array.from(exCards).map(exCard => {
+                const setRows = exCard.querySelectorAll('.set-row');
+                const sets = Array.from(setRows).map(row => ({
+                    kg: row.querySelector('.dom-kg').value,
+                    reps: row.querySelector('.dom-reps').value,
+                    done: row.querySelector('.dom-done').checked
+                }));
+                return {
+                    name: exCard.querySelector('.dom-name').value,
+                    rpe: exCard.querySelector('.dom-rpe').value,
+                    sets: sets
+                };
+            });
+
+            // Scrape Tracker
+            if (block.type === 'lumbar') {
+                block.tracker.stage = bCard.querySelector('.l-stage').value;
+                block.tracker.eva = parseInt(bCard.querySelector('.l-eva').value);
+                block.tracker.nature = bCard.querySelector(`input[name="l-nature-${bIdx}"]:checked`).value;
+                block.tracker.direction = bCard.querySelector(`input[name="l-dir-${bIdx}"]:checked`).value;
+                block.tracker.post24 = bCard.querySelector(`input[name="l-24-${bIdx}"]:checked`).value;
+                evaluateLumbar(block.tracker, bCard);
+            } else {
+                block.tracker.stage = bCard.querySelector('.t-stage').value;
+                block.tracker.eva = parseInt(bCard.querySelector('.t-eva').value);
+                block.tracker.nature = bCard.querySelector(`input[name="t-nature-${bIdx}"]:checked`).value;
+                block.tracker.post24 = bCard.querySelector(`input[name="t-24-${bIdx}"]:checked`).value;
+                evaluateTendon(block.tracker, bCard);
+            }
         });
-
-        day.lumbar.stage = document.getElementById('l-stage').value;
-        day.lumbar.eva = parseInt(document.getElementById('l-eva').value);
-        day.lumbar.nature = document.querySelector('input[name="l-nature"]:checked').value;
-        day.lumbar.direction = document.querySelector('input[name="l-dir"]:checked').value;
-        day.lumbar.post24 = document.querySelector('input[name="l-24"]:checked').value;
-
-        evaluateLumbarLogic(day.lumbar.eva, day.lumbar.nature, day.lumbar.direction, day.lumbar.post24);
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v6_db', JSON.stringify(db));
+            localStorage.setItem('prime_v7_db', JSON.stringify(db));
             triggerSaveIndicator();
         }, 500);
     }
 
-    function evaluateLumbarLogic(eva, nature, direction, post24) {
+    function evaluateLumbar(t, bCard) {
         let color, status, msg;
-        
-        if (nature === 'Radicular' || direction === 'Periferaliza' || post24 === 'Empeoramiento' || eva > 5) {
-            color = 'var(--neon-red)';
-            status = 'ALERTA CRÍTICA';
-            msg = 'Compromiso radicular detectado. Abortar patrón de movimiento inmediatamente. Reducción drástica de carga mandatoria.';
-        } else if ((eva >= 4 && eva <= 5) || post24 === 'Rigidez') {
-            color = 'var(--yellow)';
-            status = 'ADVERTENCIA TISULAR';
-            msg = 'Umbral de tolerancia al límite. Mantener vector de carga actual. Prohibida la progresión volumétrica.';
+        if (t.nature === 'Radicular' || t.direction === 'Periferaliza' || t.post24 === 'Empeoramiento' || t.eva > 5) {
+            color = 'var(--neon-red)'; status = 'ALERTA CRÍTICA';
+            msg = 'Compromiso radicular. Detener patrón. Reducir carga drásticamente.';
+        } else if ((t.eva >= 4 && t.eva <= 5) || t.post24 === 'Rigidez') {
+            color = 'var(--yellow)'; status = 'ADVERTENCIA';
+            msg = 'Límite tisular. Mantener carga. Prohibida progresión.';
         } else {
-            color = 'var(--neon-green)'; // Used the green accent color for optimal status
-            status = 'SISTEMA ÓPTIMO';
-            msg = 'Adaptación estructural confirmada. Autorizada la sobrecarga progresiva programada.';
+            color = 'var(--green)'; status = 'ÓPTIMO';
+            msg = 'Adaptación confirmada. Autorizada sobrecarga progresiva.';
         }
+        applyLogicUI(bCard, color, status, msg);
+    }
 
-        const box = document.getElementById('s-box');
+    function evaluateTendon(t, bCard) {
+        let color, status, msg;
+        if (t.nature === 'Agudo' || t.post24 === 'Persistente' || t.eva > 5) {
+            color = 'var(--neon-red)'; status = 'SOBRECARGA AGUDA';
+            msg = 'Capacidad tendinosa excedida. Retroceder a fase isométrica o reducir volumen/intensidad.';
+        } else if ((t.eva >= 4 && t.eva <= 5) || t.post24 === 'Rigidez') {
+            color = 'var(--yellow)'; status = 'ZONA DE ADAPTACIÓN';
+            msg = 'Respuesta esperable. Mantener parámetros actuales hasta consolidar tolerancia al estímulo.';
+        } else {
+            color = 'var(--green)'; status = 'ÓPTIMO';
+            msg = 'Estímulo asimilado correctamente. Progresar carga mecánica según macrociclo.';
+        }
+        applyLogicUI(bCard, color, status, msg);
+    }
+
+    function applyLogicUI(bCard, color, status, msg) {
+        const box = bCard.querySelector('.s-box');
         box.style.borderColor = color;
-        box.style.boxShadow = `inset 0 0 15px ${color}33`;
-        
-        const light = document.getElementById('s-light');
+        const light = bCard.querySelector('.s-light');
         light.style.backgroundColor = color;
         light.style.boxShadow = `0 0 15px ${color}`;
-        light.style.borderColor = color;
-
-        const txt = document.getElementById('s-text');
-        txt.innerText = status;
-        txt.style.color = color;
-        txt.style.textShadow = `0 0 8px ${color}88`;
-
-        document.getElementById('s-msg').innerText = msg;
+        const txt = bCard.querySelector('.s-text');
+        txt.innerText = status; txt.style.color = color;
+        bCard.querySelector('.s-msg').innerText = msg;
     }
 </script>
 </body>
