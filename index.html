@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v8 - ADVANCED MULTI-BLOCK</title>
+    <title>PRIME PHYSIQUE v8.1 - ADVANCED MULTI-BLOCK</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -468,7 +468,7 @@
 
     function addDay() {
         if(cClientIndex === null) return;
-        
+        autoSave();
         const newDay = {
             name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1),
             blocks: []
@@ -489,6 +489,7 @@
     }
 
     function addBlock(type) {
+        autoSave();
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
         let newBlock = {
             id: Date.now(),
@@ -504,35 +505,39 @@
         }
 
         day.blocks.push(newBlock);
-        autoSave();
         renderDayContent();
+        localStorage.setItem('prime_v8_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
-            db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
             autoSave();
+            db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
             renderDayContent();
+            localStorage.setItem('prime_v8_db', JSON.stringify(db));
         }
     }
 
     function addExercise(bIdx) {
+        autoSave();
         const block = db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx];
         block.exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        autoSave(); 
         renderDayContent(); 
+        localStorage.setItem('prime_v8_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
         autoSave();
+        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
         renderDayContent();
+        localStorage.setItem('prime_v8_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
         autoSave();
+        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
         renderDayContent();
+        localStorage.setItem('prime_v8_db', JSON.stringify(db));
     }
 
     function renderDayContent() {
