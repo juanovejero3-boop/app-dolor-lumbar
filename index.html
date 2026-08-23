@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v7 - MULTI-BLOCK PROTOCOL</title>
+    <title>PRIME PHYSIQUE v7.1 - MULTI-BLOCK PROTOCOL</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Prime Physique Cyberpunk Palette */
             --bg-main: #050505;
             --bg-card: #121216;
             --bg-input: #0a0a0c;
-            --border-color: #333333; /* Dark charcoal */
+            --border-color: #333333; 
             --border-light: #555555;
             --neon-red: #ff1744;
             --burgundy: #800020;
@@ -50,7 +49,6 @@
             position: relative;
         }
 
-        /* Top Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -68,10 +66,7 @@
             font-family: 'Share Tech Mono', monospace;
             color: #fff;
         }
-        .header h1 span { 
-            color: var(--neon-red); 
-            text-shadow: 0 0 8px rgba(255, 23, 68, 0.6);
-        }
+        .header h1 span { color: var(--neon-red); text-shadow: 0 0 8px rgba(255, 23, 68, 0.6); }
         .tag-alumno {
             background-color: rgba(255, 23, 68, 0.1);
             color: var(--neon-red);
@@ -84,11 +79,9 @@
             clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
         }
 
-        /* Layout Views */
         .view { display: none; padding: 25px; }
         .view.active { display: block; }
 
-        /* Buttons */
         .btn {
             background-color: var(--bg-card);
             color: var(--text-main);
@@ -124,7 +117,6 @@
             box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
         }
 
-        /* Client Cards */
         .client-card {
             background: linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%);
             border: 1px solid var(--border-light);
@@ -142,169 +134,96 @@
             box-shadow: -5px 0 0 var(--neon-red);
             background: linear-gradient(135deg, var(--burgundy) 0%, var(--bg-card) 100%);
         }
-        .client-card span:first-child {
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #fff;
-        }
+        .client-card span:first-child { font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; color: #fff; }
 
-        /* Tabs (Semanas y Días) */
         .tabs-container {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            scrollbar-width: none;
+            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px;
+            margin-bottom: 15px; scrollbar-width: none;
         }
         .tabs-container::-webkit-scrollbar { display: none; }
         .tab-pill {
-            background-color: var(--bg-input);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            font-family: 'Share Tech Mono', monospace;
-            cursor: pointer;
-            white-space: nowrap;
-            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+            background-color: var(--bg-input); border: 1px solid var(--border-color);
+            color: var(--text-muted); padding: 8px 20px; font-size: 0.9rem;
+            font-weight: 700; font-family: 'Share Tech Mono', monospace; cursor: pointer;
+            white-space: nowrap; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
             transition: 0.2s;
         }
         .tab-pill.active {
-            background-color: var(--burgundy);
-            color: white;
-            border-color: var(--neon-red);
+            background-color: var(--burgundy); color: white; border-color: var(--neon-red);
             box-shadow: 0 0 10px var(--burgundy);
         }
         .tab-pill:hover:not(.active) { border-color: var(--neon-red); color: var(--neon-red); }
 
-        /* Block Card */
         .block-card {
             background-color: rgba(18, 18, 22, 0.8);
             border: 1px solid var(--border-color);
             border-top: 3px solid var(--burgundy);
-            margin-bottom: 30px;
-            padding: 20px;
-            position: relative;
+            margin-bottom: 30px; padding: 20px; position: relative;
         }
         .block-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;
         }
-        .block-title {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--neon-red);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-        }
+        .block-title { font-family: 'Share Tech Mono', monospace; color: var(--neon-red); font-size: 1.2rem; text-transform: uppercase; }
 
-        /* Tarjeta de Ejercicio */
         .ex-card {
             background: linear-gradient(180deg, var(--bg-card) 0%, #0d0d10 100%);
-            border: 1px solid var(--border-light);
-            margin-bottom: 20px;
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            border: 1px solid var(--border-light); margin-bottom: 20px;
+            position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
         .ex-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
             background-color: var(--border-light);
         }
         .ex-card:hover::before { background-color: var(--neon-red); }
         
         .ex-header {
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(90deg, var(--border-color), var(--bg-input));
+            padding: 12px 15px; display: flex; justify-content: space-between;
+            align-items: center; background: linear-gradient(90deg, var(--border-color), var(--bg-input));
             border-bottom: 1px solid var(--border-light);
         }
         .ex-title-wrap { display: flex; align-items: center; gap: 10px; flex: 1; }
         .ex-triangle { color: var(--neon-red); font-size: 1rem; }
         .ex-name-input {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.1rem;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            width: 100%;
-            outline: none;
-            letter-spacing: 1px;
+            background: transparent; border: none; color: white; font-size: 1.1rem;
+            font-family: 'Rajdhani', sans-serif; font-weight: 700; width: 100%; outline: none; letter-spacing: 1px;
         }
         .ex-name-input::placeholder { color: var(--text-muted); }
         .rpe-wrap {
-            display: flex;
-            align-items: center;
-            background-color: var(--rpe-bg);
-            border: 1px solid var(--burgundy);
-            padding: 3px 8px;
-            font-family: 'Share Tech Mono', monospace;
+            display: flex; align-items: center; background-color: var(--rpe-bg);
+            border: 1px solid var(--burgundy); padding: 3px 8px; font-family: 'Share Tech Mono', monospace;
         }
         .rpe-input {
             background: transparent; border: none; color: var(--rpe-text);
             width: 35px; font-weight: bold; font-size: 0.9rem; text-align: right; outline: none;
         }
 
-        /* Tabla de Sets */
         .sets-table { padding: 15px; }
         .sets-header, .set-row {
-            display: grid;
-            grid-template-columns: 40px 1fr 1fr 40px;
-            gap: 15px;
-            align-items: center;
-            text-align: center;
+            display: grid; grid-template-columns: 40px 1fr 1fr 40px; gap: 15px;
+            align-items: center; text-align: center;
         }
         .sets-header {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-family: 'Share Tech Mono', monospace;
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+            font-size: 0.8rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace;
+            border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 12px;
         }
         .set-row { margin-bottom: 10px; }
         .set-num { font-size: 1rem; font-family: 'Share Tech Mono', monospace; color: var(--text-muted); }
         .set-input {
-            background-color: var(--bg-input);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            font-family: 'Share Tech Mono', monospace;
-            padding: 10px;
-            text-align: center;
-            font-size: 1.1rem;
-            width: 100%;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.2s;
+            background-color: var(--bg-input); border: 1px solid var(--border-color);
+            color: #fff; font-family: 'Share Tech Mono', monospace; padding: 10px;
+            text-align: center; font-size: 1.1rem; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s;
         }
         .set-input:focus { border-color: var(--neon-red); }
         .set-checkbox { width: 22px; height: 22px; accent-color: var(--neon-red); cursor: pointer; }
 
-        /* Lumbar/Tendon Tracker Section */
         .diagnostic-section {
-            background-color: rgba(0,0,0,0.5);
-            border: 1px solid var(--border-light);
-            padding: 20px;
-            margin-top: 25px;
-            border-left: 3px solid var(--neon-red);
+            background-color: rgba(0,0,0,0.5); border: 1px solid var(--border-light);
+            padding: 20px; margin-top: 25px; border-left: 3px solid var(--neon-red);
         }
         .diagnostic-section h3 {
-            margin-top: 0;
-            color: var(--neon-red);
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            margin-top: 0; color: var(--neon-red); font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
         }
         
         label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.9rem; color: #fff; font-family: 'Share Tech Mono', monospace; }
@@ -315,26 +234,19 @@
         }
         input[type="range"] { accent-color: var(--neon-red); }
         .radio-group { 
-            display: flex; flex-direction: column; gap: 8px; 
-            background-color: var(--bg-input); padding: 12px; 
-            border: 1px solid var(--border-color); 
+            display: flex; flex-direction: column; gap: 8px; background-color: var(--bg-input); 
+            padding: 12px; border: 1px solid var(--border-color); 
         }
         .radio-group label { margin: 0; color: var(--text-main); font-family: 'Rajdhani', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         
         .semaforo-result {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-input);
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            margin-top: 20px; padding: 15px; border: 1px solid var(--border-color);
+            background-color: var(--bg-input); display: flex; align-items: center; gap: 15px;
         }
         .light { width: 20px; height: 20px; border-radius: 50%; background-color: #333; }
         .status-text { font-weight: bold; font-size: 1.1rem; font-family: 'Share Tech Mono', monospace; }
         .status-msg { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
 
-        /* Utilities */
         .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .auto-save-indicator { 
             font-size: 0.85rem; color: var(--green); font-family: 'Share Tech Mono', monospace;
@@ -350,10 +262,7 @@
         .day-title-input:focus { border-color: var(--neon-red); }
         
         .block-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;
         }
     </style>
 </head>
@@ -518,9 +427,9 @@
         };
 
         if (type === 'lumbar') {
-            newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 'Basal' };
+            newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
         } else {
-            newBlock.tracker = { stage: 'Isométrica / Analgesia', eva: 0, nature: 'Tolerable', post24: 'Basal' };
+            newBlock.tracker = { stage: 'Isométrica / Analgesia', eva: 0, nature: 'Tolerable', post24: 0 };
         }
 
         day.blocks.push(newBlock);
@@ -605,9 +514,9 @@
                 `;
             });
 
-            // Diagnostic Section
             let diagHTML = '';
             const t = block.tracker;
+            let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
             
             if (block.type === 'lumbar') {
                 diagHTML = `
@@ -620,7 +529,7 @@
                             <option value="Fase 3: Carga Axial" ${t.stage==='Fase 3: Carga Axial'?'selected':''}>Fase 3: Sobrecarga Axial</option>
                         </select>
 
-                        <label>ESCALA EVA: <span class="eva-val-display" style="color:var(--neon-red);">${t.eva}</span>/10</label>
+                        <label>ESCALA EVA (INTRA-SESIÓN): <span class="eva-val-display" style="color:var(--neon-red);">${t.eva}</span>/10</label>
                         <input type="range" class="l-eva" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
 
                         <label>SÍNTOMA DOMINANTE:</label>
@@ -635,12 +544,9 @@
                             <label><input type="radio" name="l-dir-${bIdx}" value="Periferaliza" ${t.direction==='Periferaliza'?'checked':''} onchange="autoSave()"> Periferaliza (Riesgo)</label>
                         </div>
 
-                        <label>REGLA 24 HORAS:</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="l-24-${bIdx}" value="Basal" ${t.post24==='Basal'?'checked':''} onchange="autoSave()"> Retorno a nivel basal</label>
-                            <label><input type="radio" name="l-24-${bIdx}" value="Rigidez" ${t.post24==='Rigidez'?'checked':''} onchange="autoSave()"> Aumento de rigidez</label>
-                            <label><input type="radio" name="l-24-${bIdx}" value="Empeoramiento" ${t.post24==='Empeoramiento'?'checked':''} onchange="autoSave()"> Empeoramiento sostenido</label>
-                        </div>
+                        <label>DOLOR POST 24H (EVA): <span class="eva24-val-display" style="color:var(--neon-red);">${post24val}</span>/10</label>
+                        <input type="range" class="l-24" min="0" max="10" value="${post24val}" oninput="this.previousElementSibling.querySelector('.eva24-val-display').innerText=this.value; autoSave()">
+
                         <div class="semaforo-result s-box">
                             <div class="light s-light"></div>
                             <div>
@@ -670,12 +576,9 @@
                             <label><input type="radio" name="t-nature-${bIdx}" value="Agudo" ${t.nature==='Agudo'?'checked':''} onchange="autoSave()"> Dolor agudo / Punzante articular</label>
                         </div>
 
-                        <label>RESPUESTA 24 HORAS:</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="t-24-${bIdx}" value="Basal" ${t.post24==='Basal'?'checked':''} onchange="autoSave()"> Retorno al basal pre-sesión</label>
-                            <label><input type="radio" name="t-24-${bIdx}" value="Rigidez" ${t.post24==='Rigidez'?'checked':''} onchange="autoSave()"> Rigidez matutina aumentada</label>
-                            <label><input type="radio" name="t-24-${bIdx}" value="Persistente" ${t.post24==='Persistente'?'checked':''} onchange="autoSave()"> Dolor persistente elevado</label>
-                        </div>
+                        <label>DOLOR POST 24H (EVA): <span class="eva24-val-display" style="color:var(--yellow);">${post24val}</span>/10</label>
+                        <input type="range" class="t-24" min="0" max="10" value="${post24val}" oninput="this.previousElementSibling.querySelector('.eva24-val-display').innerText=this.value; autoSave()">
+
                         <div class="semaforo-result s-box">
                             <div class="light s-light"></div>
                             <div>
@@ -700,7 +603,6 @@
             `;
         });
 
-        // Trigger logic evaluation for all blocks
         document.querySelectorAll('.block-card').forEach((bCard, bIdx) => {
             const block = day.blocks[bIdx];
             if(block.type === 'lumbar') {
@@ -738,7 +640,6 @@
             const bIdx = bCard.getAttribute('data-bidx');
             const block = day.blocks[bIdx];
 
-            // Scrape Exercises
             const exCards = bCard.querySelectorAll('.ex-card');
             block.exercises = Array.from(exCards).map(exCard => {
                 const setRows = exCard.querySelectorAll('.set-row');
@@ -754,19 +655,18 @@
                 };
             });
 
-            // Scrape Tracker
             if (block.type === 'lumbar') {
                 block.tracker.stage = bCard.querySelector('.l-stage').value;
                 block.tracker.eva = parseInt(bCard.querySelector('.l-eva').value);
                 block.tracker.nature = bCard.querySelector(`input[name="l-nature-${bIdx}"]:checked`).value;
                 block.tracker.direction = bCard.querySelector(`input[name="l-dir-${bIdx}"]:checked`).value;
-                block.tracker.post24 = bCard.querySelector(`input[name="l-24-${bIdx}"]:checked`).value;
+                block.tracker.post24 = parseInt(bCard.querySelector('.l-24').value);
                 evaluateLumbar(block.tracker, bCard);
             } else {
                 block.tracker.stage = bCard.querySelector('.t-stage').value;
                 block.tracker.eva = parseInt(bCard.querySelector('.t-eva').value);
                 block.tracker.nature = bCard.querySelector(`input[name="t-nature-${bIdx}"]:checked`).value;
-                block.tracker.post24 = bCard.querySelector(`input[name="t-24-${bIdx}"]:checked`).value;
+                block.tracker.post24 = parseInt(bCard.querySelector('.t-24').value);
                 evaluateTendon(block.tracker, bCard);
             }
         });
@@ -780,30 +680,34 @@
 
     function evaluateLumbar(t, bCard) {
         let color, status, msg;
-        if (t.nature === 'Radicular' || t.direction === 'Periferaliza' || t.post24 === 'Empeoramiento' || t.eva > 5) {
+        let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
+
+        if (t.nature === 'Radicular' || t.direction === 'Periferaliza' || t.eva > 5 || post24val > 5) {
             color = 'var(--neon-red)'; status = 'ALERTA CRÍTICA';
-            msg = 'Compromiso radicular. Detener patrón. Reducir carga drásticamente.';
-        } else if ((t.eva >= 4 && t.eva <= 5) || t.post24 === 'Rigidez') {
+            msg = 'Compromiso radicular o empeoramiento post-sesión. Detener patrón. Reducir carga drásticamente.';
+        } else if ((t.eva >= 4 && t.eva <= 5) || (post24val >= 4 && post24val <= 5)) {
             color = 'var(--yellow)'; status = 'ADVERTENCIA';
-            msg = 'Límite tisular. Mantener carga. Prohibida progresión.';
+            msg = 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
         } else {
             color = 'var(--green)'; status = 'ÓPTIMO';
-            msg = 'Adaptación confirmada. Autorizada sobrecarga progresiva.';
+            msg = 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
         }
         applyLogicUI(bCard, color, status, msg);
     }
 
     function evaluateTendon(t, bCard) {
         let color, status, msg;
-        if (t.nature === 'Agudo' || t.post24 === 'Persistente' || t.eva > 5) {
+        let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
+
+        if (t.nature === 'Agudo' || t.eva > 5 || post24val > 5) {
             color = 'var(--neon-red)'; status = 'SOBRECARGA AGUDA';
             msg = 'Capacidad tendinosa excedida. Retroceder a fase isométrica o reducir volumen/intensidad.';
-        } else if ((t.eva >= 4 && t.eva <= 5) || t.post24 === 'Rigidez') {
+        } else if ((t.eva >= 4 && t.eva <= 5) || (post24val >= 4 && post24val <= 5)) {
             color = 'var(--yellow)'; status = 'ZONA DE ADAPTACIÓN';
             msg = 'Respuesta esperable. Mantener parámetros actuales hasta consolidar tolerancia al estímulo.';
         } else {
             color = 'var(--green)'; status = 'ÓPTIMO';
-            msg = 'Estímulo asimilado correctamente. Progresar carga mecánica según macrociclo.';
+            msg = 'Estímulo asimilado correctamente con recuperación basal. Progresar carga mecánica según macrociclo.';
         }
         applyLogicUI(bCard, color, status, msg);
     }
