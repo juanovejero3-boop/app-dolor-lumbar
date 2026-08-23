@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v10.1 - CLINICAL PATHWAYS (FIXED)</title>
+    <title>PRIME PHYSIQUE v11 - CLONING SYS</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -131,7 +131,7 @@
         }
 
         .tabs-container {
-            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none;
+            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; flex: 1;
         }
         .tabs-container::-webkit-scrollbar { display: none; }
         .tab-pill {
@@ -303,7 +303,10 @@
             </div>
         </div>
 
-        <div class="tabs-container" id="week-tabs"></div>
+        <div style="display:flex; align-items:flex-start; margin-bottom:15px;">
+            <div class="tabs-container" id="week-tabs"></div>
+            <button class="btn" style="margin-left:15px; border-color:var(--burgundy); color:var(--text-muted); font-size:0.8rem; white-space:nowrap; height: 35px;" onclick="propagateForward()" title="Copiar diseño actual a las semanas posteriores">[»] PROPAGAR</button>
+        </div>
         <div class="tabs-container" id="day-tabs"></div>
 
         <div id="day-content">
@@ -365,7 +368,7 @@
     }
 
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v10_db');
+        const stored = localStorage.getItem('prime_v11_db');
         if (stored) {
             db = JSON.parse(stored);
             db.clients.forEach(c => { if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; });
@@ -399,7 +402,7 @@
         if (name) {
             let weeks = {}; for(let i=1; i<=12; i++) weeks[i] = [];
             db.clients.push({ name, weeks, profile: { protocol: 'none', phase: 'none' } });
-            localStorage.setItem('prime_v10_db', JSON.stringify(db)); renderDashboard();
+            localStorage.setItem('prime_v11_db', JSON.stringify(db)); renderDashboard();
         }
     }
 
@@ -443,13 +446,11 @@
         const protocol = client.profile.protocol;
         if(protocol === 'none') return false;
 
-        let qualifyingWeeks = 0;
-        let weeksChecked = 0;
+        let qualifyingWeeks = 0; let weeksChecked = 0;
 
         for(let w = 12; w >= 1; w--) {
             const days = client.weeks[w] || [];
-            let protocolFoundInWeek = false;
-            let maxPost24 = -1;
+            let protocolFoundInWeek = false; let maxPost24 = -1;
 
             days.forEach(day => {
                 day.blocks.forEach(b => {
@@ -465,15 +466,42 @@
 
             if(protocolFoundInWeek) {
                 weeksChecked++;
-                if(maxPost24 <= 2) {
-                    qualifyingWeeks++;
-                } else {
-                    return false; // Racha rota
-                }
+                if(maxPost24 <= 2) qualifyingWeeks++;
+                else return false; 
             }
-            if(qualifyingWeeks >= 3) return true; // 3 semanas ok
+            if(qualifyingWeeks >= 3) return true; 
         }
         return false;
+    }
+
+    /* LOGICA DE CLONACIÓN DE SEMANAS */
+    function propagateForward() {
+        if(cClientIndex === null) return;
+        if(confirm(`¿Sobreescribir desde W${cWeek + 1} hasta W12 usando la W${cWeek} como plantilla?\n\n(Se copiarán días, ejercicios, series, reps y kg. Se reiniciarán los semáforos de dolor y los checks para dejar la plantilla limpia).`)) {
+            autoSave();
+            const currentWeekData = db.clients[cClientIndex].weeks[cWeek];
+            
+            for(let w = cWeek + 1; w <= 12; w++) {
+                let clonedWeek = JSON.parse(JSON.stringify(currentWeekData));
+                clonedWeek.forEach(day => {
+                    day.blocks.forEach(b => {
+                        b.id = Date.now() + Math.random(); 
+                        if(b.type === 'lumbar') {
+                            b.tracker.eva = 0; b.tracker.post24 = 0;
+                        } else {
+                            b.tracker.evaDurante = 0; b.tracker.eva24h = 0; b.tracker.rigidez = false;
+                        }
+                        b.exercises.forEach(ex => {
+                            ex.sets.forEach(s => s.done = false);
+                        });
+                    });
+                });
+                db.clients[cClientIndex].weeks[w] = clonedWeek;
+            }
+            localStorage.setItem('prime_v11_db', JSON.stringify(db));
+            triggerSaveIndicator();
+            alert(`Sincronización completada. Las semanas ${cWeek + 1} a 12 son ahora clones de la W${cWeek}.`);
+        }
     }
 
     function renderTabs() {
@@ -493,16 +521,13 @@
     function selectWeek(w) { cWeek = w; cDayIndex = 0; renderTabs(); }
     function selectDay(d) { cDayIndex = d; renderTabs(); }
 
-    /* CORE FIX: The AutoSave was scraping the old DOM before inserting the new items. 
-       Now we AutoSave() first, then push to DB, then render, then manually setItem. */
-
     function addDay() {
         if(cClientIndex === null) return;
         autoSave();
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v10_db', JSON.stringify(db));
+        localStorage.setItem('prime_v11_db', JSON.stringify(db));
         renderTabs();
     }
 
@@ -511,7 +536,7 @@
             autoSave();
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
             cDayIndex = 0;
-            localStorage.setItem('prime_v10_db', JSON.stringify(db));
+            localStorage.setItem('prime_v11_db', JSON.stringify(db));
             renderTabs();
         }
     }
@@ -524,7 +549,7 @@
         else newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
         day.blocks.push(newBlock);
         renderDayContent();
-        localStorage.setItem('prime_v10_db', JSON.stringify(db));
+        localStorage.setItem('prime_v11_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
@@ -532,7 +557,7 @@
             autoSave(); 
             db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
             renderDayContent(); 
-            localStorage.setItem('prime_v10_db', JSON.stringify(db));
+            localStorage.setItem('prime_v11_db', JSON.stringify(db));
         }
     }
 
@@ -540,21 +565,21 @@
         autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
         renderDayContent(); 
-        localStorage.setItem('prime_v10_db', JSON.stringify(db));
+        localStorage.setItem('prime_v11_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
         autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
         renderDayContent(); 
-        localStorage.setItem('prime_v10_db', JSON.stringify(db));
+        localStorage.setItem('prime_v11_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
         autoSave();
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
         renderDayContent(); 
-        localStorage.setItem('prime_v10_db', JSON.stringify(db));
+        localStorage.setItem('prime_v11_db', JSON.stringify(db));
     }
 
     function toggleWizard(bIdx) {
@@ -725,7 +750,7 @@
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].name = document.getElementById('day-name-input').value;
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v10_db', JSON.stringify(db));
+            localStorage.setItem('prime_v11_db', JSON.stringify(db));
             triggerSaveIndicator(); renderTabs();
         }, 800); 
     }
@@ -761,7 +786,7 @@
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v10_db', JSON.stringify(db));
+            localStorage.setItem('prime_v11_db', JSON.stringify(db));
             triggerSaveIndicator();
             document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
         }, 500);
