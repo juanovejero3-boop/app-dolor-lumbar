@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v12 - ADVANCED CLINICAL PATHWAYS</title>
+    <title>PRIME PHYSIQUE v13 - LUMBAR STABILITY PROTOCOLS</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -105,7 +105,6 @@
         }
         .client-card span:first-child { font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; color: #fff; }
 
-        /* PERFIL CLÍNICO GLOBAL */
         .client-profile-bar {
             background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-light);
             border-top: 2px solid var(--neon-red); padding: 15px; margin-bottom: 25px;
@@ -230,7 +229,7 @@
             margin-top: 20px; padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-input);
             display: flex; align-items: center; gap: 15px;
         }
-        .light { width: 20px; height: 20px; border-radius: 50%; background-color: #333; }
+        .light { width: 20px; height: 20px; border-radius: 50%; background-color: #333; min-width: 20px; }
         .status-text { font-weight: bold; font-size: 1.1rem; font-family: 'Share Tech Mono', monospace; }
         .status-msg { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
 
@@ -276,13 +275,11 @@
         <div class="tag-alumno">CLINICAL SYS</div>
     </div>
 
-    <!-- VISTA DASHBOARD -->
     <div id="view-dashboard" class="view active">
         <button class="btn btn-primary" onclick="promptNewClient()">[+] INICIALIZAR ATLETA</button>
         <div id="clients-list"></div>
     </div>
 
-    <!-- VISTA TRACKER DEL ALUMNO -->
     <div id="view-tracker" class="view">
         <div class="flex-between">
             <button class="btn" onclick="showView('view-dashboard')">&lt; PANEL</button>
@@ -366,9 +363,7 @@
         let r, g, b;
         if (val <= 5) {
             const factor = val / 5;
-            r = Math.round(0 + factor * (255 - 0));
-            g = Math.round(255 + factor * (204 - 255));
-            b = Math.round(102 + factor * (0 - 102));
+            r = Math.round(0 + factor * (255 - 0)); g = Math.round(255 + factor * (204 - 255)); b = Math.round(102 + factor * (0 - 102));
         } else {
             const factor = (val - 5) / 5;
             r = 255; g = Math.round(204 + factor * (0 - 204)); b = Math.round(0 + factor * (60 - 0));
@@ -377,7 +372,7 @@
     }
 
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v12_db');
+        const stored = localStorage.getItem('prime_v13_db');
         if (stored) {
             db = JSON.parse(stored);
             db.clients.forEach(c => { if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; });
@@ -411,7 +406,7 @@
         if (name) {
             let weeks = {}; for(let i=1; i<=12; i++) weeks[i] = [];
             db.clients.push({ name, weeks, profile: { protocol: 'none', phase: 'none' } });
-            localStorage.setItem('prime_v12_db', JSON.stringify(db)); renderDashboard();
+            localStorage.setItem('prime_v13_db', JSON.stringify(db)); renderDashboard();
         }
     }
 
@@ -427,7 +422,7 @@
         const phaseSelect = document.getElementById('profile-phase');
         phaseSelect.innerHTML = '<option value="none">-- Seleccionar --</option>';
         if(p.protocol === 'lumbar') {
-            phaseSelect.innerHTML += `<option value="Fase 1">Fase 1: Centralización</option><option value="Fase 2">Fase 2: Core/Estabilidad</option><option value="Fase 3">Fase 3: Carga Axial</option>`;
+            phaseSelect.innerHTML += `<option value="Inestable">Lumbar Inestable</option><option value="Fase 1">Fase 1: Centralización</option><option value="Fase 2">Fase 2: Core/Estabilidad</option><option value="Fase 3">Fase 3: Carga Axial</option>`;
         } else if(p.protocol === 'tendinoso') {
             phaseSelect.innerHTML += `<option value="Fase 1">Fase 1: Movilidad / Analgesia</option><option value="Fase 2">Fase 2: Fuerza Específica</option><option value="Fase 3">Fase 3: Fuerza General</option><option value="Fase 4">Fase 4: Potencia / Pliometría</option>`;
         } else if(p.protocol === 'piriforme') {
@@ -506,7 +501,7 @@
                 });
                 db.clients[cClientIndex].weeks[w] = clonedWeek;
             }
-            localStorage.setItem('prime_v12_db', JSON.stringify(db));
+            localStorage.setItem('prime_v13_db', JSON.stringify(db));
             triggerSaveIndicator();
             alert(`Sincronización completada. Las semanas ${cWeek + 1} a 12 son ahora clones de la W${cWeek}.`);
         }
@@ -535,7 +530,7 @@
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v12_db', JSON.stringify(db));
+        localStorage.setItem('prime_v13_db', JSON.stringify(db));
         renderTabs();
     }
 
@@ -543,7 +538,7 @@
         if(confirm("¿Purgar el día actual?")) {
             autoSave();
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
-            cDayIndex = 0; localStorage.setItem('prime_v12_db', JSON.stringify(db)); renderTabs();
+            cDayIndex = 0; localStorage.setItem('prime_v13_db', JSON.stringify(db)); renderTabs();
         }
     }
 
@@ -551,33 +546,33 @@
         autoSave();
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
         let newBlock = { id: Date.now(), type: type, exercises: [ { name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] } ], tracker: {} };
-        if (type === 'lumbar') newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
+        if (type === 'lumbar') newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0, traccion: 'Sin Tracción' };
         else if (type === 'tendinoso') newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
         else if (type === 'piriforme') newBlock.tracker = { stage: 'Piriforme Corto', eva: 0 };
         
-        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
+        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
             autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
-            renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
+            renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
         }
     }
 
     function addExercise(bIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
-        renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
     }
 
     function toggleWizard(bIdx) {
@@ -637,23 +632,29 @@
             
             if (block.type === 'lumbar') {
                 let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
+                let currentTraccion = t.traccion || 'Sin Tracción';
                 wizHTML = `
                     <div id="wiz-${bIdx}" class="wizard-card" style="display:none;">
-                        <div class="wizard-title"><span>SELECCIONE EL ESCENARIO CLÍNICO:</span></div>
-                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 1: Centralización')"> Dolor constante, irradiado o alta irritabilidad mecánica.</label>
-                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 2: Core/Estabilidad')"> Dolor intermitente/centralizado, intolerancia a posturas.</label>
-                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 3: Carga Axial')"> Tolerancia base OK, necesidad de adaptación a cargas axiales.</label>
+                        <div class="wizard-title"><span>EVALUACIÓN DE INESTABILIDAD (PRONACIÓN):</span></div>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Inestabilidad Lumbar')"> Dolor agudo al aplicar carga de cizalla boca abajo, que desaparece al levantar las piernas de la camilla.</label>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Fase 1: Centralización')"> Sin inestabilidad. Dolor constante o irradiado.</label>
                     </div>
                 `;
                 diagHTML = `
                     <div class="diagnostic-section">
                         <h3>DIAGNÓSTICO LUMBAR</h3>
-                        <label class="diag-label">FASE CLÍNICA:</label>
+                        <label class="diag-label">ESTADO CLÍNICO:</label>
                         <select class="l-stage" onchange="autoSave()">
+                            <option value="Inestabilidad Lumbar" ${t.stage==='Inestabilidad Lumbar'?'selected':''}>Inestabilidad Lumbar (Micro-movimientos)</option>
                             <option value="Fase 1: Centralización" ${t.stage==='Fase 1: Centralización'?'selected':''}>Fase 1: Centralización Mecánica</option>
                             <option value="Fase 2: Core/Estabilidad" ${t.stage==='Fase 2: Core/Estabilidad'?'selected':''}>Fase 2: Estabilización Lumbo-Pélvica</option>
                             <option value="Fase 3: Carga Axial" ${t.stage==='Fase 3: Carga Axial'?'selected':''}>Fase 3: Sobrecarga Axial</option>
                         </select>
+                        <label class="diag-label">DESCOMPRESIÓN ESPINAL:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="l-tracc-${bIdx}" value="Sin Tracción" ${currentTraccion==='Sin Tracción'?'checked':''} onchange="autoSave()"> Sin Tracción</label>
+                            <label><input type="radio" name="l-tracc-${bIdx}" value="Colgado" ${currentTraccion==='Colgado'?'checked':''} onchange="autoSave()"> Tracción Activa (Colgarse de Barra)</label>
+                        </div>
                         <label class="diag-label">ESCALA EVA (INTRA-SESIÓN): <span class="eva-val-display" style="color:var(--neon-red);">${t.eva}</span>/10</label>
                         <input type="range" class="l-eva regular-slider" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
                         <label class="diag-label">SÍNTOMA DOMINANTE:</label>
@@ -771,7 +772,7 @@
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].name = document.getElementById('day-name-input').value;
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v12_db', JSON.stringify(db));
+            localStorage.setItem('prime_v13_db', JSON.stringify(db));
             triggerSaveIndicator(); renderTabs();
         }, 800); 
     }
@@ -794,6 +795,7 @@
                 block.tracker.eva = parseInt(bCard.querySelector('.l-eva').value);
                 block.tracker.nature = bCard.querySelector(`input[name="l-nature-${bIdx}"]:checked`).value;
                 block.tracker.direction = bCard.querySelector(`input[name="l-dir-${bIdx}"]:checked`).value;
+                block.tracker.traccion = bCard.querySelector(`input[name="l-tracc-${bIdx}"]:checked`).value;
                 block.tracker.post24 = parseInt(bCard.querySelector('.l-24').value);
                 evaluateLumbar(block.tracker, bCard);
             } else if (block.type === 'tendinoso') {
@@ -811,7 +813,7 @@
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v12_db', JSON.stringify(db));
+            localStorage.setItem('prime_v13_db', JSON.stringify(db));
             triggerSaveIndicator();
             document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
         }, 500);
@@ -821,12 +823,21 @@
         let color, status, msg;
         let post24val = isNaN(parseInt(t.post24)) ? 0 : parseInt(t.post24);
 
-        if (t.nature === 'Radicular' || t.direction === 'Periferaliza' || t.eva > 5 || post24val > 5) {
+        if (t.stage === 'Inestabilidad Lumbar') {
+            color = 'var(--neon-red)'; status = 'INESTABILIDAD DETECTADA';
+            if (t.traccion === 'Colgado') {
+                msg = '¡PELIGRO! La tracción/descompresión empeora los síntomas al generar micromovimientos. PROHIBIDO COLGARSE. Utiliza "Gato-Camello" (6-8 ciclos) y refuerza el Bracing abdominal.';
+            } else {
+                msg = 'Tracción desactivada (Correcto). Mantén estabilidad con Bracing estricto antes de cada bisagra de cadera. Solo movilidad suave tipo Gato-Camello.';
+            }
+        } else if (t.nature === 'Radicular' || t.direction === 'Periferaliza' || t.eva > 5 || post24val > 5) {
             color = 'var(--neon-red)'; status = 'ALERTA CRÍTICA'; msg = 'Compromiso radicular o empeoramiento post-sesión. Detener patrón. Reducir carga.';
         } else if ((t.eva >= 4 && t.eva <= 5) || (post24val >= 4 && post24val <= 5)) {
-            color = 'var(--yellow)'; status = 'ADVERTENCIA'; msg = 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
+            color = 'var(--yellow)'; status = 'ADVERTENCIA'; 
+            msg = t.traccion === 'Colgado' ? 'Límite tisular. La descompresión es útil para rehidratar el disco (ej. levantadores pesados/edad avanzada) pero no progresar la carga.' : 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
         } else {
-            color = 'var(--green)'; status = 'ÓPTIMO'; msg = 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
+            color = 'var(--green)'; status = 'ÓPTIMO'; 
+            msg = t.traccion === 'Colgado' ? 'Descompresión efectiva para alivio post-entrenamiento en columnas estables. Autorizada progresión.' : 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
         }
         
         const box = bCard.querySelector('.s-box'); box.style.borderColor = color;
