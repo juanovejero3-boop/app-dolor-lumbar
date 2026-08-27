@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v13 - LUMBAR STABILITY PROTOCOLS</title>
+    <title>PRIME PHYSIQUE v14 - CLINICAL TRIAGE WIZARD</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -23,45 +23,26 @@
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            background-image: 
-                linear-gradient(rgba(255, 23, 68, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 23, 68, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center center;
+            background-color: var(--bg-main); color: var(--text-main); font-family: 'Rajdhani', sans-serif;
+            margin: 0; padding: 0; display: flex; justify-content: center;
+            background-image: linear-gradient(rgba(255, 23, 68, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 23, 68, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: center center;
         }
 
         .app-container {
-            max-width: 900px;
-            width: 100%;
-            min-height: 100vh;
+            max-width: 900px; width: 100%; min-height: 100vh;
             background: linear-gradient(180deg, rgba(18, 18, 22, 0.95) 0%, rgba(5, 5, 5, 0.98) 100%);
-            border-left: 1px solid var(--burgundy);
-            border-right: 1px solid var(--burgundy);
+            border-left: 1px solid var(--burgundy); border-right: 1px solid var(--burgundy);
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(128, 0, 32, 0.2);
-            padding-bottom: 50px;
-            position: relative;
+            padding-bottom: 50px; position: relative;
         }
 
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            background: linear-gradient(90deg, #000, var(--bg-card), #000);
-            border-bottom: 2px solid var(--neon-red);
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 25px;
+            background: linear-gradient(90deg, #000, var(--bg-card), #000); border-bottom: 2px solid var(--neon-red);
             box-shadow: 0 2px 15px rgba(255, 23, 68, 0.2);
         }
-        .header h1 {
-            margin: 0; font-size: 1.5rem; text-transform: uppercase;
-            letter-spacing: 3px; font-family: 'Share Tech Mono', monospace; color: #fff;
-        }
+        .header h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; font-family: 'Share Tech Mono', monospace; color: #fff; }
         .header h1 span { color: var(--neon-red); text-shadow: 0 0 8px rgba(255, 23, 68, 0.6); }
         .tag-alumno {
             background-color: rgba(255, 23, 68, 0.1); color: var(--neon-red); padding: 4px 12px;
@@ -107,7 +88,7 @@
 
         .client-profile-bar {
             background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-light);
-            border-top: 2px solid var(--neon-red); padding: 15px; margin-bottom: 25px;
+            border-top: 2px solid var(--neon-red); padding: 15px; margin-bottom: 15px;
             border-radius: 4px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
         }
         .profile-item { display: flex; flex-direction: column; gap: 5px; }
@@ -123,46 +104,51 @@
             font-weight: bold; margin-left: auto; display: none; align-items: center; gap: 10px;
             animation: pulse-green 2s infinite; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
         }
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 5px rgba(0, 230, 118, 0.2); }
-            50% { box-shadow: 0 0 20px rgba(0, 230, 118, 0.5); }
-            100% { box-shadow: 0 0 5px rgba(0, 230, 118, 0.2); }
-        }
 
-        .tabs-container {
-            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; flex: 1;
+        /* EVALUACIÓN INICIAL (TRIAJE) */
+        .eval-section {
+            background: rgba(18, 18, 22, 0.9); border: 1px solid var(--burgundy);
+            margin-bottom: 25px; padding: 20px; display: none; border-radius: 4px;
         }
+        .eval-row {
+            display: grid; grid-template-columns: 1fr 150px; gap: 15px;
+            align-items: center; border-bottom: 1px dashed var(--border-color); padding: 10px 0;
+        }
+        .eval-row:last-child { border-bottom: none; }
+        .eval-test-name { font-weight: 700; color: #fff; font-size: 1.05rem; }
+        .eval-test-desc { font-size: 0.85rem; color: var(--text-muted); display: block; line-height: 1.3; margin-top: 3px; }
+        .eval-select {
+            background: var(--bg-input); border: 1px solid var(--border-light); color: #fff;
+            padding: 8px; font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; outline: none;
+            width: 100%; text-align: center;
+        }
+        .eval-select.neg { border-left: 3px solid var(--green); }
+        .eval-select.int { border-left: 3px solid var(--yellow); }
+        .eval-select.pos { border-left: 3px solid var(--neon-red); }
+        .eval-result-box {
+            margin-top: 20px; background: rgba(0,0,0,0.8); border: 1px solid var(--border-color);
+            padding: 15px; border-left: 4px solid var(--neon-red); font-family: 'Rajdhani', sans-serif;
+        }
+        .eval-result-title { font-family: 'Share Tech Mono', monospace; color: var(--neon-red); margin-bottom: 10px; font-size: 1.1rem; }
+        .eval-finding { margin-bottom: 8px; font-size: 0.95rem; color: #d0d0d0; display: flex; align-items: flex-start; gap: 10px; }
+        .eval-finding::before { content: '>'; color: var(--neon-red); font-weight: bold; font-family: 'Share Tech Mono'; }
+
+        .tabs-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; flex: 1; }
         .tabs-container::-webkit-scrollbar { display: none; }
         .tab-pill {
-            background-color: var(--bg-input); border: 1px solid var(--border-color);
-            color: var(--text-muted); padding: 8px 20px; font-size: 0.9rem; font-weight: 700;
-            font-family: 'Share Tech Mono', monospace; cursor: pointer; white-space: nowrap;
-            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); transition: 0.2s;
+            background-color: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 8px 20px; font-size: 0.9rem; font-weight: 700; font-family: 'Share Tech Mono', monospace;
+            cursor: pointer; white-space: nowrap; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); transition: 0.2s;
         }
-        .tab-pill.active {
-            background-color: var(--burgundy); color: white; border-color: var(--neon-red);
-            box-shadow: 0 0 10px var(--burgundy);
-        }
+        .tab-pill.active { background-color: var(--burgundy); color: white; border-color: var(--neon-red); box-shadow: 0 0 10px var(--burgundy); }
         .tab-pill:hover:not(.active) { border-color: var(--neon-red); color: var(--neon-red); }
 
         .block-card {
             background-color: rgba(18, 18, 22, 0.8); border: 1px solid var(--border-color);
             border-top: 3px solid var(--burgundy); margin-bottom: 30px; padding: 20px; position: relative;
         }
-        .block-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;
-        }
+        .block-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
         .block-title { font-family: 'Share Tech Mono', monospace; color: var(--neon-red); font-size: 1.2rem; text-transform: uppercase; }
-
-        .wizard-card { background: rgba(0, 0, 0, 0.6); border: 1px dashed var(--border-light); padding: 15px; margin-bottom: 20px; border-radius: 4px; }
-        .wizard-title { color: var(--text-muted); font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; margin-bottom: 15px; }
-        .wizard-option {
-            display: block; margin-bottom: 10px; font-size: 0.95rem; color: var(--text-main);
-            cursor: pointer; padding: 8px; background: var(--bg-input); border: 1px solid var(--border-color); transition: 0.2s;
-        }
-        .wizard-option:hover { border-color: var(--neon-red); }
-        .wizard-option input { accent-color: var(--neon-red); margin-right: 10px; }
 
         .ex-card {
             background: linear-gradient(180deg, var(--bg-card) 0%, #0d0d10 100%); border: 1px solid var(--border-light);
@@ -170,92 +156,44 @@
         }
         .ex-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--border-light); }
         .ex-card:hover::before { background-color: var(--neon-red); }
-        
-        .ex-header {
-            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;
-            background: linear-gradient(90deg, var(--border-color), var(--bg-input)); border-bottom: 1px solid var(--border-light);
-        }
+        .ex-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: linear-gradient(90deg, var(--border-color), var(--bg-input)); border-bottom: 1px solid var(--border-light); }
         .ex-title-wrap { display: flex; align-items: center; gap: 10px; flex: 1; }
         .ex-triangle { color: var(--neon-red); font-size: 1rem; }
-        .ex-name-input {
-            background: transparent; border: none; color: white; font-size: 1.1rem;
-            font-family: 'Rajdhani', sans-serif; font-weight: 700; width: 100%; outline: none; letter-spacing: 1px;
-        }
-        .ex-name-input::placeholder { color: var(--text-muted); }
-        .rpe-wrap {
-            display: flex; align-items: center; background-color: var(--rpe-bg); border: 1px solid var(--burgundy);
-            padding: 3px 8px; font-family: 'Share Tech Mono', monospace;
-        }
+        .ex-name-input { background: transparent; border: none; color: white; font-size: 1.1rem; font-family: 'Rajdhani', sans-serif; font-weight: 700; width: 100%; outline: none; letter-spacing: 1px; }
+        .rpe-wrap { display: flex; align-items: center; background-color: var(--rpe-bg); border: 1px solid var(--burgundy); padding: 3px 8px; font-family: 'Share Tech Mono', monospace; }
         .rpe-input { background: transparent; border: none; color: var(--rpe-text); width: 35px; font-weight: bold; font-size: 0.9rem; text-align: right; outline: none; }
 
         .sets-table { padding: 15px; }
         .sets-header, .set-row { display: grid; grid-template-columns: 40px 1fr 1fr 40px; gap: 15px; align-items: center; text-align: center; }
-        .sets-header {
-            font-size: 0.8rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace;
-            border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 12px;
-        }
+        .sets-header { font-size: 0.8rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 12px; }
         .set-row { margin-bottom: 10px; }
         .set-num { font-size: 1rem; font-family: 'Share Tech Mono', monospace; color: var(--text-muted); }
-        .set-input {
-            background-color: var(--bg-input); border: 1px solid var(--border-color); color: #fff;
-            font-family: 'Share Tech Mono', monospace; padding: 10px; text-align: center; font-size: 1.1rem;
-            width: 100%; box-sizing: border-box; outline: none; transition: 0.2s;
-        }
+        .set-input { background-color: var(--bg-input); border: 1px solid var(--border-color); color: #fff; font-family: 'Share Tech Mono', monospace; padding: 10px; text-align: center; font-size: 1.1rem; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s; }
         .set-input:focus { border-color: var(--neon-red); }
         .set-checkbox { width: 22px; height: 22px; accent-color: var(--neon-red); cursor: pointer; }
 
-        .diagnostic-section {
-            background-color: rgba(0,0,0,0.5); border: 1px solid var(--border-light);
-            padding: 20px; margin-top: 25px; border-left: 3px solid var(--neon-red);
-        }
-        .diagnostic-section h3 {
-            margin-top: 0; color: var(--neon-red); font-family: 'Share Tech Mono', monospace;
-            font-size: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
-        }
-        
+        .diagnostic-section { background-color: rgba(0,0,0,0.5); border: 1px solid var(--border-light); padding: 20px; margin-top: 25px; border-left: 3px solid var(--neon-red); }
+        .diagnostic-section h3 { margin-top: 0; color: var(--neon-red); font-family: 'Share Tech Mono', monospace; font-size: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         label.diag-label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.9rem; color: #fff; font-family: 'Share Tech Mono', monospace; }
-        select, input[type="range"].regular-slider {
-            width: 100%; padding: 10px; background-color: var(--bg-input); color: white;
-            border: 1px solid var(--border-color); font-family: 'Rajdhani', sans-serif; font-size: 1rem; box-sizing: border-box; outline: none;
-        }
-        input[type="range"].regular-slider { accent-color: var(--neon-red); }
-        .radio-group { 
-            display: flex; flex-direction: column; gap: 8px; background-color: var(--bg-input); 
-            padding: 12px; border: 1px solid var(--border-color); 
-        }
+        select, input[type="range"].regular-slider { width: 100%; padding: 10px; background-color: var(--bg-input); color: white; border: 1px solid var(--border-color); font-family: 'Rajdhani', sans-serif; font-size: 1rem; box-sizing: border-box; outline: none; }
+        .radio-group { display: flex; flex-direction: column; gap: 8px; background-color: var(--bg-input); padding: 12px; border: 1px solid var(--border-color); }
         .radio-group label { margin: 0; color: var(--text-main); font-family: 'Rajdhani', sans-serif; font-size: 1rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         
-        .semaforo-result {
-            margin-top: 20px; padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-input);
-            display: flex; align-items: center; gap: 15px;
-        }
+        .semaforo-result { margin-top: 20px; padding: 15px; border: 1px solid var(--border-color); background-color: var(--bg-input); display: flex; align-items: center; gap: 15px; }
         .light { width: 20px; height: 20px; border-radius: 50%; background-color: #333; min-width: 20px; }
         .status-text { font-weight: bold; font-size: 1.1rem; font-family: 'Share Tech Mono', monospace; }
         .status-msg { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
 
         .flex-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .auto-save-indicator { 
-            font-size: 0.85rem; color: var(--green); font-family: 'Share Tech Mono', monospace;
-            opacity: 0; transition: opacity 0.5s; text-shadow: 0 0 5px var(--green);
-        }
+        .auto-save-indicator { font-size: 0.85rem; color: var(--green); font-family: 'Share Tech Mono', monospace; opacity: 0; transition: opacity 0.5s; text-shadow: 0 0 5px var(--green); }
         .auto-save-indicator.show { opacity: 1; }
         
-        .day-title-input {
-            width: 100%; background: transparent; border: none; color: #fff; font-size: 1.5rem;
-            font-family: 'Share Tech Mono', monospace; padding-bottom: 10px; margin-bottom: 25px;
-            border-bottom: 2px solid var(--burgundy); outline: none;
-        }
+        .day-title-input { width: 100%; background: transparent; border: none; color: #fff; font-size: 1.5rem; font-family: 'Share Tech Mono', monospace; padding-bottom: 10px; margin-bottom: 25px; border-bottom: 2px solid var(--burgundy); outline: none; }
         .day-title-input:focus { border-color: var(--neon-red); }
         .block-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
 
-        input[type=range].tendon-slider {
-            -webkit-appearance: none; width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; outline: none; padding: 0; margin: 10px 0;
-        }
-        input[type=range].tendon-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
-            background: var(--thumb-color, var(--green)); cursor: pointer; margin-top: -9px;
-            box-shadow: 0 0 12px var(--thumb-color, rgba(0, 255, 102, 0.5)); border: 2px solid var(--bg-main); transition: background 0.2s ease, box-shadow 0.2s ease;
-        }
+        input[type=range].tendon-slider { -webkit-appearance: none; width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; outline: none; padding: 0; margin: 10px 0; }
+        input[type=range].tendon-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: var(--thumb-color, var(--green)); cursor: pointer; margin-top: -9px; box-shadow: 0 0 12px var(--thumb-color, rgba(0, 255, 102, 0.5)); border: 2px solid var(--bg-main); transition: background 0.2s ease, box-shadow 0.2s ease; }
         input[type=range].tendon-slider::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: transparent; border-radius: 3px; }
 
         @media (max-width: 600px) {
@@ -264,6 +202,7 @@
             .rpe-wrap { align-self: flex-end; }
             .block-header { flex-direction: column; align-items: flex-start; gap: 12px; }
             .block-header > div { display: flex; width: 100%; justify-content: space-between; }
+            .eval-row { grid-template-columns: 1fr; gap: 5px; }
         }
     </style>
 </head>
@@ -275,11 +214,13 @@
         <div class="tag-alumno">CLINICAL SYS</div>
     </div>
 
+    <!-- VISTA DASHBOARD -->
     <div id="view-dashboard" class="view active">
         <button class="btn btn-primary" onclick="promptNewClient()">[+] INICIALIZAR ATLETA</button>
         <div id="clients-list"></div>
     </div>
 
+    <!-- VISTA TRACKER DEL ALUMNO -->
     <div id="view-tracker" class="view">
         <div class="flex-between">
             <button class="btn" onclick="showView('view-dashboard')">&lt; PANEL</button>
@@ -308,6 +249,70 @@
             </div>
         </div>
 
+        <!-- BOTÓN TRIAJE -->
+        <button class="btn" style="width:100%; margin-bottom:15px; border-style:dashed; color:var(--text-main);" onclick="toggleEvalSection()" id="btn-eval-toggle">[+] ABRIR EVALUACIÓN CLÍNICA INICIAL</button>
+
+        <!-- PANEL DE EVALUACIÓN INICIAL -->
+        <div id="eval-section" class="eval-section">
+            <h3 style="color:var(--neon-red); margin-top:0; font-family:'Share Tech Mono'; border-bottom:1px solid var(--border-color); padding-bottom:10px;">TEST DE DESCARTE Y TRIAJE</h3>
+            
+            <div class="eval-row">
+                <div>
+                    <div class="eval-test-name">1. Tolerancia a la Flexión (Toe Touch)</div>
+                    <span class="eval-test-desc">Paciente de pie, intenta tocar la punta de los pies. ¿Aparece dolor lumbar agudo al flexionar?</span>
+                </div>
+                <select class="eval-select" id="eval-flexion" onchange="processEvaluation()">
+                    <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
+                </select>
+            </div>
+
+            <div class="eval-row">
+                <div>
+                    <div class="eval-test-name">2. Tolerancia a la Extensión</div>
+                    <span class="eval-test-desc">Paciente de pie, arquea la espalda hacia atrás. ¿Aparece dolor articular/compresión en la zona lumbar?</span>
+                </div>
+                <select class="eval-select" id="eval-extension" onchange="processEvaluation()">
+                    <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
+                </select>
+            </div>
+
+            <div class="eval-row">
+                <div>
+                    <div class="eval-test-name">3. Prueba de Pronación (Inestabilidad)</div>
+                    <span class="eval-test-desc">Paciente boca abajo (piernas colgando de la camilla). Aplicar cizalla. ¿Duele y luego el dolor desaparece al elevar las piernas rectas?</span>
+                </div>
+                <select class="eval-select" id="eval-pronacion" onchange="processEvaluation()">
+                    <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
+                </select>
+            </div>
+
+            <div class="eval-row">
+                <div>
+                    <div class="eval-test-name">4. Elevación Pierna Recta (SLR / Radicular)</div>
+                    <span class="eval-test-desc">Paciente boca arriba. Elevar la pierna recta de forma pasiva. ¿Dispara dolor que viaja por debajo de la rodilla?</span>
+                </div>
+                <select class="eval-select" id="eval-slr" onchange="processEvaluation()">
+                    <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
+                </select>
+            </div>
+
+            <div class="eval-row">
+                <div>
+                    <div class="eval-test-name">5. Palpación / Tensión Muscular Focalizada</div>
+                    <span class="eval-test-desc">Al presionar la musculatura paraespinal (sin mover la columna), ¿hay dolor local similar a un espasmo sin irradiación?</span>
+                </div>
+                <select class="eval-select" id="eval-muscular" onchange="processEvaluation()">
+                    <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
+                </select>
+            </div>
+
+            <div class="eval-result-box" id="eval-result-box" style="display:none;">
+                <div class="eval-result-title">RESULTADOS DEL TRIAJE:</div>
+                <div id="eval-findings-container"></div>
+            </div>
+        </div>
+
+        <!-- CONTROLES DE SEMANA -->
         <div style="display:flex; align-items:flex-start; margin-bottom:15px;">
             <div class="tabs-container" id="week-tabs"></div>
             <button class="btn" style="margin-left:15px; border-color:var(--burgundy); color:var(--text-muted); font-size:0.8rem; white-space:nowrap; height: 35px;" onclick="propagateForward()" title="Copiar diseño actual a las semanas posteriores">[»] PROPAGAR</button>
@@ -346,36 +351,14 @@
         "Dolor severo, impide la actividad", "El peor dolor imaginable, insoportable"
     ];
 
-    const dataEstados = {
-        VERDE_CORTO: { title: "VERDE - VAS CORTO DE CARGA", color: "var(--green)", desc: "El estímulo se le queda corto: así el tejido no tiene motivo para adaptarse.", action: "→ SUBE CARGA CON DECISIÓN" },
-        VERDE_OPTIMO: { title: "VERDE ÓPTIMO", color: "var(--green)", desc: "Molestia tolerable intra-sesión y buena asimilación a las 24 h.", action: "→ PROGRESA UN ESCALÓN" },
-        VERDE_ALTO: { title: "VERDE ALTO", color: "var(--green)", desc: "Parte alta de la ventana terapéutica. Queda poco margen antes de sobrecarga.", action: "→ CONSOLIDA UNA SEMANA" },
-        AMARILLO_RIGIDEZ: { title: "AMARILLO - RIGIDEZ MATUTINA", color: "var(--yellow)", desc: "Aviso temprano de sobrecarga estructural sin aumento de dolor percibido.", action: "→ NO PROGRESAR CARGA" },
-        AMARILLO_MOLESTA: { title: "AMARILLO - MOLESTIA INTRA-SESIÓN", color: "var(--yellow)", desc: "Dosis bien asimilada a las 24h, pero ejecución excesivamente dolorosa.", action: "→ AJUSTAR TÉCNICA/RANGO, NO PESO" },
-        AMARILLO_FACTURA: { title: "AMARILLO - LÍMITE TISULAR", color: "var(--yellow)", desc: "El tejido se queja a las 24h. Techo de asimilación actual alcanzado.", action: "→ MANTENER CARGA / BAJAR SI EMPEORA" },
-        AMARILLO_ALTO: { title: "AMARILLO ALTO", color: "var(--yellow)", desc: "Doble señal de alerta (durante y post). Rozando el límite lesivo.", action: "→ NO PROGRESAR, REDUCIR VOLUMEN" },
-        ROJO: { title: "ROJO", color: "var(--neon-red)", desc: "Respuesta clara por encima del basal a las 24h. Ventana de carga excedida.", action: "→ BAJAR UN ESCALÓN Y REEVALUAR" },
-        ROJO_ALTO: { title: "ROJO ALTO - TEJIDO IRRITADO", color: "var(--neon-red)", desc: "Estado de irritación. No se puede dosificar hacia abajo de forma normal.", action: "→ DESCARGA A ISOMÉTRICOS / RETIRAR" },
-        ROJO_MAXIMO: { title: "ROJO MÁXIMO - REPLANTEA", color: "var(--neon-red)", desc: "Dolor extremo y sostenido. Protocolo actual totalmente inadecuado.", action: "→ ABORTAR EJERCICIO INMEDIATAMENTE" }
-    };
-
-    function obtenerColorInterpolado(val) {
-        let r, g, b;
-        if (val <= 5) {
-            const factor = val / 5;
-            r = Math.round(0 + factor * (255 - 0)); g = Math.round(255 + factor * (204 - 255)); b = Math.round(102 + factor * (0 - 102));
-        } else {
-            const factor = (val - 5) / 5;
-            r = 255; g = Math.round(204 + factor * (0 - 204)); b = Math.round(0 + factor * (60 - 0));
-        }
-        return `rgb(${r}, ${g}, ${b})`;
-    }
-
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v13_db');
+        const stored = localStorage.getItem('prime_v14_db');
         if (stored) {
             db = JSON.parse(stored);
-            db.clients.forEach(c => { if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; });
+            db.clients.forEach(c => { 
+                if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; 
+                if(!c.eval) c.eval = { flex: '0', ext: '0', pron: '0', slr: '0', musc: '0' };
+            });
         }
         renderDashboard();
     };
@@ -405,17 +388,107 @@
         const name = prompt("Nombre del Atleta:");
         if (name) {
             let weeks = {}; for(let i=1; i<=12; i++) weeks[i] = [];
-            db.clients.push({ name, weeks, profile: { protocol: 'none', phase: 'none' } });
-            localStorage.setItem('prime_v13_db', JSON.stringify(db)); renderDashboard();
+            db.clients.push({ 
+                name, weeks, 
+                profile: { protocol: 'none', phase: 'none' },
+                eval: { flex: '0', ext: '0', pron: '0', slr: '0', musc: '0' }
+            });
+            localStorage.setItem('prime_v14_db', JSON.stringify(db)); renderDashboard();
         }
     }
 
     function openTracker(clientIdx) {
         cClientIndex = clientIdx; cWeek = 1; cDayIndex = 0;
         document.getElementById('tracker-client-name').innerText = db.clients[cClientIndex].name;
-        updateProfileUI(); renderTabs(); showView('view-tracker');
+        updateProfileUI(); 
+        loadEvaluationData();
+        renderTabs(); showView('view-tracker');
     }
 
+    /* MÓDULO DE EVALUACIÓN INICIAL */
+    function toggleEvalSection() {
+        const section = document.getElementById('eval-section');
+        const btn = document.getElementById('btn-eval-toggle');
+        if (section.style.display === 'block') {
+            section.style.display = 'none';
+            btn.innerHTML = '[+] ABRIR EVALUACIÓN CLÍNICA INICIAL';
+        } else {
+            section.style.display = 'block';
+            btn.innerHTML = '[-] CERRAR EVALUACIÓN';
+        }
+    }
+
+    function loadEvaluationData() {
+        const eData = db.clients[cClientIndex].eval;
+        document.getElementById('eval-flexion').value = eData.flex;
+        document.getElementById('eval-extension').value = eData.ext;
+        document.getElementById('eval-pronacion').value = eData.pron;
+        document.getElementById('eval-slr').value = eData.slr;
+        document.getElementById('eval-muscular').value = eData.musc;
+        processEvaluation();
+    }
+
+    function processEvaluation() {
+        if(cClientIndex === null) return;
+        const eData = db.clients[cClientIndex].eval;
+        
+        // Capture DOM
+        const flexEl = document.getElementById('eval-flexion');
+        const extEl = document.getElementById('eval-extension');
+        const pronEl = document.getElementById('eval-pronacion');
+        const slrEl = document.getElementById('eval-slr');
+        const muscEl = document.getElementById('eval-muscular');
+
+        eData.flex = flexEl.value;
+        eData.ext = extEl.value;
+        eData.pron = pronEl.value;
+        eData.slr = slrEl.value;
+        eData.musc = muscEl.value;
+
+        // Apply visual classes
+        [flexEl, extEl, pronEl, slrEl, muscEl].forEach(el => {
+            el.className = 'eval-select';
+            if (el.value === '0') el.classList.add('neg');
+            else if (el.value === '1') el.classList.add('int');
+            else if (el.value === '2') el.classList.add('pos');
+        });
+
+        // Generate Report
+        const container = document.getElementById('eval-findings-container');
+        const box = document.getElementById('eval-result-box');
+        container.innerHTML = '';
+        let hasFindings = false;
+
+        if (eData.pron > 0) {
+            container.innerHTML += `<div class="eval-finding">INESTABILIDAD LUMBAR DETECTADA: Prohibida estrictamente la descompresión (colgarse). Foco en estabilización (McGill Big 3) y evitar rangos extremos de movimiento bajo carga.</div>`;
+            hasFindings = true;
+        }
+        if (eData.slr > 0) {
+            container.innerHTML += `<div class="eval-finding">COMPROMISO RADICULAR / CIÁTICA: Posible irritación discal que afecta al nervio. Priorizar ejercicios de centralización (ej. McKenzie). Evitar estiramientos pasivos de isquiotibiales.</div>`;
+            hasFindings = true;
+        }
+        if (eData.flex > 0 && eData.ext === '0') {
+            container.innerHTML += `<div class="eval-finding">INTOLERANCIA A LA FLEXIÓN: Mecanismo de lesión discal predominante. Limitar sentadillas profundas o peso muerto pesado temporalmente. Entrenar en columna neutra o ligera extensión.</div>`;
+            hasFindings = true;
+        }
+        if (eData.ext > 0 && eData.flex === '0') {
+            container.innerHTML += `<div class="eval-finding">INTOLERANCIA A LA EXTENSIÓN: Posible sospecha facetaria o espondilolistesis. Evitar arquear la espalda bajo carga (ej. press militar de pie excesivo). Priorizar posiciones neutras o ligera flexión.</div>`;
+            hasFindings = true;
+        }
+        if (eData.musc > 0 && eData.flex === '0' && eData.ext === '0' && eData.pron === '0' && eData.slr === '0') {
+            container.innerHTML += `<div class="eval-finding">MECÁNICA MIOFASCIAL: Cuadro predominantemente muscular (espasmo/sobrecarga). Responderá bien a liberación de tejidos blandos y ajuste de cargas.</div>`;
+            hasFindings = true;
+        }
+
+        if (hasFindings) box.style.display = 'block';
+        else box.style.display = 'none';
+
+        // Save
+        localStorage.setItem('prime_v14_db', JSON.stringify(db));
+    }
+
+
+    /* LOGICA DE PERFIL Y PROGRESIÓN */
     function updateProfileUI() {
         const p = db.clients[cClientIndex].profile;
         document.getElementById('profile-protocol').value = p.protocol;
@@ -501,7 +574,7 @@
                 });
                 db.clients[cClientIndex].weeks[w] = clonedWeek;
             }
-            localStorage.setItem('prime_v13_db', JSON.stringify(db));
+            localStorage.setItem('prime_v14_db', JSON.stringify(db));
             triggerSaveIndicator();
             alert(`Sincronización completada. Las semanas ${cWeek + 1} a 12 son ahora clones de la W${cWeek}.`);
         }
@@ -530,7 +603,7 @@
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v13_db', JSON.stringify(db));
+        localStorage.setItem('prime_v14_db', JSON.stringify(db));
         renderTabs();
     }
 
@@ -538,7 +611,7 @@
         if(confirm("¿Purgar el día actual?")) {
             autoSave();
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
-            cDayIndex = 0; localStorage.setItem('prime_v13_db', JSON.stringify(db)); renderTabs();
+            cDayIndex = 0; localStorage.setItem('prime_v14_db', JSON.stringify(db)); renderTabs();
         }
     }
 
@@ -550,29 +623,29 @@
         else if (type === 'tendinoso') newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
         else if (type === 'piriforme') newBlock.tracker = { stage: 'Piriforme Corto', eva: 0 };
         
-        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
+        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
             autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
-            renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
+            renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
         }
     }
 
     function addExercise(bIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
-        renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        renderDayContent(); localStorage.setItem('prime_v13_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
     }
 
     function toggleWizard(bIdx) {
@@ -772,7 +845,7 @@
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].name = document.getElementById('day-name-input').value;
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v13_db', JSON.stringify(db));
+            localStorage.setItem('prime_v14_db', JSON.stringify(db));
             triggerSaveIndicator(); renderTabs();
         }, 800); 
     }
@@ -813,7 +886,7 @@
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v13_db', JSON.stringify(db));
+            localStorage.setItem('prime_v14_db', JSON.stringify(db));
             triggerSaveIndicator();
             document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
         }, 500);
@@ -834,10 +907,10 @@
             color = 'var(--neon-red)'; status = 'ALERTA CRÍTICA'; msg = 'Compromiso radicular o empeoramiento post-sesión. Detener patrón. Reducir carga.';
         } else if ((t.eva >= 4 && t.eva <= 5) || (post24val >= 4 && post24val <= 5)) {
             color = 'var(--yellow)'; status = 'ADVERTENCIA'; 
-            msg = t.traccion === 'Colgado' ? 'Límite tisular. La descompresión es útil para rehidratar el disco (ej. levantadores pesados/edad avanzada) pero no progresar la carga.' : 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
+            msg = t.traccion === 'Colgado' ? 'Límite tisular. La descompresión es útil para rehidratar el disco pero no progresar la carga.' : 'Límite tisular alcanzado. Mantener carga. Prohibida progresión.';
         } else {
             color = 'var(--green)'; status = 'ÓPTIMO'; 
-            msg = t.traccion === 'Colgado' ? 'Descompresión efectiva para alivio post-entrenamiento en columnas estables. Autorizada progresión.' : 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
+            msg = t.traccion === 'Colgado' ? 'Descompresión efectiva para alivio en columnas estables. Autorizada progresión.' : 'Adaptación confirmada y recuperación adecuada. Autorizada sobrecarga progresiva.';
         }
         
         const box = bCard.querySelector('.s-box'); box.style.borderColor = color;
