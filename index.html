@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v14 - CLINICAL TRIAGE WIZARD</title>
+    <title>PRIME PHYSIQUE v15 - CLINICAL TRIAGE WIZARD</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -111,8 +111,8 @@
             margin-bottom: 25px; padding: 20px; display: none; border-radius: 4px;
         }
         .eval-row {
-            display: grid; grid-template-columns: 1fr 150px; gap: 15px;
-            align-items: center; border-bottom: 1px dashed var(--border-color); padding: 10px 0;
+            display: grid; grid-template-columns: 1fr 180px; gap: 15px;
+            align-items: center; border-bottom: 1px dashed var(--border-color); padding: 12px 0;
         }
         .eval-row:last-child { border-bottom: none; }
         .eval-test-name { font-weight: 700; color: #fff; font-size: 1.05rem; }
@@ -130,7 +130,7 @@
             padding: 15px; border-left: 4px solid var(--neon-red); font-family: 'Rajdhani', sans-serif;
         }
         .eval-result-title { font-family: 'Share Tech Mono', monospace; color: var(--neon-red); margin-bottom: 10px; font-size: 1.1rem; }
-        .eval-finding { margin-bottom: 8px; font-size: 0.95rem; color: #d0d0d0; display: flex; align-items: flex-start; gap: 10px; }
+        .eval-finding { margin-bottom: 12px; font-size: 0.95rem; color: #d0d0d0; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
         .eval-finding::before { content: '>'; color: var(--neon-red); font-weight: bold; font-family: 'Share Tech Mono'; }
 
         .tabs-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; flex: 1; }
@@ -254,32 +254,32 @@
 
         <!-- PANEL DE EVALUACIÓN INICIAL -->
         <div id="eval-section" class="eval-section">
-            <h3 style="color:var(--neon-red); margin-top:0; font-family:'Share Tech Mono'; border-bottom:1px solid var(--border-color); padding-bottom:10px;">TEST DE DESCARTE Y TRIAJE</h3>
+            <h3 style="color:var(--neon-red); margin-top:0; font-family:'Share Tech Mono'; border-bottom:1px solid var(--border-color); padding-bottom:10px;">TEST DE DESCARTE Y TRIAJE (HERNIAS & PIRIFORME)</h3>
             
             <div class="eval-row">
                 <div>
-                    <div class="eval-test-name">1. Tolerancia a la Flexión (Toe Touch)</div>
-                    <span class="eval-test-desc">Paciente de pie, intenta tocar la punta de los pies. ¿Aparece dolor lumbar agudo al flexionar?</span>
+                    <div class="eval-test-name">1. Elevación Pierna Recta Cruzada (Crossed SLR)</div>
+                    <span class="eval-test-desc">Paciente boca arriba. Elevar pasivamente la pierna SANA. ¿Dispara dolor que baja por la pierna afectada? (Descarte Hernia)</span>
                 </div>
-                <select class="eval-select" id="eval-flexion" onchange="processEvaluation()">
+                <select class="eval-select" id="eval-slr-cruzada" onchange="processEvaluation()">
                     <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
                 </select>
             </div>
 
             <div class="eval-row">
                 <div>
-                    <div class="eval-test-name">2. Tolerancia a la Extensión</div>
-                    <span class="eval-test-desc">Paciente de pie, arquea la espalda hacia atrás. ¿Aparece dolor articular/compresión en la zona lumbar?</span>
+                    <div class="eval-test-name">2. Compresión Sentado en Flexión (Slump Modificado)</div>
+                    <span class="eval-test-desc">Paciente sentado, arquear la columna y tirar del asiento hacia arriba. ¿Reproduce el dolor irradiado en la pierna? (Descarte Hernia)</span>
                 </div>
-                <select class="eval-select" id="eval-extension" onchange="processEvaluation()">
+                <select class="eval-select" id="eval-compresion" onchange="processEvaluation()">
                     <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
                 </select>
             </div>
 
             <div class="eval-row">
                 <div>
-                    <div class="eval-test-name">3. Prueba de Pronación (Inestabilidad)</div>
-                    <span class="eval-test-desc">Paciente boca abajo (piernas colgando de la camilla). Aplicar cizalla. ¿Duele y luego el dolor desaparece al elevar las piernas rectas?</span>
+                    <div class="eval-test-name">3. Inestabilidad en Pronación</div>
+                    <span class="eval-test-desc">Paciente boca abajo (piernas colgando). Aplicar cizalla lumbar. ¿Duele y luego el dolor desaparece al elevar las piernas?</span>
                 </div>
                 <select class="eval-select" id="eval-pronacion" onchange="processEvaluation()">
                     <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
@@ -288,20 +288,20 @@
 
             <div class="eval-row">
                 <div>
-                    <div class="eval-test-name">4. Elevación Pierna Recta (SLR / Radicular)</div>
-                    <span class="eval-test-desc">Paciente boca arriba. Elevar la pierna recta de forma pasiva. ¿Dispara dolor que viaja por debajo de la rodilla?</span>
+                    <div class="eval-test-name">4. Rotación Interna de Cadera a 60°</div>
+                    <span class="eval-test-desc">Paciente boca arriba, flexionar cadera afectada a 60° (no 90°). Rotar internamente (pie hacia afuera). Comparar con lado sano. (Descarte Piriforme)</span>
                 </div>
-                <select class="eval-select" id="eval-slr" onchange="processEvaluation()">
-                    <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
+                <select class="eval-select" id="eval-rotacion" onchange="processEvaluation()">
+                    <option value="0">Igual / Simétrica</option><option value="1">Limitada (Piriforme Corto)</option><option value="2">Excesiva (Piriforme Largo)</option>
                 </select>
             </div>
 
             <div class="eval-row">
                 <div>
-                    <div class="eval-test-name">5. Palpación / Tensión Muscular Focalizada</div>
-                    <span class="eval-test-desc">Al presionar la musculatura paraespinal (sin mover la columna), ¿hay dolor local similar a un espasmo sin irradiación?</span>
+                    <div class="eval-test-name">5. Tolerancia a la Flexión / Extensión Activa</div>
+                    <span class="eval-test-desc">Paciente de pie. Al tocar la punta de los pies o arquear hacia atrás, ¿Aparece dolor lumbar o compresión?</span>
                 </div>
-                <select class="eval-select" id="eval-muscular" onchange="processEvaluation()">
+                <select class="eval-select" id="eval-flex-ext" onchange="processEvaluation()">
                     <option value="0">Negativo (-)</option><option value="1">Intermedio (+/-)</option><option value="2">Positivo (+)</option>
                 </select>
             </div>
@@ -352,12 +352,12 @@
     ];
 
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v14_db');
+        const stored = localStorage.getItem('prime_v15_db');
         if (stored) {
             db = JSON.parse(stored);
             db.clients.forEach(c => { 
                 if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; 
-                if(!c.eval) c.eval = { flex: '0', ext: '0', pron: '0', slr: '0', musc: '0' };
+                if(!c.eval) c.eval = { slrCruz: '0', comp: '0', pron: '0', rot: '0', flexExt: '0' };
             });
         }
         renderDashboard();
@@ -391,9 +391,9 @@
             db.clients.push({ 
                 name, weeks, 
                 profile: { protocol: 'none', phase: 'none' },
-                eval: { flex: '0', ext: '0', pron: '0', slr: '0', musc: '0' }
+                eval: { slrCruz: '0', comp: '0', pron: '0', rot: '0', flexExt: '0' }
             });
-            localStorage.setItem('prime_v14_db', JSON.stringify(db)); renderDashboard();
+            localStorage.setItem('prime_v15_db', JSON.stringify(db)); renderDashboard();
         }
     }
 
@@ -420,11 +420,11 @@
 
     function loadEvaluationData() {
         const eData = db.clients[cClientIndex].eval;
-        document.getElementById('eval-flexion').value = eData.flex;
-        document.getElementById('eval-extension').value = eData.ext;
-        document.getElementById('eval-pronacion').value = eData.pron;
-        document.getElementById('eval-slr').value = eData.slr;
-        document.getElementById('eval-muscular').value = eData.musc;
+        document.getElementById('eval-slr-cruzada').value = eData.slrCruz || '0';
+        document.getElementById('eval-compresion').value = eData.comp || '0';
+        document.getElementById('eval-pronacion').value = eData.pron || '0';
+        document.getElementById('eval-rotacion').value = eData.rot || '0';
+        document.getElementById('eval-flex-ext').value = eData.flexExt || '0';
         processEvaluation();
     }
 
@@ -433,25 +433,30 @@
         const eData = db.clients[cClientIndex].eval;
         
         // Capture DOM
-        const flexEl = document.getElementById('eval-flexion');
-        const extEl = document.getElementById('eval-extension');
+        const slrCruzEl = document.getElementById('eval-slr-cruzada');
+        const compEl = document.getElementById('eval-compresion');
         const pronEl = document.getElementById('eval-pronacion');
-        const slrEl = document.getElementById('eval-slr');
-        const muscEl = document.getElementById('eval-muscular');
+        const rotEl = document.getElementById('eval-rotacion');
+        const flexExtEl = document.getElementById('eval-flex-ext');
 
-        eData.flex = flexEl.value;
-        eData.ext = extEl.value;
+        eData.slrCruz = slrCruzEl.value;
+        eData.comp = compEl.value;
         eData.pron = pronEl.value;
-        eData.slr = slrEl.value;
-        eData.musc = muscEl.value;
+        eData.rot = rotEl.value;
+        eData.flexExt = flexExtEl.value;
 
         // Apply visual classes
-        [flexEl, extEl, pronEl, slrEl, muscEl].forEach(el => {
+        [slrCruzEl, compEl, pronEl, flexExtEl].forEach(el => {
             el.className = 'eval-select';
             if (el.value === '0') el.classList.add('neg');
             else if (el.value === '1') el.classList.add('int');
             else if (el.value === '2') el.classList.add('pos');
         });
+
+        // Specific class logic for Rotation
+        rotEl.className = 'eval-select';
+        if (rotEl.value === '0') rotEl.classList.add('neg');
+        else if (rotEl.value === '1' || rotEl.value === '2') rotEl.classList.add('pos');
 
         // Generate Report
         const container = document.getElementById('eval-findings-container');
@@ -459,24 +464,24 @@
         container.innerHTML = '';
         let hasFindings = false;
 
+        if (eData.slrCruz > 0 || eData.comp > 0) {
+            container.innerHTML += `<div class="eval-finding">HERNIA DE DISCO / PROTRUSIÓN ACTIVA DETECTADA: La prueba de elevación de pierna cruzada o compresión en flexión indican que una protrusión está presionando el nervio ciático. Derivar a Protocolo Lumbar. Evitar estiramientos pasivos de isquiotibiales o piriforme.</div>`;
+            hasFindings = true;
+        }
+        if (eData.rot === '1') {
+            container.innerHTML += `<div class="eval-finding">SÍNDROME DEL PIRIFORME CORTO: Rotación interna limitada. El músculo está tenso/rígido. Protocolo: Liberación con pelota (2 min) y estiramientos con cadera flexionada >90°. Prohibido fortalecer en acortamiento (ej. conchas).</div>`;
+            hasFindings = true;
+        }
+        if (eData.rot === '2') {
+            container.innerHTML += `<div class="eval-finding">SÍNDROME DEL PIRIFORME LARGO: Rotación interna excesiva. El músculo está elongado/débil frente al nervio. Protocolo: Fortalecimiento de rotadores externos (conchas con banda, puentes, sentadillas touchdown) y corrección del valgo dinámico de rodilla.</div>`;
+            hasFindings = true;
+        }
         if (eData.pron > 0) {
-            container.innerHTML += `<div class="eval-finding">INESTABILIDAD LUMBAR DETECTADA: Prohibida estrictamente la descompresión (colgarse). Foco en estabilización (McGill Big 3) y evitar rangos extremos de movimiento bajo carga.</div>`;
+            container.innerHTML += `<div class="eval-finding">INESTABILIDAD LUMBAR DETECTADA: Prohibida estrictamente la tracción o descompresión (colgarse). Foco en estabilización de Core y evitar rangos extremos bajo carga.</div>`;
             hasFindings = true;
         }
-        if (eData.slr > 0) {
-            container.innerHTML += `<div class="eval-finding">COMPROMISO RADICULAR / CIÁTICA: Posible irritación discal que afecta al nervio. Priorizar ejercicios de centralización (ej. McKenzie). Evitar estiramientos pasivos de isquiotibiales.</div>`;
-            hasFindings = true;
-        }
-        if (eData.flex > 0 && eData.ext === '0') {
-            container.innerHTML += `<div class="eval-finding">INTOLERANCIA A LA FLEXIÓN: Mecanismo de lesión discal predominante. Limitar sentadillas profundas o peso muerto pesado temporalmente. Entrenar en columna neutra o ligera extensión.</div>`;
-            hasFindings = true;
-        }
-        if (eData.ext > 0 && eData.flex === '0') {
-            container.innerHTML += `<div class="eval-finding">INTOLERANCIA A LA EXTENSIÓN: Posible sospecha facetaria o espondilolistesis. Evitar arquear la espalda bajo carga (ej. press militar de pie excesivo). Priorizar posiciones neutras o ligera flexión.</div>`;
-            hasFindings = true;
-        }
-        if (eData.musc > 0 && eData.flex === '0' && eData.ext === '0' && eData.pron === '0' && eData.slr === '0') {
-            container.innerHTML += `<div class="eval-finding">MECÁNICA MIOFASCIAL: Cuadro predominantemente muscular (espasmo/sobrecarga). Responderá bien a liberación de tejidos blandos y ajuste de cargas.</div>`;
+        if (eData.flexExt > 0 && eData.slrCruz === '0' && eData.comp === '0') {
+            container.innerHTML += `<div class="eval-finding">INTOLERANCIA MECÁNICA SIMPLE: Dolor al mover la columna pero sin signos radiculares severos. Priorizar posturas neutras y observar en qué rango de movimiento se desencadena la molestia para adaptar el entrenamiento.</div>`;
             hasFindings = true;
         }
 
@@ -484,7 +489,7 @@
         else box.style.display = 'none';
 
         // Save
-        localStorage.setItem('prime_v14_db', JSON.stringify(db));
+        localStorage.setItem('prime_v15_db', JSON.stringify(db));
     }
 
 
@@ -574,7 +579,7 @@
                 });
                 db.clients[cClientIndex].weeks[w] = clonedWeek;
             }
-            localStorage.setItem('prime_v14_db', JSON.stringify(db));
+            localStorage.setItem('prime_v15_db', JSON.stringify(db));
             triggerSaveIndicator();
             alert(`Sincronización completada. Las semanas ${cWeek + 1} a 12 son ahora clones de la W${cWeek}.`);
         }
@@ -603,7 +608,7 @@
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v14_db', JSON.stringify(db));
+        localStorage.setItem('prime_v15_db', JSON.stringify(db));
         renderTabs();
     }
 
@@ -611,7 +616,7 @@
         if(confirm("¿Purgar el día actual?")) {
             autoSave();
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
-            cDayIndex = 0; localStorage.setItem('prime_v14_db', JSON.stringify(db)); renderTabs();
+            cDayIndex = 0; localStorage.setItem('prime_v15_db', JSON.stringify(db)); renderTabs();
         }
     }
 
@@ -623,29 +628,29 @@
         else if (type === 'tendinoso') newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
         else if (type === 'piriforme') newBlock.tracker = { stage: 'Piriforme Corto', eva: 0 };
         
-        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
+        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v15_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
             autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
-            renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
+            renderDayContent(); localStorage.setItem('prime_v15_db', JSON.stringify(db));
         }
     }
 
     function addExercise(bIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v15_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
-        renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v15_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
         autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        renderDayContent(); localStorage.setItem('prime_v14_db', JSON.stringify(db));
+        renderDayContent(); localStorage.setItem('prime_v15_db', JSON.stringify(db));
     }
 
     function toggleWizard(bIdx) {
@@ -845,7 +850,7 @@
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].name = document.getElementById('day-name-input').value;
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v14_db', JSON.stringify(db));
+            localStorage.setItem('prime_v15_db', JSON.stringify(db));
             triggerSaveIndicator(); renderTabs();
         }, 800); 
     }
@@ -886,7 +891,7 @@
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v14_db', JSON.stringify(db));
+            localStorage.setItem('prime_v15_db', JSON.stringify(db));
             triggerSaveIndicator();
             document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
         }, 500);
