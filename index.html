@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PHYSIQUE v11.1 - CLONING SYS & MOBILE FIX</title>
+    <title>PRIME PHYSIQUE v12 - ADVANCED CLINICAL PATHWAYS</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -247,7 +247,7 @@
             border-bottom: 2px solid var(--burgundy); outline: none;
         }
         .day-title-input:focus { border-color: var(--neon-red); }
-        .block-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+        .block-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
 
         input[type=range].tendon-slider {
             -webkit-appearance: none; width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; outline: none; padding: 0; margin: 10px 0;
@@ -259,32 +259,12 @@
         }
         input[type=range].tendon-slider::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: transparent; border-radius: 3px; }
 
-        /* REGLAS RESPONSIVAS PARA CELULARES (MOBILE FIX) */
         @media (max-width: 600px) {
-            .ex-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .ex-title-wrap {
-                width: 100%;
-            }
-            .rpe-wrap {
-                align-self: flex-end;
-            }
-            .block-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .block-header > div {
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
-            }
-            .block-actions {
-                grid-template-columns: 1fr;
-            }
+            .ex-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .ex-title-wrap { width: 100%; }
+            .rpe-wrap { align-self: flex-end; }
+            .block-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .block-header > div { display: flex; width: 100%; justify-content: space-between; }
         }
     </style>
 </head>
@@ -310,7 +290,6 @@
             <span id="save-indicator" class="auto-save-indicator">GUARDADO</span>
         </div>
 
-        <!-- Perfil Clínico / Progresión -->
         <div class="client-profile-bar">
             <div class="profile-item">
                 <span class="profile-label">PROTOCOLO ACTIVO:</span>
@@ -318,6 +297,7 @@
                     <option value="none">-- Seleccionar --</option>
                     <option value="lumbar">Rehab Lumbar</option>
                     <option value="tendinoso">Rehab Tendinosa</option>
+                    <option value="piriforme">Rehab Piriforme</option>
                 </select>
             </div>
             <div class="profile-item">
@@ -341,8 +321,9 @@
             <input type="text" id="day-name-input" class="day-title-input" placeholder="DESIGNACIÓN DEL DÍA (Ej. SESIÓN 1)" oninput="autoSaveDayName()">
             
             <div class="block-actions">
-                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('lumbar')">+ BLOQUE LUMBAR</button>
-                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('tendinoso')">+ BLOQUE TENDINOSO</button>
+                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('lumbar')">+ BLQ LUMBAR</button>
+                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('tendinoso')">+ BLQ TENDINOSO</button>
+                <button class="btn" style="border-color:var(--burgundy); color:var(--text-main);" onclick="addBlock('piriforme')">+ BLQ PIRIFORME</button>
             </div>
 
             <div id="blocks-container"></div>
@@ -396,7 +377,7 @@
     }
 
     window.onload = () => {
-        const stored = localStorage.getItem('prime_v11_db');
+        const stored = localStorage.getItem('prime_v12_db');
         if (stored) {
             db = JSON.parse(stored);
             db.clients.forEach(c => { if(!c.profile) c.profile = { protocol: 'none', phase: 'none' }; });
@@ -430,7 +411,7 @@
         if (name) {
             let weeks = {}; for(let i=1; i<=12; i++) weeks[i] = [];
             db.clients.push({ name, weeks, profile: { protocol: 'none', phase: 'none' } });
-            localStorage.setItem('prime_v11_db', JSON.stringify(db)); renderDashboard();
+            localStorage.setItem('prime_v12_db', JSON.stringify(db)); renderDashboard();
         }
     }
 
@@ -440,7 +421,6 @@
         updateProfileUI(); renderTabs(); showView('view-tracker');
     }
 
-    /* LOGICA DE PERFIL Y PROGRESIÓN */
     function updateProfileUI() {
         const p = db.clients[cClientIndex].profile;
         document.getElementById('profile-protocol').value = p.protocol;
@@ -450,6 +430,8 @@
             phaseSelect.innerHTML += `<option value="Fase 1">Fase 1: Centralización</option><option value="Fase 2">Fase 2: Core/Estabilidad</option><option value="Fase 3">Fase 3: Carga Axial</option>`;
         } else if(p.protocol === 'tendinoso') {
             phaseSelect.innerHTML += `<option value="Fase 1">Fase 1: Movilidad / Analgesia</option><option value="Fase 2">Fase 2: Fuerza Específica</option><option value="Fase 3">Fase 3: Fuerza General</option><option value="Fase 4">Fase 4: Potencia / Pliometría</option>`;
+        } else if(p.protocol === 'piriforme') {
+            phaseSelect.innerHTML += `<option value="Corto">Piriforme Corto (Movilidad)</option><option value="Largo">Piriforme Largo (Fuerza)</option>`;
         }
         phaseSelect.value = p.phase;
         document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
@@ -472,7 +454,7 @@
         if(cClientIndex === null) return false;
         const client = db.clients[cClientIndex];
         const protocol = client.profile.protocol;
-        if(protocol === 'none') return false;
+        if(protocol === 'none' || protocol === 'piriforme') return false; 
 
         let qualifyingWeeks = 0; let weeksChecked = 0;
 
@@ -502,13 +484,11 @@
         return false;
     }
 
-    /* LOGICA DE CLONACIÓN DE SEMANAS */
     function propagateForward() {
         if(cClientIndex === null) return;
-        if(confirm(`¿Sobreescribir desde W${cWeek + 1} hasta W12 usando la W${cWeek} como plantilla?\n\n(Se copiarán días, ejercicios, series, reps y kg. Se reiniciarán los semáforos de dolor y los checks para dejar la plantilla limpia).`)) {
+        if(confirm(`¿Sobreescribir desde W${cWeek + 1} hasta W12 usando la W${cWeek} como plantilla?\n\n(Se copiarán días, ejercicios, series, reps y kg. Se reiniciarán los semáforos de dolor).`)) {
             autoSave();
             const currentWeekData = db.clients[cClientIndex].weeks[cWeek];
-            
             for(let w = cWeek + 1; w <= 12; w++) {
                 let clonedWeek = JSON.parse(JSON.stringify(currentWeekData));
                 clonedWeek.forEach(day => {
@@ -516,17 +496,17 @@
                         b.id = Date.now() + Math.random(); 
                         if(b.type === 'lumbar') {
                             b.tracker.eva = 0; b.tracker.post24 = 0;
-                        } else {
+                        } else if(b.type === 'tendinoso') {
                             b.tracker.evaDurante = 0; b.tracker.eva24h = 0; b.tracker.rigidez = false;
+                        } else if(b.type === 'piriforme') {
+                            b.tracker.eva = 0;
                         }
-                        b.exercises.forEach(ex => {
-                            ex.sets.forEach(s => s.done = false);
-                        });
+                        b.exercises.forEach(ex => { ex.sets.forEach(s => s.done = false); });
                     });
                 });
                 db.clients[cClientIndex].weeks[w] = clonedWeek;
             }
-            localStorage.setItem('prime_v11_db', JSON.stringify(db));
+            localStorage.setItem('prime_v12_db', JSON.stringify(db));
             triggerSaveIndicator();
             alert(`Sincronización completada. Las semanas ${cWeek + 1} a 12 son ahora clones de la W${cWeek}.`);
         }
@@ -555,7 +535,7 @@
         const newDay = { name: 'DÍA ' + ((db.clients[cClientIndex].weeks[cWeek].length) + 1), blocks: [] };
         db.clients[cClientIndex].weeks[cWeek].push(newDay);
         cDayIndex = db.clients[cClientIndex].weeks[cWeek].length - 1;
-        localStorage.setItem('prime_v11_db', JSON.stringify(db));
+        localStorage.setItem('prime_v12_db', JSON.stringify(db));
         renderTabs();
     }
 
@@ -563,9 +543,7 @@
         if(confirm("¿Purgar el día actual?")) {
             autoSave();
             db.clients[cClientIndex].weeks[cWeek].splice(cDayIndex, 1);
-            cDayIndex = 0;
-            localStorage.setItem('prime_v11_db', JSON.stringify(db));
-            renderTabs();
+            cDayIndex = 0; localStorage.setItem('prime_v12_db', JSON.stringify(db)); renderTabs();
         }
     }
 
@@ -574,45 +552,36 @@
         const day = db.clients[cClientIndex].weeks[cWeek][cDayIndex];
         let newBlock = { id: Date.now(), type: type, exercises: [ { name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] } ], tracker: {} };
         if (type === 'lumbar') newBlock.tracker = { stage: 'Fase 1: Centralización', eva: 0, nature: 'Muscular', direction: 'Centraliza', post24: 0 };
-        else newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
-        day.blocks.push(newBlock);
-        renderDayContent();
-        localStorage.setItem('prime_v11_db', JSON.stringify(db));
+        else if (type === 'tendinoso') newBlock.tracker = { stage: 'Fase 1: Movilidad', evaDurante: 0, eva24h: 0, rigidez: false };
+        else if (type === 'piriforme') newBlock.tracker = { stage: 'Piriforme Corto', eva: 0 };
+        
+        day.blocks.push(newBlock); renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
     }
 
     function removeBlock(bIdx) {
         if(confirm("¿Eliminar bloque completo?")) {
-            autoSave(); 
-            db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
-            renderDayContent(); 
-            localStorage.setItem('prime_v11_db', JSON.stringify(db));
+            autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks.splice(bIdx, 1);
+            renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
         }
     }
 
     function addExercise(bIdx) {
-        autoSave();
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
-        renderDayContent(); 
-        localStorage.setItem('prime_v11_db', JSON.stringify(db));
+        autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.push({ name: '', rpe: 7, sets: [{kg: '', reps: '', done: false}] });
+        renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
     }
 
     function removeExercise(bIdx, exIdx) {
-        autoSave();
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
-        renderDayContent(); 
-        localStorage.setItem('prime_v11_db', JSON.stringify(db));
+        autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises.splice(exIdx, 1);
+        renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
     }
 
     function addSet(bIdx, exIdx) {
-        autoSave();
-        db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
-        renderDayContent(); 
-        localStorage.setItem('prime_v11_db', JSON.stringify(db));
+        autoSave(); db.clients[cClientIndex].weeks[cWeek][cDayIndex].blocks[bIdx].exercises[exIdx].sets.push({kg: '', reps: '', done: false});
+        renderDayContent(); localStorage.setItem('prime_v12_db', JSON.stringify(db));
     }
 
     function toggleWizard(bIdx) {
-        const wiz = document.getElementById(`wiz-${bIdx}`);
-        wiz.style.display = wiz.style.display === 'none' ? 'block' : 'none';
+        const wiz = document.getElementById(`wiz-${bIdx}`); wiz.style.display = wiz.style.display === 'none' ? 'block' : 'none';
     }
 
     function applyWizard(bIdx, phase) {
@@ -702,7 +671,7 @@
                         <div class="semaforo-result s-box"><div class="light s-light"></div><div><div class="status-text s-text">--</div><div class="status-msg s-msg">--</div></div></div>
                     </div>
                 `;
-            } else {
+            } else if (block.type === 'tendinoso') {
                 const tD = t.evaDurante || 0; const t24 = t.eva24h || 0; const tRig = t.rigidez ? 'checked' : '';
                 wizHTML = `
                     <div id="wiz-${bIdx}" class="wizard-card" style="display:none;">
@@ -747,12 +716,35 @@
                         </div>
                     </div>
                 `;
+            } else if (block.type === 'piriforme') {
+                wizHTML = `
+                    <div id="wiz-${bIdx}" class="wizard-card" style="display:none;">
+                        <div class="wizard-title"><span>EVALUACIÓN DEL SÍNDROME:</span></div>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Descartar: Lumbar')"> Dolor irradiado al flexionar/arquear columna o elevar la pierna opuesta.</label>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Piriforme Corto')"> Cadera flexionada a 60°: Rotación interna limitada comparada con el lado sano.</label>
+                        <label class="wizard-option"><input type="radio" name="wiz-${bIdx}" onchange="applyWizard(${bIdx}, 'Piriforme Largo')"> Rotación interna excesiva o colapso de rodilla (valgo) en sentadilla.</label>
+                    </div>
+                `;
+                diagHTML = `
+                    <div class="diagnostic-section" style="border-left-color: var(--neon-red);">
+                        <h3 style="color: var(--neon-red);">DIAGNÓSTICO PIRIFORME / CADERA</h3>
+                        <label class="diag-label">TIPO DE DISFUNCIÓN:</label>
+                        <select class="p-stage" onchange="autoSave()">
+                            <option value="Piriforme Corto" ${t.stage==='Piriforme Corto'?'selected':''}>Piriforme Corto (Rígido/Tenso)</option>
+                            <option value="Piriforme Largo" ${t.stage==='Piriforme Largo'?'selected':''}>Piriforme Largo (Elongado/Débil)</option>
+                            <option value="Descartar: Lumbar" ${t.stage==='Descartar: Lumbar'?'selected':''}>Descartar: Origen Lumbar</option>
+                        </select>
+                        <label class="diag-label">NIVEL DE DOLOR / MOLESTIA: <span class="eva-val-display" style="color:var(--text-main);">${t.eva}</span>/10</label>
+                        <input type="range" class="p-eva regular-slider" min="0" max="10" value="${t.eva}" oninput="this.previousElementSibling.querySelector('.eva-val-display').innerText=this.value; autoSave()">
+                        <div class="semaforo-result s-box"><div class="light s-light"></div><div><div class="status-text s-text">--</div><div class="status-msg s-msg">--</div></div></div>
+                    </div>
+                `;
             }
 
             bContainer.innerHTML += `
                 <div class="block-card" data-bidx="${bIdx}">
                     <div class="block-header">
-                        <div class="block-title">PROTOCOLO: ${block.type === 'lumbar' ? 'LUMBAR' : 'TENDINOSO'}</div>
+                        <div class="block-title">PROTOCOLO: ${block.type}</div>
                         <div>
                             <button class="btn" style="border:none; color:var(--text-muted); font-size:0.8rem;" onclick="toggleWizard(${bIdx})">[?] ASISTENTE</button>
                             <button class="btn" style="border:none; color:var(--neon-red); font-size:0.8rem;" onclick="removeBlock(${bIdx})">[X] BORRAR</button>
@@ -769,7 +761,8 @@
         document.querySelectorAll('.block-card').forEach((bCard, bIdx) => {
             const block = day.blocks[bIdx];
             if(block.type === 'lumbar') evaluateLumbar(block.tracker, bCard);
-            else evaluateTendonAdvanced(block.tracker, bCard);
+            else if(block.type === 'tendinoso') evaluateTendonAdvanced(block.tracker, bCard);
+            else if(block.type === 'piriforme') evaluatePiriforme(block.tracker, bCard);
         });
     }
 
@@ -778,7 +771,7 @@
         db.clients[cClientIndex].weeks[cWeek][cDayIndex].name = document.getElementById('day-name-input').value;
         clearTimeout(titleSaveTimeout);
         titleSaveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v11_db', JSON.stringify(db));
+            localStorage.setItem('prime_v12_db', JSON.stringify(db));
             triggerSaveIndicator(); renderTabs();
         }, 800); 
     }
@@ -803,18 +796,22 @@
                 block.tracker.direction = bCard.querySelector(`input[name="l-dir-${bIdx}"]:checked`).value;
                 block.tracker.post24 = parseInt(bCard.querySelector('.l-24').value);
                 evaluateLumbar(block.tracker, bCard);
-            } else {
+            } else if (block.type === 'tendinoso') {
                 block.tracker.stage = bCard.querySelector('.t-stage').value;
                 block.tracker.evaDurante = parseInt(bCard.querySelector('.t-durante').value);
                 block.tracker.eva24h = parseInt(bCard.querySelector('.t-24h').value);
                 block.tracker.rigidez = bCard.querySelector('.t-rigidez').checked;
                 evaluateTendonAdvanced(block.tracker, bCard);
+            } else if (block.type === 'piriforme') {
+                block.tracker.stage = bCard.querySelector('.p-stage').value;
+                block.tracker.eva = parseInt(bCard.querySelector('.p-eva').value);
+                evaluatePiriforme(block.tracker, bCard);
             }
         });
 
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => {
-            localStorage.setItem('prime_v11_db', JSON.stringify(db));
+            localStorage.setItem('prime_v12_db', JSON.stringify(db));
             triggerSaveIndicator();
             document.getElementById('progression-badge').style.display = checkProgression() ? 'flex' : 'none';
         }, 500);
@@ -883,6 +880,28 @@
         const dot = bCard.querySelector('.status-dot'); dot.style.backgroundColor = datos.color; dot.style.boxShadow = `0 0 12px ${datos.color}`;
         const head = bCard.querySelector('.result-heading'); head.textContent = datos.title; head.style.color = datos.color;
         bCard.querySelector('.result-desc').textContent = datos.desc; bCard.querySelector('.action-text').textContent = datos.action;
+    }
+
+    function evaluatePiriforme(t, bCard) {
+        let color, status, msg;
+
+        if (t.stage === 'Descartar: Lumbar') {
+            color = 'var(--neon-red)'; status = 'ORIGEN LUMBAR DETECTADO'; 
+            msg = 'Cierre este bloque e inicie un Bloque Lumbar. La prueba de elevación de pierna cruzada o flexión indica posible origen discal.';
+        } else if (t.stage === 'Piriforme Corto') {
+            color = t.eva > 6 ? 'var(--neon-red)' : 'var(--yellow)'; 
+            status = 'PIRIFORME CORTO (RÍGIDO)'; 
+            msg = 'Protocolo: Liberación miofascial (Pelota 2 min) + Estiramiento cadera >90°. PROHIBIDO fortalecer en acortamiento (ej. Conchas).';
+        } else {
+            color = t.eva > 6 ? 'var(--neon-red)' : 'var(--green)'; 
+            status = 'PIRIFORME LARGO (ELONGADO)'; 
+            msg = 'Protocolo: Conchas con banda (5s), Puentes de glúteo y Sentadilla Touchdown. Mantener alineación de rodilla y evitar valgo dinámico.';
+        }
+        
+        const box = bCard.querySelector('.s-box'); box.style.borderColor = color;
+        const light = bCard.querySelector('.s-light'); light.style.backgroundColor = color; light.style.boxShadow = `0 0 15px ${color}`;
+        const txt = bCard.querySelector('.s-text'); txt.innerText = status; txt.style.color = color;
+        bCard.querySelector('.s-msg').innerText = msg;
     }
 </script>
 </body>
